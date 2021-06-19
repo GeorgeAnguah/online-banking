@@ -8,7 +8,7 @@ package com.onlinebanking.constant;
  * @since 1.0
  */
 
-public final class HomeConstant {
+public final class HomeConstants {
 
     /**
      * URL Mapping Constants.
