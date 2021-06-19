@@ -1,5 +1,5 @@
 /**
- * This package will hold all controllers in this application
+ * This package will hold all controllers in this application.
  *
  * @author George on 6/18/2021
  * @version 1.0

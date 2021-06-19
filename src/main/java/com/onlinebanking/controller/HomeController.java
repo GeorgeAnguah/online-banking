@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(HomeConstant.INDEX_URL_MAPPING)
 public class HomeController {
 
-    public String home(){
+    /**
+     * Maps index url request.
+     * @return index view name
+     */
+    public String home() {
         return HomeConstant.INDEX_VIEW_NAME;
     }
 }
