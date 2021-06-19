@@ -5,6 +5,8 @@ plugins {
     id 'checkstyle'
     id 'java'
     id 'pmd'
+    id 'idea'
+    id 'eclipse'
 }
 
 group = 'com.onlinebanking'
