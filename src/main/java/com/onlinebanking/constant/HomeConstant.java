@@ -1,13 +1,14 @@
 package com.onlinebanking.constant;
 
 /**
+ * This class holds all Home constants used in the application.
  *
  * @author Matthew Puentes
  * @version 1.0
  * @since 1.0
  */
 
-public class HomeConstant {
+public final class HomeConstant {
 
     /**
      * URL Mapping Constants.
