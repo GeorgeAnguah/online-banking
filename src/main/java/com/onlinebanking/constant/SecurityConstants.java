@@ -8,11 +8,12 @@ package com.onlinebanking.constant;
  * @since 1.0
  */
 public final class SecurityConstants {
-
     public static final String WEBJARS = "/webjars/**";
     public static final String CSS = "/css/**";
     public static final String JS = "/js/**";
     public static final String STATIC = "/static/**";
     public static final String RESOURCES = "/resources/**";
 
+    private SecurityConstants() {
+    }
 }

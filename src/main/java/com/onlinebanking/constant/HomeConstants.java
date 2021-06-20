@@ -19,4 +19,7 @@ public final class HomeConstants {
      * View Name Constants.
      */
     public static final String INDEX_VIEW_NAME = "index";
+
+    private HomeConstants() {
+    }
 }
