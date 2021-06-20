@@ -1,23 +1,13 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Head -->
+    <th:block th:replace="common/template :: common-head(title='..:: Online Banking | Home ::..')"/>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css">
+    <body>
+        <h1><i>e-banking</i></h1>
 
-    <title>E-banking</title>
-</head>
-<body>
-<h1><i>e-banking</i></h1>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
-</body>
+        <!--Common Body Scripts-->
+        <div th:replace="common/template :: common-scripts"></div>
+    </body>
 </html>
