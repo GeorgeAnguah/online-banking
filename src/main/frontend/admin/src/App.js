@@ -1,24 +1,29 @@
 import './App.css';
-
+import Header from './components/Header.js';
+import LoginForm from './components/LoginForm.js'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 function App() {
-  return (
+return (
+    <Router>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <Header/>
+        <div className="container d-flex align-items-center flex-column">
+          <Switch>
+            <Route path="/login" exact={true}>
+              <LoginForm />
+            </Route>
+            <Route path="/" exact={true}>
+              
+            </Route>
+          </Switch>
+       </div>
+   </div>
+  </Router>
+  )  
 }
 
 export default App;
