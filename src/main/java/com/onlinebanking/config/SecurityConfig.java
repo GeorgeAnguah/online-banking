@@ -1,5 +1,7 @@
 package com.onlinebanking.config;
 
+import com.onlinebanking.constant.HomeConstants;
+import com.onlinebanking.constant.SecurityConstants;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,8 +16,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static String[] publicMatchers = {
-            "/"
+    private static final String[] PUBLIC_MATCHERS = {
+            HomeConstants.INDEX_URL_MAPPING,
+            SecurityConstants.CSS,
+            SecurityConstants.JS,
+            SecurityConstants.WEBJARS,
+            SecurityConstants.RESOURCES,
+            SecurityConstants.STATIC
+
     };
 
     /**
@@ -29,7 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(publicMatchers).permitAll()
+                .antMatchers(PUBLIC_MATCHERS).permitAll()
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated();
