@@ -5,8 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-datetimepicker/css/datetimepicker.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/webjars/datatables/css/jquery.dataTables.min.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/main.css}" type="text/css">
 
     <title th:text="${title} ? ${title} : _">..:: Online Banking ::..</title>
 </head>
@@ -19,6 +22,10 @@
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js}"></script>
+    <script th:src="@{/webjars/datatables/js/jquery.dataTables.min.js}"></script>
+    <script th:src="@{/webjars/bootbox/bootbox.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
 </div>
 
 

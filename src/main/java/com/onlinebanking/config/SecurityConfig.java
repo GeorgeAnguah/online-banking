@@ -5,6 +5,7 @@ import com.onlinebanking.constant.SecurityConstants;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * This class holds security configuration settings from this application.
@@ -20,6 +21,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             HomeConstants.INDEX_URL_MAPPING,
             SecurityConstants.CSS,
             SecurityConstants.JS,
+            SecurityConstants.IMAGES,
+            SecurityConstants.FONTS,
             SecurityConstants.WEBJARS,
             SecurityConstants.RESOURCES,
             SecurityConstants.STATIC
@@ -41,5 +44,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated();
+        http.formLogin()
+                .failureUrl(SecurityConstants.LOGIN_ERROR)
+                .loginPage(HomeConstants.INDEX_URL_MAPPING).permitAll();
+        http.logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher(SecurityConstants.LOGOUT))
+                .logoutSuccessUrl(SecurityConstants.LOGIN_LOGOUT)
+                .deleteCookies(SecurityConstants.REMEMBER_ME).permitAll();
+        http.rememberMe();
     }
 }
