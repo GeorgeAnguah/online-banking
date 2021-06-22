@@ -1,5 +1,6 @@
 package com.onlinebanking.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import static com.onlinebanking.constant.ProfileTypeConstants.DEV;
@@ -12,6 +13,7 @@ import static com.onlinebanking.constant.ProfileTypeConstants.DEV;
  * @version 1.0
  * @since 1.0
  */
+@Configuration
 @Profile(DEV)
-public final class DevConfig {
+public class DevConfig {
 }
