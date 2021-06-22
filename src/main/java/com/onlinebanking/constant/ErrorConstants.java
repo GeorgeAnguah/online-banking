@@ -1,5 +1,8 @@
 package com.onlinebanking.constant;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 /**
  * Class ErrorConstants will hold all the error messages used in the application.
  *
@@ -7,6 +10,9 @@ package com.onlinebanking.constant;
  * @version 1.0
  * @since 1.0
  */
+
+@Getter
+@RequiredArgsConstructor
 public enum ErrorConstants {
 
     MISSING_REQUIRED_FIELD("Missing required field. Please check the documentation for required fields"),
@@ -22,15 +28,7 @@ public enum ErrorConstants {
 
     private final String errorMsg;
 
-    ErrorConstants(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
 
-    /**
-     * Constant error message.
-     * @return errorMsg String error message return from enum constants.
-     */
-    public String getErrorMsg() {
-        return errorMsg;
-    }
+
+
 }
