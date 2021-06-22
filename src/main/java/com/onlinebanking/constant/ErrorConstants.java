@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
  * @version 1.0
  * @since 1.0
  */
-
 @Getter
 @RequiredArgsConstructor
 public enum ErrorConstants {
@@ -27,8 +26,6 @@ public enum ErrorConstants {
     NOT_INSTANTIABLE("This class cannot be instantiated");
 
     private final String errorMsg;
-
-
 
 
 }
