@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Class ErrorMessage will hold all the error messages used in the application.
+ * ErrorMessage will hold all the error messages used in the application.
  *
  * @author George on 6/21/2021
  * @version 1.0
