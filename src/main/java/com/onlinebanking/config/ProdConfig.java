@@ -11,6 +11,6 @@ import org.springframework.context.annotation.Profile;
  * @version 1.0
  * @since 1.0
  */
-@Profile(ProfileTypeConstants.DEV)
+@Profile(ProfileTypeConstants.PROD)
 public class ProdConfig {
 }
