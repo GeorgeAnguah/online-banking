@@ -1,10 +1,10 @@
-package com.onlinebanking.constant;
+package com.onlinebanking.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Class ErrorConstants will hold all the error messages used in the application.
+ * ErrorMessage will hold all the error messages used in the application.
  *
  * @author George on 6/21/2021
  * @version 1.0
@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
-public enum ErrorConstants {
+public enum ErrorMessage {
 
     MISSING_REQUIRED_FIELD("Missing required field. Please check the documentation for required fields"),
     RECORD_ALREADY_EXISTS("Record already exists"),
