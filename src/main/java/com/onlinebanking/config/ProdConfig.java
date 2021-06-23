@@ -1,5 +1,6 @@
 package com.onlinebanking.config;
 
+import com.onlinebanking.constant.ProfileTypeConstants;
 import org.springframework.context.annotation.Profile;
 
 /**
@@ -10,6 +11,6 @@ import org.springframework.context.annotation.Profile;
  * @version 1.0
  * @since 1.0
  */
-@Profile("prod")
+@Profile(ProfileTypeConstants.DEV)
 public class ProdConfig {
 }
