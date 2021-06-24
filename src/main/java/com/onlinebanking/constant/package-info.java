@@ -1,5 +1,3 @@
-package com.onlinebanking.constant;
-
 /**
  * This package will house all constants used in the application.
  *
@@ -7,3 +5,4 @@ package com.onlinebanking.constant;
  * @version 1.0
  * @since 1.0
  */
+package com.onlinebanking.constant;
