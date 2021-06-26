@@ -10,24 +10,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 /**
  * This class holds security configuration settings from this application.
  *
- * @author Nana on 6/19/2021
+ * @author George on 6/19/2021
  * @version 1.0
  * @since 1.0
  */
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    private static final String[] PUBLIC_MATCHERS = {
-            HomeConstants.INDEX_URL_MAPPING,
-            SecurityConstants.CSS,
-            SecurityConstants.JS,
-            SecurityConstants.IMAGES,
-            SecurityConstants.FONTS,
-            SecurityConstants.WEBJARS,
-            SecurityConstants.RESOURCES,
-            SecurityConstants.STATIC
-
-    };
 
     /**
      * Override this method to configure the {@link HttpSecurity}.
@@ -40,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(PUBLIC_MATCHERS).permitAll()
+                .antMatchers(SecurityConstants.getPublicMatchers().toArray(new String[0])).permitAll()
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated();

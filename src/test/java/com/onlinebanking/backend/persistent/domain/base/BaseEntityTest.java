@@ -1,10 +1,8 @@
 package com.onlinebanking.backend.persistent.domain.base;
 
+import com.onlinebanking.TestUtils;
 import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.internal.util.Assert;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 
 /**
  * Test class for the BaseEntity.
@@ -15,18 +13,10 @@ import org.junit.jupiter.api.TestInfo;
  */
 class BaseEntityTest {
 
-    BaseEntity baseEntity;
-
-    @BeforeEach
-    void setUp(TestInfo testInfo) {
-        baseEntity = new BaseEntity();
-        baseEntity.setId(1L);
-        baseEntity.setVersion(1);
-    }
-
     @Test
-    void testEqualsContract() {
-        EqualsVerifier.simple().forClass(BaseEntity.class)
-                .withIgnoredFields("id", "createdAt", "createdBy", "updatedAt", "updatedBy").verify();
+    void equalsContract() {
+        EqualsVerifier.forClass(BaseEntity.class)
+                .withIgnoredFields(TestUtils.getIgnoredFields().toArray(new String[0]))
+                .verify();
     }
 }

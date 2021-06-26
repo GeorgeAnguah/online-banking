@@ -2,6 +2,7 @@ package com.onlinebanking.backend.persistent.domain.base;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -29,6 +30,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @MappedSuperclass
+@ToString
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
     @Id
@@ -66,14 +68,14 @@ public class BaseEntity {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        if (!canEqual(o)) {
+        if (!(o instanceof BaseEntity)) {
             return false;
         }
         BaseEntity that = (BaseEntity) o;
-        return version == that.version;
+        if (!that.canEqual(o)) {
+            return false;
+        }
+        return getVersion() == that.getVersion();
     }
 
     /**
@@ -94,16 +96,6 @@ public class BaseEntity {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(version);
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("BaseEntity{");
-        sb.append(getClass().getSimpleName())
-                .append(" : version=")
-                .append(version)
-                .append('}');
-        return sb.toString();
+        return Objects.hash(getVersion());
     }
 }
