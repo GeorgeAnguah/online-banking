@@ -17,6 +17,7 @@ public final class SecurityConstants {
     public static final String LOGIN_ERROR = "/?error";
     public static final String LOGOUT = "/logout";
     public static final String REMEMBER_ME = "remember-me";
+    public static final int SECURITY_STRENGTH = 12;
 
     private static final String[] PUBLIC_MATCHERS = {
             HomeConstants.INDEX_URL_MAPPING,
