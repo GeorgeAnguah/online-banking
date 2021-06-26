@@ -52,8 +52,8 @@ class OnlineBankingAuditorAwareTest {
     }
 
     private String getAuditor() {
-        var interviewWizardAuditorAware = new OnlineBankingAuditorAware();
-        Optional<String> currentAuditor = interviewWizardAuditorAware.getCurrentAuditor();
+        var onlineBankingAuditorAware = new OnlineBankingAuditorAware();
+        Optional<String> currentAuditor = onlineBankingAuditorAware.getCurrentAuditor();
         return currentAuditor.orElse(null);
     }
 
