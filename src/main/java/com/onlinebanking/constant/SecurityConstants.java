@@ -18,7 +18,7 @@ public final class SecurityConstants {
     public static final String LOGOUT = "/logout";
     public static final String REMEMBER_ME = "remember-me";
     public static final int SECURITY_STRENGTH = 12;
-    public static final String H2_CONSOLE_URL_MAPPING = "/console-h2/**";
+    public static final String H2_CONSOLE_URL_MAPPING = "/h2-console/**";
 
     private static final String[] PUBLIC_MATCHERS = {
             HomeConstants.INDEX_URL_MAPPING,
