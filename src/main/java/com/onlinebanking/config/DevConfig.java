@@ -1,8 +1,14 @@
 package com.onlinebanking.config;
 
 import com.onlinebanking.constant.ProfileTypeConstants;
+import com.onlinebanking.constant.SecurityConstants;
+import org.h2.server.web.WebServlet;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+
+
 
 /**
  * This class provides every bean, and other configurations needed
@@ -15,4 +21,13 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 @Profile(ProfileTypeConstants.DEV)
 public class DevConfig {
+
+    /**
+     * A bean to register the path /h2-console for the h2 database.
+     * @return the h2 registered bean.
+     */
+    @Bean
+    public ServletRegistrationBean<WebServlet> h2servletRegistration() {
+        return new ServletRegistrationBean<>(new WebServlet(), SecurityConstants.H2_CONSOLE_URL_MAPPING);
+    }
 }
