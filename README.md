@@ -34,7 +34,7 @@ for details on our code of conduct, and the process for submitting pull requests
 * Start Spring Boot application first using - **./gradlew bootRun**
 * Start React application using - **npm install** then **npm start**
 * Access application on - *http://localhost:3000/*
-* Access in-memory database on *http://localhost:8080/h2-console*
+* Access in-memory database on *http://localhost:8080/console*
 
 ## Running on Docker (Assuming docker is installed)
 * in the directory where docker-compose.yml file resides, simply run the command - **docker-compose up**
