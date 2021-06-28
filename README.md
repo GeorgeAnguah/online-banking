@@ -21,6 +21,7 @@ for details on our code of conduct, and the process for submitting pull requests
 * **Eric Opoku** - *Initial work* 
 * **George Angah** - *Initial work* 
 * **Matthew Puentes** - *Initial work* 
+* **Stephen Boakye** - *Initial work*
 
 ## Acknowledgments
 
