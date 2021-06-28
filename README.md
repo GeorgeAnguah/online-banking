@@ -16,6 +16,9 @@ A web application for online banking
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) 
 for details on our code of conduct, and the process for submitting pull requests to us.
 
+## Credit
+This project is an updated implementation of [Le Dang](https://github.com/raydeng83/OnlineBanking)'s project. 
+
 ## Authors
 
 * **Eric Opoku** - *Initial work* 
