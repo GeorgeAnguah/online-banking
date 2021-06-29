@@ -3,6 +3,8 @@ package com.onlinebanking.backend.persistent.domain.base;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -14,7 +16,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Version;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -34,8 +35,14 @@ import java.util.Objects;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
     @Id
-    @SequenceGenerator(name = "online-banking_sequenceGenerator", sequenceName = "online-banking_sequence")
-    @GeneratedValue(generator = "online-banking_sequenceGenerator")
+    @GenericGenerator(
+            name = "onlineBankingSequenceGenerator",
+            strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
+            parameters = {
+                    @Parameter(name = "initial_value", value = "1"),
+                    @Parameter(name = "increment_size", value = "1")
+            })
+    @GeneratedValue(generator = "onlineBankingSequenceGenerator")
     private Long id;
 
     @Version
