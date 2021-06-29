@@ -25,7 +25,7 @@ import java.util.Arrays;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    
+
     private final Environment environment;
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
@@ -36,6 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * configuration.
      *
      * @param http the {@link HttpSecurity} to modify.
+     *
      * @throws Exception thrown when error happens during authentication.
      */
     @Override

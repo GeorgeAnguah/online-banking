@@ -24,7 +24,7 @@
     $.transferDisplay = function () {
         let transferFrom = "#transferFrom";
         let transferTo = "#transferTo";
-        $(transferFrom).change(function() {
+        $(transferFrom).change(function () {
             if ($(transferFrom).val() === 'Primary') {
                 $(transferTo).val('Savings');
             } else if ($(transferFrom).val() === 'Savings') {
@@ -32,7 +32,7 @@
             }
         });
 
-        $(transferTo).change(function() {
+        $(transferTo).change(function () {
             if ($(transferTo).val() === 'Primary') {
                 $(transferFrom).val('Savings');
             } else if ($(transferTo).val() === 'Savings') {
@@ -42,10 +42,9 @@
     };
 
 
-
 }(jQuery));
 
-$(document).ready(function() {
+$(document).ready(function () {
     const confirm = function () {
         bootbox.confirm({
             title: "Appointment Confirmation",

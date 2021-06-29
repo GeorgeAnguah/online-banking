@@ -37,6 +37,7 @@ public final class SecurityConstants {
 
     /**
      * Public matchers to allow access to the application.
+     *
      * @return public matchers.
      */
     public static Collection<String> getPublicMatchers() {

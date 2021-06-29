@@ -19,6 +19,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * Find user by email.
      *
      * @param email email used to search for user.
+     *
      * @return User found.
      */
     User findByEmail(String email);
@@ -27,6 +28,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * Check if user exists by email.
      *
      * @param email email to check if user exists.
+     *
      * @return True if user exists or false otherwise.
      */
     Boolean existsByEmailOrderById(String email);
@@ -35,6 +37,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * Find user by username.
      *
      * @param username username used to search for user.
+     *
      * @return User found.
      */
     User findByUsername(String username);
@@ -43,6 +46,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * Check if user exists by username.
      *
      * @param username username to check if user exists.
+     *
      * @return True if user exists or false otherwise.
      */
     Boolean existsByUsernameOrderById(String username);
@@ -51,6 +55,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
      * Find user by public id.
      *
      * @param publicId publicId used to search for user.
+     *
      * @return User found.
      */
     User findByPublicId(String publicId);

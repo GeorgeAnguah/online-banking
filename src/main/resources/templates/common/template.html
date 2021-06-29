@@ -3,7 +3,7 @@
 <head th:fragment="common-head (title)">
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
     <link rel="stylesheet" th:href="@{/webjars/font-awesome/css/all.min.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css">
@@ -13,7 +13,6 @@
 
     <title th:text="${title} ? ${title} : _">..:: Online Banking ::..</title>
 </head>
-
 
 
 <div th:fragment="common-scripts">

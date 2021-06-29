@@ -5,7 +5,7 @@
 
 <body>
 <!-- Login Section -->
-<img class="img-fluid" src="#" th:src="@{/images/banner.png}" alt="banner"/>
+<img alt="banner" class="img-fluid" src="#" th:src="@{/images/banner.png}"/>
 <div class="container">
     <div class="row ">
         <div class="main-center ">
@@ -15,29 +15,29 @@
             <div class="bg-warning" th:if="${param.logout}">
                 You have been logged out.
             </div>
-            <form class="form-signin" th:action="@{/}" method="post">
+            <form class="form-signin" method="post" th:action="@{/}">
                 <h2 class="form-signin-heading">Please sign in</h2>
                 <div class="form-group">
-                    <label for="username" class="sr-only">Username</label>
-                    <input type="text"
+                    <label class="sr-only" for="username">Username</label>
+                    <input autofocus
                            class="form-control"
-                           placeholder="Username"
-                           name="username"
                            id="username"
-                           required autofocus>
+                           name="username"
+                           placeholder="Username"
+                           required type="text">
                 </div>
                 <div class="form-group">
-                    <label for="password" class="sr-only">Password</label>
-                    <input type="password"
-                           class="form-control"
-                           placeholder="Password"
+                    <label class="sr-only" for="password">Password</label>
+                    <input class="form-control"
                            id="password"
                            name="password"
-                           required>
+                           placeholder="Password"
+                           required
+                           type="password">
                 </div>
                 <div class="form-group">
-                    <label for="remember-me" class="sr-only"></label>
-                    <input type="checkbox" name="remember-me" id="remember-me"> &nbsp; Remember me
+                    <label class="sr-only" for="remember-me"></label>
+                    <input id="remember-me" name="remember-me" type="checkbox"> &nbsp; Remember me
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>
@@ -48,7 +48,7 @@
                 <a th:href="'#'">Forgot Password?</a>
             </div>
             <div class="form-group ">
-                <a type="submit" class="btn btn-info btn-lg btn-block login-button" th:href="@{/signup}">Sign up!</a>
+                <a class="btn btn-info btn-lg btn-block login-button" th:href="@{/signup}" type="submit">Sign up!</a>
             </div>
         </div>
     </div>

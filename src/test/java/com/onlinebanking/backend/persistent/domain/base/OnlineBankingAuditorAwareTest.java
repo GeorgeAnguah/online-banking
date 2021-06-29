@@ -67,7 +67,7 @@ class OnlineBankingAuditorAwareTest {
         var authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
         Authentication auth;
         if (username.equals(ANONYMOUS_USER)) {
-            var user =  User.builder().username(username).password(username).authorities(authorities).build();
+            var user = User.builder().username(username).password(username).authorities(authorities).build();
             auth = new AnonymousAuthenticationToken(username, user, authorities);
         } else {
             auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
