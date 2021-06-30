@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -22,13 +23,16 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Role {
+public class Role implements Serializable {
+    private static final long serialVersionUID = 7008351760784988067L;
+
     @Id
     private int id;
     private String name;
 
     /**
      * The Role class creates a role for the user.
+     *
      * @param roleType assigns the role properties.
      */
     public Role(RoleType roleType) {
@@ -40,6 +44,7 @@ public class Role {
      * Evaluate the equality of Role class.
      *
      * @param o is the other object use in equality test.
+     *
      * @return the equality of both objects.
      */
     @Override
@@ -62,6 +67,7 @@ public class Role {
      * Should be overridden by subclasses.
      *
      * @param other the other object use in equality test.
+     *
      * @return true for objects derived from similar class, otherwise false.
      */
     protected boolean canEqual(Object other) {

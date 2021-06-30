@@ -36,8 +36,8 @@ public final class OnlineBankingAuditorAware implements AuditorAware<String> {
         // authentication and authorization
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (Objects.nonNull(authentication)
-                && authentication.isAuthenticated()
-                && !(authentication instanceof AnonymousAuthenticationToken)) {
+            && authentication.isAuthenticated()
+            && !(authentication instanceof AnonymousAuthenticationToken)) {
             return Optional.ofNullable(authentication.getName());
         }
         // If there is no authentication,

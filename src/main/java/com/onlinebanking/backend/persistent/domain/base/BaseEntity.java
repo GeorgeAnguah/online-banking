@@ -68,6 +68,7 @@ public class BaseEntity {
      * Evaluate the equality of BaseEntity class.
      *
      * @param o is the other object use in equality test.
+     *
      * @return the equality of both objects.
      */
     @Override
@@ -90,6 +91,7 @@ public class BaseEntity {
      * Should be overridden by subclasses.
      *
      * @param other the other object use in equality test.
+     *
      * @return true for objects derived from similar class, otherwise false.
      */
     protected boolean canEqual(Object other) {

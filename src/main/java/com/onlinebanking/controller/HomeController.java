@@ -17,6 +17,7 @@ public class HomeController {
 
     /**
      * Maps index url request.
+     *
      * @return index view name
      */
     public String home() {

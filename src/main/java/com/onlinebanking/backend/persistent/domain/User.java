@@ -5,13 +5,17 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * The user model for the application.
@@ -27,7 +31,7 @@ import java.util.Objects;
 public class User extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 7538542321562810251L;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String publicId;
 
     @Column(unique = true, nullable = false)
@@ -52,6 +56,9 @@ public class User extends BaseEntity implements Serializable {
     private boolean enabled;
     private String verificationToken;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserRole> userRoles = new HashSet<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -62,8 +69,8 @@ public class User extends BaseEntity implements Serializable {
         }
         var user = (User) o;
         return Objects.equals(getPublicId(), user.getPublicId())
-                && Objects.equals(getUsername(), user.getUsername())
-                && Objects.equals(getEmail(), user.getEmail());
+               && Objects.equals(getUsername(), user.getUsername())
+               && Objects.equals(getEmail(), user.getEmail());
     }
 
     @Override

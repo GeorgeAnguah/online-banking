@@ -137,7 +137,7 @@
     </rule>
     <rule ref="category/java/codestyle.xml/ShortClassName">
         <properties>
-            <property name="minimum" value="4" />
+            <property name="minimum" value="4"/>
             <!-- Main is a good name for the class containing the main method.
                  Tag as inner class name is fine. -->
             <property name="violationSuppressXPath"
@@ -328,7 +328,7 @@
     </rule>
     <rule ref="category/java/design.xml/TooManyFields">
         <properties>
-            <property name="maxfields" value="20" />
+            <property name="maxfields" value="20"/>
             <!-- Unable to split fields out of the class. -->
             <!-- Main has an annotated field for each command line option. This is by design. -->
             <property name="violationSuppressXPath"
@@ -377,7 +377,7 @@
                  Checker collects external resource locations and sets up the configuration.
                  CheckstyleAntTask integrates Checkstyle with Ant.
                   -->
-            <property name="minimum" value="35.0" />
+            <property name="minimum" value="35.0"/>
             <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration[@SimpleName='Main'
         or @Image='Checker' or @Image='CheckstyleAntTask']"/>
         </properties>
@@ -434,7 +434,8 @@
     <!--The PMD UseUtilityClass rule can be suppressed just for classes with @SpringBootApplication annotation-->
     <rule ref="category/java/design.xml/UseUtilityClass">
         <properties>
-            <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration/preceding-sibling::Annotation/MarkerAnnotation/Name[@Image='SpringBootApplication']" />
+            <property name="violationSuppressXPath"
+                      value="//ClassOrInterfaceDeclaration/preceding-sibling::Annotation/MarkerAnnotation/Name[@Image='SpringBootApplication']"/>
         </properties>
     </rule>
 

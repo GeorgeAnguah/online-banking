@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 
-
 /**
  * This class provides every bean, and other configurations needed
  * to be used in the development phase.
@@ -24,6 +23,7 @@ public class DevConfig {
 
     /**
      * A bean to register the path /h2-console for the h2 database.
+     *
      * @return the h2 registered bean.
      */
     @Bean
