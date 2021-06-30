@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Class holds User history types relevant to a user of the application.
+ * UserHistoryType will hold User history types relevant to a user of the application.
  *
  * @author George on 6/29/2021
  * @version 1.0
@@ -25,7 +25,7 @@ public enum UserHistoryType {
     VERIFIED("Account verified"),
 
     /**
-     * This is will be used for password changes.
+     * This will be used for password changes.
      */
     PASSWORD_UPDATE("Password updated"),
 
