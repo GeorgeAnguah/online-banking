@@ -1,6 +1,10 @@
 package com.onlinebanking.config;
 
+import com.onlinebanking.backend.persistent.domain.base.OnlineBankingAuditorAware;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.AuditorAware;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -10,7 +14,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @version 1.0
  * @since 1.0
  */
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @Configuration
 @EnableTransactionManagement
 public class JpaConfig {
+
+    /**
+     * AuditorAware bean used for auditing.
+     *
+     * @return Application implementation of AuditorAware.
+     */
+    @Bean
+    public AuditorAware<String> auditorAware() {
+        return new OnlineBankingAuditorAware();
+    }
 }
