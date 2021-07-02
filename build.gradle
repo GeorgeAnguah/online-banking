@@ -3,6 +3,7 @@ import com.github.spotbugs.snom.SpotBugsTask
 plugins {
     id 'org.springframework.boot' version '2.5.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.unbroken-dome.test-sets' version '4.0.0'
     id 'com.github.spotbugs' version '4.7.1'
     id 'checkstyle'
     id 'eclipse'
@@ -24,6 +25,10 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+
+testSets {
+    integrationTest
 }
 
 dependencies {
@@ -62,6 +67,8 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+check.dependsOn integrationTest
 
 // Checkstyle task to disable xml reports and load config file
 tasks.withType(Checkstyle) {
