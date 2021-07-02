@@ -38,6 +38,9 @@ dependencies {
     implementation 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
 
+    //Java Faker
+    implementation 'com.github.javafaker:javafaker:1.0.2'
+
     // Webjars
     implementation 'org.webjars:jquery:3.3.1'
     implementation 'org.webjars:bootstrap:4.1.3'
