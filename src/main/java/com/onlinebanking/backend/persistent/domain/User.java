@@ -57,6 +57,7 @@ public class User extends BaseEntity implements Serializable {
     private String verificationToken;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Set<UserRole> userRoles = new HashSet<>();
 
     @Override
@@ -71,6 +72,7 @@ public class User extends BaseEntity implements Serializable {
         return Objects.equals(getPublicId(), user.getPublicId())
                && Objects.equals(getUsername(), user.getUsername())
                && Objects.equals(getEmail(), user.getEmail());
+
     }
 
     @Override
@@ -81,5 +83,25 @@ public class User extends BaseEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getPublicId(), getUsername(), getEmail());
+    }
+
+    /**
+     * Add userRole to this User.
+     *
+     * @param userRole userRole to be added if not already present.
+     */
+    public void addUserRole(UserRole userRole) {
+        userRoles.add(userRole);
+        userRole.setUser(this);
+    }
+
+    /**
+     * Remove userRole from this User.
+     *
+     * @param userRole userRole to be removed if present.
+     */
+    public void removeUserRole(UserRole userRole) {
+        userRoles.remove(userRole);
+        userRole.setUser(null);
     }
 }
