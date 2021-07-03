@@ -1,5 +1,7 @@
 package com.onlinebanking.constant;
 
+import com.onlinebanking.enums.ErrorMessage;
+
 /**
  * This class holds all profile type constants used in the application.
  *
@@ -23,5 +25,6 @@ public final class ProfileTypeConstants {
     public static final String TEST = "test";
 
     private ProfileTypeConstants() {
+        throw new AssertionError(ErrorMessage.NOT_INSTANTIABLE.getErrorMsg());
     }
 }
