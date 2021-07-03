@@ -80,7 +80,7 @@ public class BaseEntity {
             return false;
         }
         BaseEntity that = (BaseEntity) o;
-        if (!that.canEqual(o)) {
+        if (!that.canEqual(this)) {
             return false;
         }
         return getVersion() == that.getVersion();

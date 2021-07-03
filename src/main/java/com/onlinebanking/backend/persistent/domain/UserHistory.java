@@ -7,11 +7,14 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -22,13 +25,17 @@ import java.util.Objects;
  * @since 1.0
  */
 @Entity
+@Getter
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
-@Getter
-public class UserHistory extends BaseEntity {
+public class UserHistory extends BaseEntity implements Serializable {
+    private static final long serialVersionUID = -418682848586685969L;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @Column(unique = true, nullable = false)
+    private final String publicId;
+
     @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private final User user;
 
     @Enumerated(EnumType.STRING)
@@ -39,21 +46,26 @@ public class UserHistory extends BaseEntity {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof UserHistory) || !super.equals(o)) {
+        if (!(o instanceof UserHistory)) {
+            return false;
+        }
+        if (!(super.equals(o))) {
             return false;
         }
         UserHistory that = (UserHistory) o;
-        if (!that.canEqual(o)) {
+        if (!that.canEqual(this)) {
             return false;
         }
-        return Objects.equals(user, that.user)
-               && Objects.equals(userHistoryType, that.userHistoryType)
-               && getCreatedAt().isEqual(that.getCreatedAt());
+        return
+                Objects.equals(publicId, that.publicId)
+                && Objects.equals(getUser(), that.getUser())
+                && Objects.equals(getUserHistoryType(), that.getUserHistoryType());
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), user, userHistoryType, getCreatedAt());
+        return Objects.hash(super.hashCode(), getPublicId(), getUser(), getUserHistoryType());
     }
 
     @Override
