@@ -1,5 +1,7 @@
 package com.onlinebanking.constant;
 
+import com.onlinebanking.enums.ErrorMessage;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,6 +35,7 @@ public final class SecurityConstants {
     };
 
     private SecurityConstants() {
+        throw new AssertionError(ErrorMessage.NOT_INSTANTIABLE.getErrorMsg());
     }
 
     /**

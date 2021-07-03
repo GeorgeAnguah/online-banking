@@ -1,5 +1,7 @@
 package com.onlinebanking.constant;
 
+import com.onlinebanking.enums.ErrorMessage;
+
 /**
  * This class holds all Home constants used in the application.
  *
@@ -21,5 +23,6 @@ public final class HomeConstants {
     public static final String INDEX_VIEW_NAME = "index";
 
     private HomeConstants() {
+        throw new AssertionError(ErrorMessage.NOT_INSTANTIABLE.getErrorMsg());
     }
 }
