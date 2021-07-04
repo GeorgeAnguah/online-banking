@@ -23,6 +23,7 @@ public enum ErrorMessage {
     COULD_NOT_UPDATE_RECORD("Could not update record"),
     COULD_NOT_DELETE_RECORD("Could not delete record"),
     EMAIL_ADDRESS_NOT_VERIFIED("Email address could not be verified"),
+    NULL_ELEMENTS_NOT_ALLOWED("Null elements are not allowed"),
     NOT_INSTANTIABLE("This class cannot be instantiated");
 
     private final String errorMsg;
