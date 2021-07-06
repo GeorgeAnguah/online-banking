@@ -56,8 +56,8 @@ public class User extends BaseEntity implements Serializable {
     private boolean enabled;
     private String verificationToken;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserRole> userRoles = new HashSet<>();
 
     @Override
