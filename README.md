@@ -22,7 +22,7 @@ This project is an updated implementation of [Le Dang](https://github.com/rayden
 ## Authors
 
 * **Eric Opoku** - *Initial work* 
-* **George Angah** - *Initial work* 
+* **George Anguah** - *Initial work* 
 * **Matthew Puentes** - *Initial work* 
 * **Stephen Boakye** - *Contributor*
 * **Charles Dimbeng** - *Contributor*
