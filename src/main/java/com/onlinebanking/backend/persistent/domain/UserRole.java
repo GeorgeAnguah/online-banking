@@ -21,18 +21,20 @@ import java.util.Objects;
  * @version 1.0
  * @since 1.0
  */
-@NoArgsConstructor
 @Getter
 @Setter
 @Entity
 @ToString
+@NoArgsConstructor
 public class UserRole extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 2803657434288286128L;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "role_id")
     private Role role;
