@@ -58,7 +58,7 @@ public class UserRole extends BaseEntity implements Serializable {
         if (!(o instanceof UserRole) || !super.equals(o)) {
             return false;
         }
-        UserRole userRole = (UserRole) o;
+        var userRole = (UserRole) o;
         return Objects.equals(getUser(), userRole.getUser())
                && Objects.equals(getRole(), userRole.getRole());
     }

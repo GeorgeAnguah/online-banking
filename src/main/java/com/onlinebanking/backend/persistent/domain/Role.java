@@ -56,22 +56,7 @@ public class Role implements Serializable {
             return false;
         }
         var that = (Role) o;
-        if (!that.canEqual(o)) {
-            return false;
-        }
         return Objects.equals(name, that.name);
-    }
-
-    /**
-     * Called by equals method to maintain strict equality.
-     * Should be overridden by subclasses.
-     *
-     * @param other the other object use in equality test.
-     *
-     * @return true for objects derived from similar class, otherwise false.
-     */
-    protected boolean canEqual(Object other) {
-        return other instanceof Role;
     }
 
     /**

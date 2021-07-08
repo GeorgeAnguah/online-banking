@@ -46,19 +46,22 @@ public class User extends BaseEntity implements Serializable {
 
     @ToString.Exclude
     @NotBlank(message = "Password cannot be left blank")
-    @Size(min = 4, max = 15, message = "Password must be at least 4 and at most 15 characters")
     private String password;
 
     private String firstName;
     private String lastName;
-
     private String phone;
-    private boolean enabled;
     private String verificationToken;
+
+    private boolean enabled;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserRole> userRoles = new HashSet<>();
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserHistory> userHistories = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
