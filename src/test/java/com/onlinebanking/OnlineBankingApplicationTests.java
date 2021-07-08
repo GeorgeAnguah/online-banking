@@ -1,5 +1,6 @@
 package com.onlinebanking;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -23,6 +24,11 @@ class OnlineBankingApplicationTests {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testClassConstructor() {
+        Assertions.assertDoesNotThrow(OnlineBankingApplication::new);
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.onlinebanking.shared.util.validation;
 
+import com.onlinebanking.TestUtils;
+import com.onlinebanking.enums.ErrorMessage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -14,6 +16,23 @@ import org.junit.jupiter.api.TestInfo;
 class InputValidationUtilsTest {
 
     @Test
+    void callingConstructorShouldThrowException() {
+        TestUtils.assertExceptionCause(
+                InputValidationUtils.class,
+                AssertionError.class
+        );
+    }
+
+    @Test
+    void callingConstructorShouldThrowExceptionWithMessage() {
+        TestUtils.assertExceptionCause(
+                InputValidationUtils.class,
+                AssertionError.class,
+                ErrorMessage.NOT_INSTANTIABLE.getErrorMsg()
+        );
+    }
+
+    @Test
     void invalidInputAsEmptyThrowsException() {
         String input = "";
         Assertions.assertThrows(IllegalArgumentException.class, () -> InputValidationUtils.validateInputs(input));
@@ -26,18 +45,44 @@ class InputValidationUtilsTest {
     }
 
     @Test
+    void invalidInputAsNullThrowsException() {
+        String input = null;
+        Assertions.assertThrows(IllegalArgumentException.class, () -> InputValidationUtils.validateInputs(input));
+    }
+
+    @Test
     void validInputsDoesNotThrowException(TestInfo testInfo) {
         Assertions.assertDoesNotThrow(() -> InputValidationUtils.validateInputs(testInfo));
     }
 
+
     @Test
-    void emptyArrayInputThrowsException() {
-        Object[] objects = {};
+    void nullAndValidArrayInputThrowsException(TestInfo testInfo) {
+        Object[] objects = {null, testInfo.getDisplayName()};
         String message = "An empty array should not be accepted as a valid input";
         Class<? extends InputValidationUtilsTest> clazz = getClass();
 
         var expectedType = IllegalArgumentException.class;
         Assertions.assertThrows(expectedType, () -> InputValidationUtils.validateInputs(message, clazz, objects));
+    }
+
+    @Test
+    void validAndBlankArrayInputThrowsException(TestInfo testInfo) {
+        Object[] objects = {testInfo.getDisplayName(), " "};
+        String message = "An empty array should not be accepted as a valid input";
+
+        var expectedType = IllegalArgumentException.class;
+        Assertions.assertThrows(expectedType, () -> InputValidationUtils.validateInputs(message, objects));
+    }
+
+
+    @Test
+    void emptyArrayInputThrowsException() {
+        Object[] objects = {};
+        Class<? extends InputValidationUtilsTest> clazz = getClass();
+
+        var expectedType = IllegalArgumentException.class;
+        Assertions.assertThrows(expectedType, () -> InputValidationUtils.validateInputs(clazz, objects));
     }
 
     @Test
