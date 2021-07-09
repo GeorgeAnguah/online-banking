@@ -32,6 +32,10 @@ testSets {
     integrationTest
 }
 
+ext {
+    mapstructVersion = '1.4.2.Final'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -58,6 +62,10 @@ dependencies {
     implementation 'org.webjars:datatables:1.10.24'
     implementation 'org.webjars:bootstrap-datetimepicker:6aa746736d'
     implementation 'org.webjars:webjars-locator:0.41'
+
+    // MapStruct for Object Mapping
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
