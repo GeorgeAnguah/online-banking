@@ -28,7 +28,7 @@ class HomeControllerTest {
 
     @Test
     void shouldReturnIndexViewName() throws Exception {
-        this.mockMvc.perform(get("/"))
+        this.mockMvc.perform(get(HomeConstants.INDEX_URL_MAPPING))
                 .andExpect(status().isOk())
                 .andExpect(view().name(HomeConstants.INDEX_VIEW_NAME));
     }
