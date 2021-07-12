@@ -1,5 +1,6 @@
 package com.onlinebanking.controller;
 
+import com.onlinebanking.backend.persistent.repository.UserRepository;
 import com.onlinebanking.constant.HomeConstants;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ class HomeControllerTest {
      */
     @MockBean
     private PasswordEncoder passwordEncoder;
+
+    @MockBean
+    private UserRepository userRepository;
 
     @Test
     void shouldReturnIndexViewName() throws Exception {
