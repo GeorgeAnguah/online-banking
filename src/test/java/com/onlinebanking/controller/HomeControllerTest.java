@@ -8,10 +8,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 /**
  * Unit Test HomeController.
@@ -32,13 +30,10 @@ class HomeControllerTest {
     @MockBean
     private PasswordEncoder passwordEncoder;
 
-    @MockBean
-    private UserRepository userRepository;
-
     @Test
     void shouldReturnIndexViewName() throws Exception {
-        this.mockMvc.perform(get(HomeConstants.INDEX_URL_MAPPING))
-                .andExpect(status().isOk())
-                .andExpect(view().name(HomeConstants.INDEX_VIEW_NAME));
+        this.mockMvc.perform(MockMvcRequestBuilders.get(HomeConstants.INDEX_URL_MAPPING))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name(HomeConstants.INDEX_VIEW_NAME));
     }
 }
