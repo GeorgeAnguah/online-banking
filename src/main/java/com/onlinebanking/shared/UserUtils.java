@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
 import com.onlinebanking.backend.persistent.domain.User;
+import com.onlinebanking.enums.ErrorMessage;
 
 import java.text.MessageFormat;
 import java.util.Locale;
@@ -16,11 +17,14 @@ import java.util.Locale;
  * @since 1.0
  */
 public final class UserUtils {
+
     private static final Faker FAKER = new Faker();
     private static final int MIN_LENGTH = 4;
     public static final int MAX_LENGTH = 15;
+    public static final int DEFAULT_LENGTH = 30;
 
     private UserUtils() {
+        throw new AssertionError(ErrorMessage.NOT_INSTANTIABLE.getErrorMsg());
     }
 
     /**
@@ -64,7 +68,7 @@ public final class UserUtils {
      * @return a user
      */
     public static User createUser(String username, String password, String email, boolean enabled) {
-        User user = new User();
+        var user = new User();
         user.setUsername(username);
         user.setPassword(password);
         user.setPublicId(generatePublicId());
@@ -85,7 +89,7 @@ public final class UserUtils {
      * @return public id
      */
     public static String generatePublicId() {
-        return generatePublicId(30);
+        return generatePublicId(DEFAULT_LENGTH);
     }
 
     /**
@@ -95,7 +99,7 @@ public final class UserUtils {
      * @return public id
      */
     public static String generatePublicId(int length) {
-        FakeValuesService fakeValuesService = new FakeValuesService(Locale.ENGLISH, new RandomService());
+        var fakeValuesService = new FakeValuesService(Locale.ENGLISH, new RandomService());
         return fakeValuesService.regexify(MessageFormat.format("[A-Z1-9a-z]'{'{0}'}'", length));
     }
 }

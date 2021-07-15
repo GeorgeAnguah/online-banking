@@ -30,8 +30,8 @@ import java.util.Objects;
  */
 @Getter
 @Setter
-@MappedSuperclass
 @ToString
+@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
     @Id
@@ -48,20 +48,20 @@ public class BaseEntity {
     @Version
     private int version;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @CreatedBy
     @Column(name = "created_by")
     private String createdBy;
 
-    @Column(name = "updated_at")
     @LastModifiedDate
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "updated_by")
     @LastModifiedBy
+    @Column(name = "updated_by")
     private String updatedBy;
 
     /**
