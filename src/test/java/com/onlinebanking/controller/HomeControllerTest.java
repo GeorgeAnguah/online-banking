@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -26,12 +24,6 @@ class HomeControllerTest {
     private HomeController homeController;
 
     private MockMvc mockMvc;
-
-    /**
-     * Use to satisfy spring security requirement.
-     */
-    @MockBean
-    private PasswordEncoder passwordEncoder;
 
     @Test
     void shouldReturnIndexViewName() throws Exception {
