@@ -63,12 +63,12 @@ dependencies {
     implementation 'org.webjars:bootstrap-datetimepicker:6aa746736d'
     implementation 'org.webjars:webjars-locator:0.41'
 
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+
     // MapStruct for Object Mapping
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
-
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
 
     // Testing
     testImplementation 'org.mockito:mockito-inline'
