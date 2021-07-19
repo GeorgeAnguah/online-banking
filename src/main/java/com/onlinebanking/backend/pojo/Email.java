@@ -1,10 +1,10 @@
-package com.onlinebanking.backend.service.mail;
+package com.onlinebanking.backend.pojo;
 
 import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Email container used in EmailService.
+ * Email used for email service.
  *
  * @author Matthew Puentes on 7/19/2021
  * @version 1.0

@@ -1,33 +1,15 @@
 package com.onlinebanking.backend.service.mail;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
+import com.onlinebanking.backend.pojo.Email;
 
 /**
- * This class will send email in real time as well as test emails
- * for testing purposes.
- *
- * @author Matthew Puentes on 7/19/2021
- * @version 1.0
- * @since 1.0
+ * Email service interface used to send emails.
  */
-@RequiredArgsConstructor
-@Service
-public class EmailService {
-    private final JavaMailSender javaMailSender;
-
+public interface EmailService {
     /**
-     * Used to send a simple email.
+     * Send a simple email.
      *
-     * @param email email to send.
+     * @param email email to send
      */
-    public void sendSimpleEmail(Email email) {
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo(email.getTo());
-        simpleMailMessage.setFrom(email.getFrom());
-        simpleMailMessage.setSubject(email.getSubject());
-        javaMailSender.send(simpleMailMessage);
-    }
+    void sendSimpleEmail(Email email);
 }
