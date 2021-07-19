@@ -2,6 +2,7 @@ package com.onlinebanking.controller;
 
 import com.onlinebanking.constant.HomeConstants;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -20,6 +21,7 @@ public class HomeController {
      *
      * @return index view name
      */
+    @GetMapping
     public String home() {
         return HomeConstants.INDEX_VIEW_NAME;
     }

@@ -1,12 +1,12 @@
 package com.onlinebanking.shared;
 
 import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
 import com.onlinebanking.backend.persistent.domain.User;
-
-import java.text.MessageFormat;
-import java.util.Locale;
+import com.onlinebanking.enums.ErrorMessage;
+import com.onlinebanking.shared.dto.UserDto;
+import com.onlinebanking.shared.dto.mapper.UserDtoMapper;
+import com.onlinebanking.shared.util.StringUtils;
+import com.onlinebanking.shared.util.validation.InputValidationUtils;
 
 /**
  * User utility class that holds methods used across application.
@@ -16,11 +16,13 @@ import java.util.Locale;
  * @since 1.0
  */
 public final class UserUtils {
+
     private static final Faker FAKER = new Faker();
     private static final int MIN_LENGTH = 4;
     public static final int MAX_LENGTH = 15;
 
     private UserUtils() {
+        throw new AssertionError(ErrorMessage.NOT_INSTANTIABLE.getErrorMsg());
     }
 
     /**
@@ -64,10 +66,10 @@ public final class UserUtils {
      * @return a user
      */
     public static User createUser(String username, String password, String email, boolean enabled) {
-        User user = new User();
+        var user = new User();
         user.setUsername(username);
         user.setPassword(password);
-        user.setPublicId(generatePublicId());
+        user.setPublicId(StringUtils.generatePublicId());
         user.setEmail(email);
         user.setPhone(FAKER.phoneNumber().cellPhone());
         user.setFirstName(FAKER.name().firstName());
@@ -80,22 +82,24 @@ public final class UserUtils {
     }
 
     /**
-     * Generate a public id for user.
+     * Transfers data from entity to transfer object.
      *
-     * @return public id
+     * @param user stored user details
+     * @return user dto
      */
-    public static String generatePublicId() {
-        return generatePublicId(30);
+    public static UserDto convertToUserDto(final User user) {
+        InputValidationUtils.validateInputs(user);
+        return UserDtoMapper.MAPPER.toUserDto(user);
     }
 
     /**
-     * Generate a public id for user.
+     * Transfers data from transfer object to entity.
      *
-     * @param length length used for public id.
-     * @return public id
+     * @param userDto the userDto
+     * @return user
      */
-    public static String generatePublicId(int length) {
-        FakeValuesService fakeValuesService = new FakeValuesService(Locale.ENGLISH, new RandomService());
-        return fakeValuesService.regexify(MessageFormat.format("[A-Z1-9a-z]'{'{0}'}'", length));
+    public static User convertToUser(final UserDto userDto) {
+        InputValidationUtils.validateInputs(userDto);
+        return UserDtoMapper.MAPPER.toUser(userDto);
     }
 }
