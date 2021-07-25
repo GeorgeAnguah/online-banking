@@ -70,4 +70,11 @@ class UserTest {
         client.removeUserRole(userRole1);
         assertTrue(client.getUserRoles().isEmpty());
     }
+
+    @Test
+    void addSingleUserHistory() {
+        UserHistory userHistory = new UserHistory();
+        client.addUserHistory(userHistory);
+        assertEquals(1, client.getUserHistories().size());
+    }
 }
