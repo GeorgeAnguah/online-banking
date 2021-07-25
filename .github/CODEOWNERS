@@ -3,12 +3,7 @@
 
 # These owners will be the default owners for everything in
 # the repo. Unless a later match takes precedence,
-<<<<<<< HEAD
+
 # @georgeanguah, @mattp18 and @ericus20 will be requested for
 # review when someone opens a pull request.
 *       @georgeanguah @mattp18 @ericus20
-=======
-# @georgeanguah and @ericus20 will be requested for
-# review when someone opens a pull request.
-*       @georgeanguah @ericus20
->>>>>>> 4bab34e473a071681090583b3622a00e3b31ed48
