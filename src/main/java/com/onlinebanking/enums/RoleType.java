@@ -14,9 +14,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum RoleType {
-    ADMIN(1, "ROLE_ADMIN"),
-    CUSTOMER(2, "ROLE_CUSTOMER");
+    ROLE_ADMIN(1, "ROLE_ADMIN", "ADMIN"),
+    ROLE_CUSTOMER(2, "ROLE_CUSTOMER", "CUSTOMER");
 
     private final int id;
     private final String role;
+    private final String name;
 }

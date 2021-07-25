@@ -1,4 +1,4 @@
-package com.onlinebanking.shared;
+package com.onlinebanking.shared.util;
 
 import com.onlinebanking.TestUtils;
 import com.onlinebanking.backend.persistent.domain.User;
