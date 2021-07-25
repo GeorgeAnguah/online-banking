@@ -1,6 +1,7 @@
 package com.onlinebanking.backend.persistent.domain;
 
 import com.onlinebanking.backend.persistent.domain.base.BaseEntity;
+import com.onlinebanking.enums.ErrorMessage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -35,17 +36,17 @@ public class User extends BaseEntity implements Serializable {
     private String publicId;
 
     @Column(unique = true, nullable = false)
-    @NotBlank(message = "Username cannot be left blank")
-    @Size(min = 3, message = "Username should be at least 3 characters")
+    @NotBlank(message = ErrorMessage.BLANK_USERNAME)
+    @Size(min = 3, message = ErrorMessage.USERNAME_SIZE)
     private String username;
 
     @Column(unique = true, nullable = false)
-    @NotBlank(message = "Email cannot be left blank")
-    @Email(message = "A valid email format is required")
+    @NotBlank(message = ErrorMessage.BLANK_EMAIL)
+    @Email(message = ErrorMessage.INVALID_EMAIL)
     private String email;
 
     @ToString.Exclude
-    @NotBlank(message = "Password cannot be left blank")
+    @NotBlank(message = ErrorMessage.BLANK_PASSWORD)
     private String password;
 
     private String firstName;

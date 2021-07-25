@@ -5,7 +5,7 @@ import com.onlinebanking.backend.persistent.domain.UserRole;
 import com.onlinebanking.backend.persistent.repository.RoleRepository;
 import com.onlinebanking.backend.persistent.repository.UserRepository;
 import com.onlinebanking.enums.RoleType;
-import com.onlinebanking.shared.UserUtils;
+import com.onlinebanking.shared.util.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -37,8 +37,8 @@ public class DatabaseSeeder implements CommandLineRunner {
     public void run(String... args) throws Exception {
         var adminEmail = "admin@gmail.com";
 
-        var roleAdmin = new Role(RoleType.ADMIN);
-        var roleCustomer = new Role(RoleType.CUSTOMER);
+        var roleAdmin = new Role(RoleType.ROLE_ADMIN);
+        var roleCustomer = new Role(RoleType.ROLE_CUSTOMER);
         roleRepository.save(roleCustomer);
         roleRepository.save(roleAdmin);
 
