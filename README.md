@@ -45,3 +45,5 @@ This project is an updated implementation of [Le Dang](https://github.com/rayden
 
 ## Stop running application on Docker
 * in the directory where docker-compose.yml file resides, simply run the command - **docker-compose down**
+
+bla test
