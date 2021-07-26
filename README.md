@@ -39,3 +39,9 @@ This project is an updated implementation of [Le Dang](https://github.com/rayden
 * Start React application using - **npm install** then **npm start**
 * Access application on - *http://localhost:3000/*
 * Access in-memory database on *http://localhost:8080/console*
+
+## Running on Docker (Assuming docker is installed)
+* in the directory where docker-compose.yml file resides, simply run the command - **docker-compose up**
+
+## Stop running application on Docker
+* in the directory where docker-compose.yml file resides, simply run the command - **docker-compose down**
