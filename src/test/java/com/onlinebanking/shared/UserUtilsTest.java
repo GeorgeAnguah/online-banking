@@ -14,6 +14,14 @@ class UserUtilsTest {
     void callingConstructorShouldThrowException() {
         TestUtils.assertExceptionCause(
                 UserUtils.class,
+                AssertionError.class
+        );
+    }
+
+    @Test
+    void callingConstructorShouldThrowExceptionWithMessage() {
+        TestUtils.assertExceptionCause(
+                UserUtils.class,
                 AssertionError.class,
                 ErrorMessage.NOT_INSTANTIABLE.getErrorMsg()
         );
@@ -31,7 +39,7 @@ class UserUtilsTest {
     }
 
     @Test
-    @DisplayName("createUserWithNoArgument")
+    @DisplayName("createUserWithAnArgument")
     void createUserWithAnArgument(TestInfo testInfo) {
         User user = UserUtils.createUser(testInfo.getDisplayName());
         Assertions.assertAll(() -> {
