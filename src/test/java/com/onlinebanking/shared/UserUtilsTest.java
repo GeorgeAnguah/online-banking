@@ -39,7 +39,7 @@ class UserUtilsTest {
     }
 
     @Test
-    @DisplayName("createUserWithNoArgument")
+    @DisplayName("createUserWithAnArgument")
     void createUserWithAnArgument(TestInfo testInfo) {
         User user = UserUtils.createUser(testInfo.getDisplayName());
         Assertions.assertAll(() -> {
