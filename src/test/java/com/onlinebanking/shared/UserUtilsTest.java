@@ -3,6 +3,7 @@ package com.onlinebanking.shared;
 import com.onlinebanking.TestUtils;
 import com.onlinebanking.backend.persistent.domain.User;
 import com.onlinebanking.enums.ErrorMessage;
+import com.onlinebanking.shared.util.validation.InputValidationUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,14 @@ class UserUtilsTest {
 
     @Test
     void callingConstructorShouldThrowException() {
+        TestUtils.assertExceptionCause(
+                UserUtils.class,
+                AssertionError.class
+        );
+    }
+
+    @Test
+    void callingConstructorShouldThrowExceptionWithMessage() {
         TestUtils.assertExceptionCause(
                 UserUtils.class,
                 AssertionError.class,
