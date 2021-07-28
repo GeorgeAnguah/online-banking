@@ -1,5 +1,6 @@
 package com.onlinebanking.backend.service.impl;
 
+import com.onlinebanking.TestUtils;
 import com.onlinebanking.backend.persistent.domain.Role;
 import com.onlinebanking.backend.persistent.domain.User;
 import com.onlinebanking.backend.persistent.domain.UserRole;
@@ -21,8 +22,8 @@ class UserDetailsBuilderTest {
         user = new User();
         user.setUsername(testInfo.getDisplayName());
         user.setPassword(testInfo.getDisplayName());
-        user.setEmail(testInfo.getDisplayName().concat("@email.com"));
-        user.addUserRole(new UserRole(user, new Role(RoleType.CUSTOMER)));
+        user.setEmail(testInfo.getDisplayName().concat(TestUtils.TEST_EMAIL_SUFFIX));
+        user.addUserRole(new UserRole(user, new Role(RoleType.ROLE_CUSTOMER)));
     }
 
     @Test
