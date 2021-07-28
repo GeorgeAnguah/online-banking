@@ -12,6 +12,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
  * A convenient class to initializes and save user data on application start.
  *
@@ -36,23 +44,14 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         var adminEmail = "admin@gmail.com";
-
-        var roleAdmin = new Role(RoleType.ROLE_ADMIN);
-        var roleCustomer = new Role(RoleType.ROLE_CUSTOMER);
-        roleRepository.save(roleCustomer);
-        roleRepository.save(roleAdmin);
-
-        // encode plain password
-        var encodedPass = passwordEncoder.encode(adminPassword);
-
-        var admin = UserUtils.createUser(adminUsername, encodedPass, adminEmail, true);
-
-        //set connection between user and userRole
-        admin.addUserRole(new UserRole(admin, roleCustomer));
-        admin.addUserRole(new UserRole(admin, roleAdmin));
-
-        // save user cascades saving userRoles
+        var admin = UserUtils.createUser(adminUsername, adminPassword, adminEmail, true);
         var adminDto = UserUtils.convertToUserDto(admin);
-        userService.createUser(adminDto);
+
+        Arrays.stream(RoleType.values()).forEach(roleTypeValue -> {
+            roleRepository.save(new Role(roleTypeValue));
+        });
+
+        Set<RoleType> adminRoleType = Collections.singleton(RoleType.ROLE_ADMIN);
+        userService.createUser(adminDto, adminRoleType);
     }
 }
