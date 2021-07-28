@@ -4,6 +4,7 @@ import com.onlinebanking.backend.persistent.domain.base.BaseEntity;
 import com.onlinebanking.enums.UserHistoryType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -31,6 +32,7 @@ public class UserHistory extends BaseEntity implements Serializable {
     @Column(unique = true, nullable = false)
     private String publicId;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private User user;
 
@@ -40,8 +42,8 @@ public class UserHistory extends BaseEntity implements Serializable {
     /**
      * Constructor for UserHistory.
      *
-     * @param publicId the publicId
-     * @param user the user
+     * @param publicId        the publicId
+     * @param user            the user
      * @param userHistoryType the userHistoryType
      */
     public UserHistory(String publicId, User user, UserHistoryType userHistoryType) {

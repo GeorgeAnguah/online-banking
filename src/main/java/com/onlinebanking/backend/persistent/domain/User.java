@@ -107,4 +107,15 @@ public class User extends BaseEntity implements Serializable {
         userRoles.remove(userRole);
         userRole.setUser(null);
     }
+
+    /**
+     * Add a UserHistory to this user.
+     *
+     * @param userHistory userHistory to be added.
+     */
+    public void addUserHistory(UserHistory userHistory) {
+        userHistories.add(userHistory);
+        userHistory.setUser(this);
+    }
+
 }
