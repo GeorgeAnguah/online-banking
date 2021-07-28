@@ -3,7 +3,7 @@ package com.onlinebanking.backend.component.bootstrap;
 import com.onlinebanking.backend.persistent.domain.Role;
 import com.onlinebanking.backend.persistent.domain.UserRole;
 import com.onlinebanking.backend.persistent.repository.RoleRepository;
-import com.onlinebanking.backend.persistent.repository.UserRepository;
+import com.onlinebanking.backend.service.UserService;
 import com.onlinebanking.enums.RoleType;
 import com.onlinebanking.shared.util.UserUtils;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +23,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DatabaseSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
-    private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final UserService userService;
 
     @Value("${admin.username}")
     private String adminUsername;
@@ -52,7 +52,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         admin.addUserRole(new UserRole(admin, roleAdmin));
 
         // save user cascades saving userRoles
-        userRepository.save(admin);
-
+        var adminDto = UserUtils.convertToUserDto(admin);
+        userService.createUser(adminDto);
     }
 }
