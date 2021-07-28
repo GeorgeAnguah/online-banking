@@ -1,7 +1,6 @@
 package com.onlinebanking.backend.component.bootstrap;
 
 import com.onlinebanking.backend.persistent.domain.Role;
-import com.onlinebanking.backend.persistent.domain.UserRole;
 import com.onlinebanking.backend.persistent.repository.RoleRepository;
 import com.onlinebanking.backend.service.UserService;
 import com.onlinebanking.enums.RoleType;
@@ -13,12 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * A convenient class to initializes and save user data on application start.
