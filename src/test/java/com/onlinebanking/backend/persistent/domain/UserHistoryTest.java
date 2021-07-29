@@ -1,6 +1,7 @@
 package com.onlinebanking.backend.persistent.domain;
 
 import com.onlinebanking.TestUtils;
+import com.onlinebanking.shared.util.UserUtils;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +16,8 @@ class UserHistoryTest {
 
     @Test
     void equalsContract() {
-        User client = TestUtils.createUser("one");
-        User admin = TestUtils.createUser("two");
+        User client = UserUtils.createUser("one");
+        User admin = UserUtils.createUser("two");
 
         EqualsVerifier.forClass(UserHistory.class)
                 .withRedefinedSuperclass()
