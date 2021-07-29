@@ -1,5 +1,6 @@
 package com.onlinebanking;
 
+import com.onlinebanking.backend.persistent.domain.User;
 import com.onlinebanking.constant.ProfileTypeConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -31,7 +32,7 @@ public class TestUtils {
     /**
      * Asserts that the given class on invocation will throw the specified throwable.
      *
-     * @param clazz the class
+     * @param clazz     the class
      * @param throwable the class
      */
     public static void assertExceptionCause(Class<?> clazz, Class<? extends Throwable> throwable) {
@@ -41,9 +42,9 @@ public class TestUtils {
     /**
      * Asserts that the given class on invocation will throw the specified throwable with the provided message.
      *
-     * @param clazz the class
+     * @param clazz     the class
      * @param throwable the class
-     * @param message the message
+     * @param message   the message
      */
     public static void assertExceptionCause(Class<?> clazz, Class<? extends Throwable> throwable, String message) {
         var constructors = clazz.getDeclaredConstructors();
