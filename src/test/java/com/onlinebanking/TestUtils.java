@@ -63,19 +63,4 @@ public class TestUtils {
         }
     }
 
-    /**
-     * Create user for testing.
-     *
-     * @param username required username.
-     * @return created user.
-     */
-    public static User createUser(String username) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPublicId(username + "publicId");
-        user.setEmail(username + TestUtils.TEST_EMAIL_SUFFIX);
-        user.setPassword(username);
-        return user;
-    }
-
 }

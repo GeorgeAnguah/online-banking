@@ -2,6 +2,7 @@ package com.onlinebanking.backend.persistent.domain;
 
 import com.onlinebanking.TestUtils;
 import com.onlinebanking.enums.RoleType;
+import com.onlinebanking.shared.util.UserUtils;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.Test;
 
@@ -16,11 +17,11 @@ class UserRoleTest {
 
     @Test
     void equalsContract() {
-        User client = TestUtils.createUser("one");
-        User admin = TestUtils.createUser("two");
+        User client = UserUtils.createUser();
+        User admin = UserUtils.createUser();
 
-        Role roleClient = new Role(RoleType.CUSTOMER);
-        Role roleAdmin = new Role(RoleType.ADMIN);
+        Role roleClient = new Role(RoleType.ROLE_CUSTOMER);
+        Role roleAdmin = new Role(RoleType.ROLE_ADMIN);
 
 
         EqualsVerifier.forClass(UserRole.class)
