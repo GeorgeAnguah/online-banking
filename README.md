@@ -35,6 +35,13 @@ This project is an updated implementation of [Le Dang](https://github.com/rayden
 
 ## Notes
 
+* The following environment variables need to be configured before application starts: ADMIN_USERNAME, ADMIN_PASSWORD, JWT_SECRET
+- For example:
+
+		ADMIN_USERNAME = NAME
+        ADMIN_PASSWORD = PASSWORD
+        JWT_SECRET = 33ee9048-716d-4166-b532-43702a756f59
+        
 * Start Spring Boot application first using - **./gradlew bootRun**
 * Start React application using - **npm install** then **npm start**
 * Access application on - *http://localhost:3000/*
