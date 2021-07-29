@@ -16,6 +16,7 @@ class UserHistoryTest {
 
     @Test
     void equalsContract() {
+
         User client = UserUtils.createUser();
         User admin = UserUtils.createUser();
 
