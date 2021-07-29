@@ -2,7 +2,7 @@ package com.onlinebanking.backend.persistent.domain;
 
 import com.onlinebanking.TestUtils;
 import com.onlinebanking.enums.RoleType;
-import com.onlinebanking.shared.UserUtils;
+import com.onlinebanking.shared.util.UserUtils;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ class UserTest {
     @BeforeEach
     void runsBeforeEachTest() {
         client = UserUtils.createUser();
-        userRole1 = new UserRole(client, new Role(RoleType.CUSTOMER));
+        userRole1 = new UserRole(client, new Role(RoleType.ROLE_CUSTOMER));
     }
 
     @Test
@@ -49,7 +49,7 @@ class UserTest {
 
     @Test
     void addDuplicateUserRoleToUserProduceSingleRole() {
-        UserRole userRole2 = new UserRole(client, new Role(RoleType.CUSTOMER));
+        UserRole userRole2 = new UserRole(client, new Role(RoleType.ROLE_CUSTOMER));
         client.addUserRole(userRole1);
         client.addUserRole(userRole2);
         assertEquals(1, client.getUserRoles().size());
@@ -57,7 +57,7 @@ class UserTest {
 
     @Test
     void addTwoDifferentUserRoleToUserProduceMultipleRoles() {
-        UserRole userRole2 = new UserRole(client, new Role(RoleType.ADMIN));
+        UserRole userRole2 = new UserRole(client, new Role(RoleType.ROLE_ADMIN));
         client.addUserRole(userRole1);
         client.addUserRole(userRole2);
         assertEquals(2, client.getUserRoles().size());

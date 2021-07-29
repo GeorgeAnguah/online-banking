@@ -1,11 +1,10 @@
-package com.onlinebanking.shared;
+package com.onlinebanking.shared.util;
 
 import com.github.javafaker.Faker;
 import com.onlinebanking.backend.persistent.domain.User;
 import com.onlinebanking.enums.ErrorMessage;
 import com.onlinebanking.shared.dto.UserDto;
 import com.onlinebanking.shared.dto.mapper.UserDtoMapper;
-import com.onlinebanking.shared.util.StringUtils;
 import com.onlinebanking.shared.util.validation.InputValidationUtils;
 
 /**
@@ -82,14 +81,27 @@ public final class UserUtils {
     }
 
     /**
+     * Create a test user with flexibility.
+     *
+     * @param username the username
+     *
+     * @return the userEntity
+     */
+    public static UserDto createUserDto(final String username) {
+        return UserUtils.convertToUserDto(createUser(username));
+    }
+
+    /**
      * Transfers data from entity to transfer object.
      *
      * @param user stored user details
      * @return user dto
      */
     public static UserDto convertToUserDto(final User user) {
-        InputValidationUtils.validateInputs(user);
-        return UserDtoMapper.MAPPER.toUserDto(user);
+        var userDto = UserDtoMapper.MAPPER.toUserDto(user);
+        InputValidationUtils.validateInputs(userDto);
+        return userDto;
+
     }
 
     /**
@@ -99,7 +111,18 @@ public final class UserUtils {
      * @return user
      */
     public static User convertToUser(final UserDto userDto) {
+        var user = UserDtoMapper.MAPPER.toUser(userDto);
+        InputValidationUtils.validateInputs(user);
+        return user;
+    }
+
+    /**
+     * Enables and unlocks a user.
+     *
+     * @param userDto the userDto
+     */
+    public static void enableUser(final UserDto userDto) {
         InputValidationUtils.validateInputs(userDto);
-        return UserDtoMapper.MAPPER.toUser(userDto);
+        userDto.setEnabled(true);
     }
 }
