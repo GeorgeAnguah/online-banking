@@ -9,6 +9,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * This class defines the beans needed for the security operation of the application.
+ *
+ * @author Matthew Puentes on 6/26/2021
+ * @version 1.0
+ * @since 1.0
  */
 
 @Configuration

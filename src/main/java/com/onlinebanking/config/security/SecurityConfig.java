@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * Override this method to configure the {@link HttpSecurity}.
-     * Typically subclasses should not call super as it may override their
+     * Typically, subclasses should not call super as it may override their
      * configuration.
      *
      * @param http the {@link HttpSecurity} to modify.
