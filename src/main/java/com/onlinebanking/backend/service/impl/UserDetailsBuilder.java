@@ -79,6 +79,7 @@ public class UserDetailsBuilder implements UserDetails {
                 .password(user.getPassword())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
+                .publicId(user.getPublicId())
                 .enabled(user.isEnabled())
                 .authorities(grantedAuthorities)
                 .build();

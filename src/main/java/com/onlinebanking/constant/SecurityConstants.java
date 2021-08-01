@@ -21,6 +21,7 @@ public final class SecurityConstants {
     public static final String REMEMBER_ME = "remember-me";
     public static final int SECURITY_STRENGTH = 12;
     public static final String H2_CONSOLE_URL_MAPPING = "/console/*";
+    public static final String BEARER = "Bearer";
 
     private static final String[] PUBLIC_MATCHERS = {
             HomeConstants.INDEX_URL_MAPPING,
