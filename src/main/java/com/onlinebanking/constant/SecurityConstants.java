@@ -22,6 +22,7 @@ public final class SecurityConstants {
     public static final int SECURITY_STRENGTH = 12;
     public static final String H2_CONSOLE_URL_MAPPING = "/console/*";
     public static final String BEARER = "Bearer";
+    public static final String BEARER_PREFIX = "Bearer ";
 
     private static final String[] PUBLIC_MATCHERS = {
             HomeConstants.INDEX_URL_MAPPING,
