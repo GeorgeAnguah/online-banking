@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!-- Head -->
-<th:block th:replace="common/template :: common-head(title='..:: Online Banking | Home ::..', togglePassword=true)"/>
+<th:block th:replace="common/template :: common-head(title='Login', togglePassword=true, formValidation=true)"/>
 
 <body>
 <!-- Login Section -->
@@ -23,25 +23,29 @@
                 </div>
             </div>
 
-            <form method="post" th:action="@{/}">
+            <form id="login-form" method="post" th:action="@{/}">
                 <fieldset>
                     <legend>Please Sign In</legend>
 
                     <!-- Username input starts-->
-                    <div class="input-group mb-3">
-                        <span class="input-group-text"><i class="fas fa-user"></i></span>
-                        <input type="text" class="form-control rounded" id="username" name="username" placeholder="Username"
-                               aria-label="Username" aria-describedby="username" required autofocus>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input type="text" class="form-control rounded" id="username" name="username" placeholder="Username"
+                                   aria-label="Username" aria-describedby="username" required autofocus>
+                        </div>
                     </div>
                     <!-- Username input ends -->
                     <!-- Password input starts -->
-                    <div class="input-group mb-3">
-                        <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        <input type="password" class="form-control rounded" id="password" name="password" placeholder="Password"
-                               aria-label="Password" aria-describedby="password" required autofocus>
-                        <button id="toggle-password" type="button" class="d-none"
-                                aria-label="Show password as plain text. Warning: this will display your password on the screen.">
-                        </button>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                            <input type="password" class="form-control rounded" id="password" name="password" placeholder="Password"
+                                   aria-label="Password" aria-describedby="password" required autofocus>
+                            <button id="toggle-password" type="button" class="d-none"
+                                    aria-label="Show password as plain text. Warning: this will display your password on the screen.">
+                            </button>
+                        </div>
                     </div>
                     <!-- Password input ends -->
                     <!-- Remember me starts -->
@@ -51,7 +55,7 @@
                     </div>
                     <!-- Remember me ends-->
                     <!-- Sign in button starts -->
-                    <div class="d-grid gap-2 mx-auto">
+                    <div class="mb-3 d-grid gap-2 mx-auto">
                         <button class="btn btn-primary" type="submit">Sign in</button>
                     </div>
                     <!-- Sign in button ends -->
@@ -78,6 +82,6 @@
 
 
 <!--Common Body Scripts-->
-<div th:replace="common/template :: common-scripts(togglePassword=true)"></div>
+<div th:replace="common/template :: common-scripts(togglePassword=true, formValidation=true)"></div>
 </body>
 </html>
