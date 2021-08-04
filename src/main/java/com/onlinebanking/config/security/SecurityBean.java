@@ -1,9 +1,12 @@
 package com.onlinebanking.config.security;
 
+import com.onlinebanking.backend.service.JwtService;
+import com.onlinebanking.config.security.jwt.JwtAuthTokenFilter;
 import com.onlinebanking.constant.SecurityConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -27,5 +30,18 @@ public class SecurityBean {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(SecurityConstants.SECURITY_STRENGTH);
+    }
+
+    /**
+     * JwtAuthTokenFilter bean used in security operations.
+     *
+     * @param jwtService         the jwtService
+     * @param userDetailsService the userDetailsService
+     *
+     * @return the jwtAuthTokenFilter
+     */
+    @Bean
+    public JwtAuthTokenFilter jwtAuthTokenFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+        return new JwtAuthTokenFilter(jwtService, userDetailsService);
     }
 }
