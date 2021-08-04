@@ -5,6 +5,10 @@ import com.onlinebanking.enums.ErrorMessage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 /**
  * InputValidationUtilsTest class holds unit tests for methods in InputValidationUtils.
@@ -32,21 +36,10 @@ class InputValidationUtilsTest {
         );
     }
 
-    @Test
-    void invalidInputAsEmptyThrowsException() {
+    @ParameterizedTest
+    @MethodSource({"blankStrings"})
+    void invalidInputThrowsException() {
         String input = "";
-        Assertions.assertThrows(IllegalArgumentException.class, () -> InputValidationUtils.validateInputs(input));
-    }
-
-    @Test
-    void invalidInputAsBlankThrowsException() {
-        String input = " ";
-        Assertions.assertThrows(IllegalArgumentException.class, () -> InputValidationUtils.validateInputs(input));
-    }
-
-    @Test
-    void invalidInputAsNullThrowsException() {
-        String input = null;
         Assertions.assertThrows(IllegalArgumentException.class, () -> InputValidationUtils.validateInputs(input));
     }
 
@@ -91,5 +84,26 @@ class InputValidationUtilsTest {
         Class<? extends InputValidationUtilsTest> clazz = getClass();
 
         Assertions.assertDoesNotThrow(() -> InputValidationUtils.validateInputs(clazz, objects));
+    }
+
+    @Test
+    void validArrayWithEmptyArrayInputThrowsException() {
+        Object[] objects = {new String[]{}};
+        Class<? extends InputValidationUtilsTest> clazz = getClass();
+
+        var expectedType = IllegalArgumentException.class;
+        Assertions.assertThrows(expectedType, () -> InputValidationUtils.validateInputs(clazz, objects));
+    }
+
+    @Test
+    void validArrayWithArrayInputsShouldBeValid(TestInfo testInfo) {
+        Object[] objects = {testInfo.getDisplayName(), new String[]{testInfo.getDisplayName()}};
+        Class<? extends InputValidationUtilsTest> clazz = getClass();
+
+        Assertions.assertDoesNotThrow(() -> InputValidationUtils.validateInputs(clazz, objects));
+    }
+
+    private static Stream<String> blankStrings() {
+        return Stream.of("", "   ", null);
     }
 }
