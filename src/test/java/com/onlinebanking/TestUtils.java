@@ -1,6 +1,5 @@
 package com.onlinebanking;
 
-import com.onlinebanking.backend.persistent.domain.User;
 import com.onlinebanking.constant.ProfileTypeConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.AssertionsForClassTypes;
