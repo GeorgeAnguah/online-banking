@@ -8,7 +8,6 @@ import com.onlinebanking.shared.util.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -25,7 +24,7 @@ import java.util.Set;
 @Component
 @RequiredArgsConstructor
 public class DatabaseSeeder implements CommandLineRunner {
-    private final PasswordEncoder passwordEncoder;
+
     private final RoleRepository roleRepository;
     private final UserService userService;
 
@@ -42,11 +41,9 @@ public class DatabaseSeeder implements CommandLineRunner {
         var admin = UserUtils.createUser(adminUsername, adminPassword, adminEmail, true);
         var adminDto = UserUtils.convertToUserDto(admin);
 
-        Arrays.stream(RoleType.values()).forEach(roleTypeValue -> {
-            roleRepository.save(new Role(roleTypeValue));
-        });
-
+        Arrays.stream(RoleType.values()).forEach(roleTypeValue -> roleRepository.save(new Role(roleTypeValue)));
         Set<RoleType> adminRoleType = Collections.singleton(RoleType.ROLE_ADMIN);
         userService.createUser(adminDto, adminRoleType);
+
     }
 }

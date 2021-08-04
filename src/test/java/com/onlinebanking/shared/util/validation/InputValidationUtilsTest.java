@@ -103,6 +103,14 @@ class InputValidationUtilsTest {
         Assertions.assertDoesNotThrow(() -> InputValidationUtils.validateInputs(clazz, objects));
     }
 
+    @Test
+    void validArrayWithPrimitiveArrayInputsShouldBeValid(TestInfo testInfo) {
+        Object[] objects = {testInfo.getDisplayName(), new int[]{1}};
+        Class<? extends InputValidationUtilsTest> clazz = getClass();
+
+        Assertions.assertDoesNotThrow(() -> InputValidationUtils.validateInputs(clazz, objects));
+    }
+
     private static Stream<String> blankStrings() {
         return Stream.of("", "   ", null);
     }
