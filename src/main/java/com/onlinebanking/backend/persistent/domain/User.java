@@ -37,7 +37,7 @@ public class User extends BaseEntity implements Serializable {
 
     @Column(unique = true, nullable = false)
     @NotBlank(message = ErrorMessage.BLANK_USERNAME)
-    @Size(min = 3, message = ErrorMessage.USERNAME_SIZE)
+    @Size(min = 3, max = 50, message = ErrorMessage.USERNAME_SIZE)
     private String username;
 
     @Column(unique = true, nullable = false)
