@@ -1,8 +1,8 @@
 package com.onlinebanking.config.security;
 
 import com.onlinebanking.constant.HomeConstants;
-import com.onlinebanking.constant.ProfileTypeConstants;
 import com.onlinebanking.constant.SecurityConstants;
+import com.onlinebanking.shared.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,8 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import java.util.Arrays;
 
 /**
  * This class holds security configuration settings from this application.
@@ -43,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         // if we are running with dev profile, disable csrf and frame options to enable h2 to work.
-        configureDevEnvironmentAccess(http);
+        SecurityUtils.configureDevEnvironmentAccess(http, environment);
 
         http.authorizeRequests()
                 .antMatchers(SecurityConstants.getPublicMatchers().toArray(new String[0])).permitAll()
@@ -63,18 +61,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-    }
-
-    /**
-     * If we are running with dev profile, disable csrf and frame options to enable h2 to work.
-     *
-     * @param http the http request
-     */
-    private void configureDevEnvironmentAccess(HttpSecurity http) throws Exception {
-        var activeProfiles = Arrays.asList(environment.getActiveProfiles());
-
-        if (activeProfiles.contains(ProfileTypeConstants.DEV)) {
-            http.headers().frameOptions().disable().and().csrf().disable();
-        }
     }
 }

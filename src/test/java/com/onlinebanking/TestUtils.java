@@ -4,6 +4,12 @@ import com.onlinebanking.constant.ProfileTypeConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.Constructor;
@@ -23,6 +29,9 @@ import java.util.Collections;
 public class TestUtils {
     private static final String[] IGNORED_FIELDS = {"id", "createdAt", "createdBy", "updatedAt", "updatedBy"};
     public static final String TEST_EMAIL_SUFFIX = "@email.com";
+    public static final String ANONYMOUS_ROLE = "ROLE_ANONYMOUS";
+    public static final String ANONYMOUS_USER = "anonymousUser";
+    public static final String ROLE_USER = "ROLE_USER";
 
     public static Collection<String> getIgnoredFields() {
         return Collections.unmodifiableCollection(Arrays.asList(IGNORED_FIELDS));
@@ -60,6 +69,18 @@ public class TestUtils {
         if (StringUtils.isNotBlank(message)) {
             rootCause.withStackTraceContaining(message);
         }
+    }
+
+    public static void setAuthentication(String role, String username) {
+        var authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
+        Authentication auth;
+        if (username.equals(ANONYMOUS_USER)) {
+            var user = User.builder().username(username).password(username).authorities(authorities).build();
+            auth = new AnonymousAuthenticationToken(username, user, authorities);
+        } else {
+            auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
+        }
+        SecurityContextHolder.getContext().setAuthentication(auth);
     }
 
 }
