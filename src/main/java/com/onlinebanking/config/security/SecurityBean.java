@@ -1,6 +1,7 @@
 package com.onlinebanking.config.security;
 
 import com.onlinebanking.backend.service.JwtService;
+import com.onlinebanking.backend.service.security.EncryptionService;
 import com.onlinebanking.config.security.jwt.JwtAuthTokenFilter;
 import com.onlinebanking.constant.SecurityConstants;
 import lombok.RequiredArgsConstructor;
@@ -37,11 +38,15 @@ public class SecurityBean {
      *
      * @param jwtService         the jwtService
      * @param userDetailsService the userDetailsService
+     * @param encryptionService  the encryptionService
      *
      * @return the jwtAuthTokenFilter
      */
     @Bean
-    public JwtAuthTokenFilter jwtAuthTokenFilter(JwtService jwtService, UserDetailsService userDetailsService) {
-        return new JwtAuthTokenFilter(jwtService, userDetailsService);
+    public JwtAuthTokenFilter jwtAuthTokenFilter(JwtService jwtService,
+                                                 EncryptionService encryptionService,
+                                                 UserDetailsService userDetailsService) {
+
+        return new JwtAuthTokenFilter(jwtService, encryptionService, userDetailsService);
     }
 }

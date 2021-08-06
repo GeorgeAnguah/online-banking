@@ -2,7 +2,12 @@ package com.onlinebanking.backend.service;
 
 import com.onlinebanking.enums.RoleType;
 import com.onlinebanking.shared.dto.UserDto;
+import com.onlinebanking.web.payload.response.LoginResponse;
+import com.onlinebanking.web.payload.response.LogoutResponse;
+import org.springframework.http.ResponseEntity;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
 
 /**
@@ -54,4 +59,35 @@ public interface UserService {
      * @throws IllegalArgumentException in case the given entity is {@literal null}
      */
     UserDto findByEmail(String email);
+
+    /**
+     * Validates and update the access token and refresh token accordingly.
+     *
+     * @param username     the username
+     * @param accessToken  the accessToken
+     * @param refreshToken the refreshToken
+     *
+     * @return the http headers
+     */
+    ResponseEntity<LoginResponse> login(String username, String accessToken, String refreshToken);
+
+    /**
+     * Refreshes the current access token and refresh token accordingly.
+     *
+     * @param accessToken  the accessToken
+     * @param refreshToken the refreshToken
+     *
+     * @return the http headers
+     */
+    ResponseEntity<LoginResponse> refresh(String accessToken, String refreshToken);
+
+    /**
+     * Logout the user from the system and clear all cookies from request and response.
+     *
+     * @param request  the request
+     * @param response the response
+     *
+     * @return the http headers
+     */
+    ResponseEntity<LogoutResponse> logout(HttpServletRequest request, HttpServletResponse response);
 }

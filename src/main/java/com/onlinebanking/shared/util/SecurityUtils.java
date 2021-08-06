@@ -8,7 +8,12 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -54,6 +59,22 @@ public final class SecurityUtils {
      */
     public static Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    /**
+     * Logout the user from the system and clear all cookies from request and response.
+     *
+     * @param request  the request
+     * @param response the response
+     */
+    public static void logout(HttpServletRequest request, HttpServletResponse response) {
+
+        String rememberMeCookieKey = AbstractRememberMeServices.SPRING_SECURITY_REMEMBER_ME_COOKIE_KEY;
+        CookieClearingLogoutHandler logoutHandler = new CookieClearingLogoutHandler(rememberMeCookieKey);
+
+        SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
+        logoutHandler.logout(request, response, null);
+        securityContextLogoutHandler.logout(request, response, null);
     }
 
     private SecurityUtils() {

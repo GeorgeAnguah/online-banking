@@ -16,18 +16,21 @@ import java.util.Collections;
 public final class SecurityConstants {
 
     public static final String ACCOUNT_OVERVIEW = "/account-overview";
+    public static final String API_AUTH_ROOT_URL = "/api/auth";
+    public static final String API_AUTH_URL_MAPPING = "/api/auth/**";
+    public static final String API_ROOT_URL_MAPPING = "/api/**";
+    public static final String BEARER = "Bearer";
+    public static final String H2_CONSOLE_URL_MAPPING = "/console/*";
+    public static final String JSESSIONID = "JSESSIONID";
     public static final String LOGIN_LOGOUT = "/?logout";
     public static final String LOGIN_ERROR = "/?error";
     public static final String LOGOUT = "/logout";
+    public static final String LOGIN = "/login";
+    public static final String REFRESH = "/refresh";
     public static final String REMEMBER_ME = "remember-me";
-    public static final String JSESSIONID = "JSESSIONID";
+    public static final String SAME_SITE = "strict";
+
     public static final int SECURITY_STRENGTH = 12;
-    public static final String H2_CONSOLE_URL_MAPPING = "/console/*";
-    public static final String API_ROOT_URL_MAPPING = "/api/**";
-    public static final String API_AUTH_URL_MAPPING = "/api/auth/**";
-    public static final String API_AUTH_ROOT_URL = "/api/auth";
-    public static final String BEARER = "Bearer";
-    public static final String BEARER_PREFIX = "Bearer ";
 
     private static final String[] PUBLIC_MATCHERS = {
             HomeConstants.INDEX_URL_MAPPING,

@@ -2,8 +2,8 @@ package com.onlinebanking.backend.service.security.impl;
 
 import com.onlinebanking.backend.service.security.EncryptionService;
 import com.onlinebanking.excepton.EncryptionException;
-import com.onlinebanking.shared.util.validation.InputValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +64,9 @@ public class EncryptionServiceImpl implements EncryptionService {
      */
     @Override
     public String encrypt(String text) {
-        InputValidationUtils.validateInputs(getClass(), text);
+        if (StringUtils.isBlank(text)) {
+            return null;
+        }
 
         try {
             byte[] iv = new byte[GCM_IV_LENGTH];
@@ -101,7 +103,9 @@ public class EncryptionServiceImpl implements EncryptionService {
      */
     @Override
     public String decrypt(String encryptedText) {
-        InputValidationUtils.validateInputs(getClass(), encryptedText);
+        if (StringUtils.isBlank(encryptedText)) {
+            return null;
+        }
 
         try {
             byte[] decoded = Base64.getDecoder().decode(encryptedText);

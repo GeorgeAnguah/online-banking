@@ -1,6 +1,5 @@
 package com.onlinebanking.config.security.jwt;
 
-import com.onlinebanking.enums.ErrorMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -27,7 +26,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
         LOG.error("Unauthorized error: {}", authException.getMessage(), authException);
-        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, ErrorMessage.AUTHENTICATION_FAILED.getErrorMsg());
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getLocalizedMessage());
     }
 
 }

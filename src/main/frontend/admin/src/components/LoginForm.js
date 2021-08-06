@@ -6,7 +6,7 @@ function LoginForm() {
             <form>
                 <div className="form-group text-left">
                     <label htmlFor="exampleInputEmail1">Email address</label>
-                    <input type="email"
+                    <input type="text"
                            className="form-control"
                            id="email"
                            aria-describedby="emailHelp"

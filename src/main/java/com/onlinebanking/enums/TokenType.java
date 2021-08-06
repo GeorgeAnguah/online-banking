@@ -13,8 +13,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum TokenType {
-    ACCESS("access"),
-    REFRESH("refresh");
+    ACCESS("accessToken"),
+    JSESSIONID("JSESSIONID"),
+    REFRESH("refreshToken");
 
     private final String name;
 }
