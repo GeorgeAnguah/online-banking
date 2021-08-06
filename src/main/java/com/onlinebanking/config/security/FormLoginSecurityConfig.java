@@ -24,6 +24,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final Environment environment;
+    private final SecurityBean securityBean;
 
     /**
      * Override this method to configure the {@link HttpSecurity}.
@@ -54,6 +55,7 @@ public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl(SecurityConstants.LOGIN_LOGOUT)
                 .deleteCookies(SecurityConstants.JSESSIONID).permitAll()
                 .deleteCookies(SecurityConstants.REMEMBER_ME).permitAll();
-        http.rememberMe();
+        http.rememberMe()
+                .tokenRepository(securityBean.persistentRepository());
     }
 }

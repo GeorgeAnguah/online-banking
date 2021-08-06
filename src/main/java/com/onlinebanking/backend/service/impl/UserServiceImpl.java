@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private static final int DEFAULT_DURATION = 3600000;
+    private static final int DEFAULT_DURATION = 3_600_000;
 
     /**
      * Create the userDto with the userDto instance given.
@@ -198,6 +198,7 @@ public class UserServiceImpl implements UserService {
      *
      * @return the http headers
      */
+    @Override
     public ResponseEntity<LogoutResponse> logout(HttpServletRequest request, HttpServletResponse response) {
 
         SecurityUtils.logout(request, response);
@@ -237,29 +238,26 @@ public class UserServiceImpl implements UserService {
      * Updates the accessToken and refreshToken accordingly.
      *
      * @param username          the username
-     * @param accessTokenValid  if the access token is valid
-     * @param refreshTokenValid if the refresh token is valid
-     * @param responseHeaders   the response headers
+     * @param isAccessValid  if the access token is valid
+     * @param isRefreshValid if the refresh token is valid
+     * @param headers   the response headers
      */
-    private void updateCookies(String username,
-                               boolean accessTokenValid,
-                               boolean refreshTokenValid,
-                               HttpHeaders responseHeaders) {
+    private void updateCookies(String username, boolean isAccessValid, boolean isRefreshValid, HttpHeaders headers) {
 
         String newAccessToken;
         long duration = new Date().getTime() + DEFAULT_DURATION;
-        if (!accessTokenValid && !refreshTokenValid || (accessTokenValid && refreshTokenValid)) {
+        if (!isAccessValid && !isRefreshValid || isAccessValid && isRefreshValid) {
             newAccessToken = jwtService.generateJwtToken(username);
             String newRefreshToken = jwtService.generateJwtToken(username);
 
-            CookieUtils.addCookieToHeaders(responseHeaders, TokenType.ACCESS, newAccessToken, duration);
-            CookieUtils.addCookieToHeaders(responseHeaders, TokenType.REFRESH, newRefreshToken, duration);
+            CookieUtils.addCookieToHeaders(headers, TokenType.ACCESS, newAccessToken, duration);
+            CookieUtils.addCookieToHeaders(headers, TokenType.REFRESH, newRefreshToken, duration);
         }
 
-        if (!accessTokenValid && refreshTokenValid) {
+        if (!isAccessValid && isRefreshValid) {
             newAccessToken = jwtService.generateJwtToken(username);
-            CookieUtils.addCookieToHeaders(responseHeaders, TokenType.ACCESS, newAccessToken, duration);
+            CookieUtils.addCookieToHeaders(headers, TokenType.ACCESS, newAccessToken, duration);
         }
-        CookieUtils.deleteCookie(responseHeaders, TokenType.JSESSIONID);
+        CookieUtils.deleteCookie(headers, TokenType.JSESSIONID);
     }
 }

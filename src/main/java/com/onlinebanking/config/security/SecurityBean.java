@@ -1,15 +1,15 @@
 package com.onlinebanking.config.security;
 
-import com.onlinebanking.backend.service.JwtService;
-import com.onlinebanking.backend.service.security.EncryptionService;
-import com.onlinebanking.config.security.jwt.JwtAuthTokenFilter;
 import com.onlinebanking.constant.SecurityConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * This class defines the beans needed for the security operation of the application.
@@ -23,6 +23,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityBean {
 
+    private final DataSource dataSource;
+
     /**
      * PasswordEncoder bean used in security operations.
      *
@@ -34,19 +36,15 @@ public class SecurityBean {
     }
 
     /**
-     * JwtAuthTokenFilter bean used in security operations.
+     * Making use of persistent option instead of in-memory for maximum security.
      *
-     * @param jwtService         the jwtService
-     * @param userDetailsService the userDetailsService
-     * @param encryptionService  the encryptionService
-     *
-     * @return the jwtAuthTokenFilter
+     * @return persistentTokenRepository
      */
     @Bean
-    public JwtAuthTokenFilter jwtAuthTokenFilter(JwtService jwtService,
-                                                 EncryptionService encryptionService,
-                                                 UserDetailsService userDetailsService) {
+    public PersistentTokenRepository persistentRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
 
-        return new JwtAuthTokenFilter(jwtService, encryptionService, userDetailsService);
+        return jdbcTokenRepository;
     }
 }

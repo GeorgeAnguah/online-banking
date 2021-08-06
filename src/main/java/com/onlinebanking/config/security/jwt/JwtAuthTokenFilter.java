@@ -10,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -28,6 +29,7 @@ import java.util.Objects;
  * @since 1.0
  */
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
