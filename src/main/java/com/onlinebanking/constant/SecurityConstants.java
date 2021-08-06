@@ -28,6 +28,7 @@ public final class SecurityConstants {
     public static final String LOGIN = "/login";
     public static final String REFRESH = "/refresh";
     public static final String REMEMBER_ME = "remember-me";
+    public static final String ROOT_PATH = "/";
     public static final String SAME_SITE = "strict";
 
     public static final int SECURITY_STRENGTH = 12;

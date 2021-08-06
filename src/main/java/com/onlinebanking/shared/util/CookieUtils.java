@@ -1,14 +1,19 @@
 package com.onlinebanking.shared.util;
 
 import com.onlinebanking.backend.service.security.EncryptionService;
+import com.onlinebanking.constant.ProfileTypeConstants;
 import com.onlinebanking.constant.SecurityConstants;
 import com.onlinebanking.enums.ErrorMessage;
 import com.onlinebanking.enums.TokenType;
 import com.onlinebanking.shared.util.validation.InputValidationUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
+
+import java.util.Arrays;
 
 /**
  * This class provides mechanism to create and manage cookies a text.
@@ -21,6 +26,7 @@ import org.springframework.http.ResponseCookie;
 public final class CookieUtils {
 
     private static final EncryptionService ENCRYPT_SERVICE = ApplicationContextUtils.getBean(EncryptionService.class);
+    private static final Environment env = ApplicationContextUtils.getBean(Environment.class);
 
     private CookieUtils() {
         throw new AssertionError(ErrorMessage.NOT_INSTANTIABLE.getErrorMsg());
@@ -41,11 +47,11 @@ public final class CookieUtils {
 
         return ResponseCookie
                 .from(tokenType.getName(), encryptedToken)
+                .secure(Arrays.asList(env.getActiveProfiles()).contains(ProfileTypeConstants.PROD))
                 .sameSite(SecurityConstants.SAME_SITE)
-                .sameSite("strict")
+                .path(SecurityConstants.ROOT_PATH)
                 .maxAge(duration)
                 .httpOnly(true)
-                .path("/")
                 .build();
     }
 
@@ -60,11 +66,12 @@ public final class CookieUtils {
         InputValidationUtils.validateInputs(CookieUtils.class, tokenType);
 
         return ResponseCookie
-                .from(tokenType.getName(), "")
+                .from(tokenType.getName(), StringUtils.EMPTY)
+                .secure(Arrays.asList(env.getActiveProfiles()).contains(ProfileTypeConstants.PROD))
                 .sameSite(SecurityConstants.SAME_SITE)
+                .path(SecurityConstants.ROOT_PATH)
                 .maxAge(0)
                 .httpOnly(true)
-                .path("/")
                 .build();
     }
 
