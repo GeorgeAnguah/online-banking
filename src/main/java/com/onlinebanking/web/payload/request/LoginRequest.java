@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 /**
  * This class models the format of the login request accepted.
  *
- * @author Eric Opoku
+ * @author Stephen Boakye
  * @version 1.0
  * @since 1.0
  */
