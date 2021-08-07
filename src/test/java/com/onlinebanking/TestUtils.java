@@ -71,6 +71,12 @@ public class TestUtils {
         }
     }
 
+    /**
+     * Sets the authentication object for unit testing purposes.
+     *
+     * @param role     the role to be assigned
+     * @param username the user to authenticate
+     */
     public static void setAuthentication(String role, String username) {
         var authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
         Authentication auth;

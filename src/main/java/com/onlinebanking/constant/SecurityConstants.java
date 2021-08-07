@@ -20,6 +20,7 @@ public final class SecurityConstants {
     public static final String API_AUTH_URL_MAPPING = "/api/auth/**";
     public static final String API_ROOT_URL_MAPPING = "/api/**";
     public static final String BEARER = "Bearer";
+    public static final String BEARER_PREFIX = "Bearer ";
     public static final String H2_CONSOLE_URL_MAPPING = "/console/*";
     public static final String JSESSIONID = "JSESSIONID";
     public static final String LOGIN_LOGOUT = "/?logout";

@@ -26,7 +26,7 @@ import java.util.Arrays;
 public final class CookieUtils {
 
     private static final EncryptionService ENCRYPT_SERVICE = ApplicationContextUtils.getBean(EncryptionService.class);
-    private static final Environment env = ApplicationContextUtils.getBean(Environment.class);
+    private static final Environment ENV = ApplicationContextUtils.getBean(Environment.class);
 
     private CookieUtils() {
         throw new AssertionError(ErrorMessage.NOT_INSTANTIABLE.getErrorMsg());
@@ -47,7 +47,7 @@ public final class CookieUtils {
 
         return ResponseCookie
                 .from(tokenType.getName(), encryptedToken)
-                .secure(Arrays.asList(env.getActiveProfiles()).contains(ProfileTypeConstants.PROD))
+                .secure(Arrays.asList(ENV.getActiveProfiles()).contains(ProfileTypeConstants.PROD))
                 .sameSite(SecurityConstants.SAME_SITE)
                 .path(SecurityConstants.ROOT_PATH)
                 .maxAge(duration)
@@ -67,7 +67,7 @@ public final class CookieUtils {
 
         return ResponseCookie
                 .from(tokenType.getName(), StringUtils.EMPTY)
-                .secure(Arrays.asList(env.getActiveProfiles()).contains(ProfileTypeConstants.PROD))
+                .secure(Arrays.asList(ENV.getActiveProfiles()).contains(ProfileTypeConstants.PROD))
                 .sameSite(SecurityConstants.SAME_SITE)
                 .path(SecurityConstants.ROOT_PATH)
                 .maxAge(0)

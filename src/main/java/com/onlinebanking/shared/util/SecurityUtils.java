@@ -1,10 +1,13 @@
 package com.onlinebanking.shared.util;
 
+import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
 import com.onlinebanking.constant.ProfileTypeConstants;
 import com.onlinebanking.enums.ErrorMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,6 +62,42 @@ public final class SecurityUtils {
      */
     public static Authentication getAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    /**
+     * Sets the provided authentication object to the SecurityContextHolder.
+     *
+     * @param authentication the authentication
+     */
+    public static void setAuthentication(Authentication authentication) {
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    /**
+     * Creates an authentication object with the credentials then set authentication to SecurityContextHolder.
+     *
+     * @param authenticationManager the authentication manager
+     * @param username              the username
+     * @param password              the password
+     */
+    public static void authenticateUser(AuthenticationManager authenticationManager, String username, String password) {
+        var authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        var authentication = authenticationManager.authenticate(authenticationToken);
+
+        setAuthentication(authentication);
+    }
+
+    /**
+     * Returns the user details from the authenticated object if authenticated.
+     *
+     * @return the user details
+     */
+    public static UserDetailsBuilder getAuthenticatedUserDetails() {
+        var authentication = getAuthentication();
+        if (Objects.nonNull(authentication)) {
+            return (UserDetailsBuilder) authentication.getPrincipal();
+        }
+        return null;
     }
 
     /**

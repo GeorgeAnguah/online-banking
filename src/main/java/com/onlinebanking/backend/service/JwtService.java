@@ -1,5 +1,6 @@
 package com.onlinebanking.backend.service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -35,6 +36,16 @@ public interface JwtService {
      * @return the username
      */
     String getUsernameFromToken(String token);
+
+    /**
+     * Retrieves the jwt token from the request cookie or request header if present and valid.
+     *
+     * @param request the httpRequest
+     * @param fromCookie if jwt should be retrieved from the cookies.
+     *
+     * @return the jwt token
+     */
+    String getJwtToken(HttpServletRequest request, boolean fromCookie);
 
     /**
      * Validates the Jwt token passed to it.

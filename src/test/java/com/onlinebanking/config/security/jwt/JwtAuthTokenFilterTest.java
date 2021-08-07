@@ -2,6 +2,7 @@ package com.onlinebanking.config.security.jwt;
 
 import com.onlinebanking.backend.service.JwtService;
 import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
+import com.onlinebanking.backend.service.security.EncryptionService;
 import com.onlinebanking.shared.util.UserUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,6 +37,9 @@ class JwtAuthTokenFilterTest {
     @Mock
     private UserDetailsService userDetailsService;
 
+    @Mock
+    private EncryptionService encryptionService;
+
     @InjectMocks
     private JwtAuthTokenFilter jwtAuthTokenFilter;
 
@@ -48,6 +52,7 @@ class JwtAuthTokenFilterTest {
 
         UserDetailsBuilder userDetails = UserDetailsBuilder.buildUserDetails(UserUtils.createUser());
         Mockito.when(userDetailsService.loadUserByUsername(ArgumentMatchers.anyString())).thenReturn(userDetails);
+        Mockito.when(encryptionService.decrypt(ArgumentMatchers.anyString())).thenReturn(bearerToken);
 
         request = new MockHttpServletRequest();
         request.setRequestURI(API_AUTH_LOGIN);
