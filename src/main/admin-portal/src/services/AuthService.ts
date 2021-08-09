@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { useState } from 'react';
-import User from "../types/User";
 
 const API_AUTH_URL = "http://localhost:8080/api/auth";
 
@@ -11,16 +9,26 @@ const API_AUTH_URL = "http://localhost:8080/api/auth";
  * @param {password} password
  */
 const login = async (username: string, password: string) => {
-    const [user, setUser] = useState<User>();
 
-    let axiosResponse = await axios.post(`${API_AUTH_URL}/login`, { username, password });
+    let axiosResponse = await axios.post(`${API_AUTH_URL}/login`, { username, password }, { withCredentials: true });
     if (axiosResponse && axiosResponse.data.accessToken) {
-        console.log("user: ", axiosResponse.data)
-
-        setUser(axiosResponse.data);
-        console.log("Current state of user is ", user);
+        console.log("response => ", axiosResponse.headers.cookie)
+        return axiosResponse.data;
     }
 }
 
-const AuthService = { login };
+const refresh = async () => {
+    let axiosResponse = await axios.post(`${API_AUTH_URL}/refresh`, {}, { withCredentials: true });
+    if (axiosResponse && axiosResponse.data) {
+        console.log("response => ", axiosResponse.data)
+        return axiosResponse.data;
+    }
+}
+
+const logout = async () => {
+    let axiosResponse = await axios.post(`${API_AUTH_URL}/logout`);
+    return axiosResponse.data;
+}
+
+const AuthService = { login, refresh, logout };
 export default AuthService;
