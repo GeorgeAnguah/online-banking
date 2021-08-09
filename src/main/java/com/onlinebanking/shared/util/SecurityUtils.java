@@ -39,7 +39,7 @@ public final class SecurityUtils {
         var activeProfiles = Arrays.asList(environment.getActiveProfiles());
 
         if (activeProfiles.contains(ProfileTypeConstants.DEV)) {
-            http.headers().frameOptions().disable().and().csrf().disable();
+            http.headers().frameOptions().disable().and().csrf().disable().cors();
         }
     }
 

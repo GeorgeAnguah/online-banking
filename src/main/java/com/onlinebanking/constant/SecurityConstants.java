@@ -5,6 +5,7 @@ import com.onlinebanking.enums.ErrorMessage;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * This class holds all security-related URL mappings constants.
@@ -45,6 +46,10 @@ public final class SecurityConstants {
             "/static/**",
             "/console/**"
     };
+
+    public static final List<String> ALLOWED_HTTP_METHODS = List.of(
+            "GET", "POST", "PUT", "DELETE","OPTIONS", "PATCH", "DELETE"
+    );
 
     private SecurityConstants() {
         throw new AssertionError(ErrorMessage.NOT_INSTANTIABLE.getErrorMsg());

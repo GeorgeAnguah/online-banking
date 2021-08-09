@@ -2,7 +2,6 @@ package com.onlinebanking.web.rest.v1;
 
 import com.onlinebanking.backend.service.JwtService;
 import com.onlinebanking.backend.service.UserService;
-import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
 import com.onlinebanking.backend.service.security.EncryptionService;
 import com.onlinebanking.constant.SecurityConstants;
 import com.onlinebanking.enums.OperationStatus;
@@ -17,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -49,7 +47,6 @@ public class AuthRestApi {
     private final JwtService jwtService;
     private final UserService userService;
     private final EncryptionService encryptionService;
-    private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
 
     private static final int DEFAULT_DURATION = 3_600_000;
@@ -73,7 +70,6 @@ public class AuthRestApi {
             LOG.warn("No record found for storedUser with username {}", username);
             throw new UsernameNotFoundException("User with username " + username + " not found");
         }
-
         String decryptedAccessToken = encryptionService.decrypt(accessToken);
         String decryptedRefreshToken = encryptionService.decrypt(refreshToken);
 
@@ -96,7 +92,7 @@ public class AuthRestApi {
      * @return the jwt token details
      */
     @PostMapping(SecurityConstants.REFRESH)
-    public ResponseEntity<JwtResponseBuilder> refreshToken(@CookieValue String refreshToken) {
+    public ResponseEntity<String> refreshToken(@CookieValue String refreshToken) {
         String decryptedRefreshToken = encryptionService.decrypt(refreshToken);
         boolean refreshTokenValid = jwtService.isValidJwtToken(decryptedRefreshToken);
 
@@ -108,8 +104,7 @@ public class AuthRestApi {
         String newAccessToken = jwtService.generateJwtToken(username);
         String encryptedAccessToken = encryptionService.encrypt(newAccessToken);
 
-        UserDetailsBuilder userDetails = (UserDetailsBuilder) userDetailsService.loadUserByUsername(username);
-        return ResponseEntity.ok(JwtResponseBuilder.buildJwtResponse(encryptedAccessToken, userDetails));
+        return ResponseEntity.ok(encryptedAccessToken);
     }
 
     /**
