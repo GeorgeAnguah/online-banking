@@ -2,6 +2,7 @@ package com.onlinebanking.web.payload.response;
 
 import com.onlinebanking.backend.persistent.domain.User;
 import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
+import com.onlinebanking.shared.util.StringUtils;
 import com.onlinebanking.shared.util.UserUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,6 +47,14 @@ class JwtResponseTest {
         JwtResponse jwtResponse = JwtResponse.buildJwtResponse(fakeJwToken, userDetailsBuilder);
         Assertions.assertNotNull(jwtResponse);
         Assertions.assertEquals(testInfo.getDisplayName(), userDetailsBuilder.getUsername());
+
+    }
+
+    @Test
+    void shouldReturnJwtResponseContainsPublicId(TestInfo testInfo) {
+        JwtResponse jwtResponse = JwtResponse.buildJwtResponse(fakeJwToken, userDetailsBuilder);
+        Assertions.assertNotNull(jwtResponse);
+        Assertions.assertNotNull(userDetailsBuilder.getPublicId());
 
     }
 
