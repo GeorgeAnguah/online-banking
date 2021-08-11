@@ -74,6 +74,7 @@ public class UserDetailsBuilder implements UserDetails {
         return UserDetailsBuilder.builder()
                 .id(user.getId())
                 .email(user.getEmail())
+                .publicId(user.getPublicId())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .firstName(user.getFirstName())
