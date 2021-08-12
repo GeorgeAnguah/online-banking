@@ -44,6 +44,7 @@ class UserDetailsServiceImplTest {
         user.setEmail(testInfo.getDisplayName().concat(TestUtils.TEST_EMAIL_SUFFIX));
 
         Mockito.when(userRepository.findByUsername(EXISTING)).thenReturn(user);
+        Mockito.when(userRepository.findByEmail(EXISTING.concat(TestUtils.TEST_EMAIL_SUFFIX))).thenReturn(user);
     }
 
     @Test
@@ -62,5 +63,13 @@ class UserDetailsServiceImplTest {
     void testShouldThrowExceptionForNonExistingUsername(TestInfo testInfo) {
         var username = testInfo.getDisplayName();
         Assertions.assertThrows(UsernameNotFoundException.class, () -> userDetailsService.loadUserByUsername(username));
+    }
+
+    @Test
+    void testShouldReturnUserGivenAnExistingEmail(TestInfo testInfo) {
+        var userDetails =
+                userDetailsService.loadUserByUsername(EXISTING.concat(TestUtils.TEST_EMAIL_SUFFIX));
+        Assertions.assertNotNull(userDetails);
+        Assertions.assertEquals(testInfo.getDisplayName(), userDetails.getUsername());
     }
 }
