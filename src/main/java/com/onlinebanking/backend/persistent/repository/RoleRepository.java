@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 public interface RoleRepository extends CrudRepository<Role, Integer> {
 
     /**
-     * Gets role associated with name.
+     * Gets role associated with required name.
      *
      * @param name name of role.
      *
