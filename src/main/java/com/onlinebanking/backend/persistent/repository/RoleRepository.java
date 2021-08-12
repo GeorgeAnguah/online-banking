@@ -1,7 +1,7 @@
 package com.onlinebanking.backend.persistent.repository;
 
 import com.onlinebanking.backend.persistent.domain.Role;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * @since 1.0
  */
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Integer> {
+public interface RoleRepository extends CrudRepository<Role, Integer> {
 
     /**
      * Gets role associated with name.
