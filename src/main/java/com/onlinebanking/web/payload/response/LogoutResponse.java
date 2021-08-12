@@ -3,6 +3,8 @@ package com.onlinebanking.web.payload.response;
 import com.onlinebanking.enums.OperationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
@@ -15,9 +17,12 @@ import java.io.Serializable;
  */
 @Data
 @AllArgsConstructor
+@RequiredArgsConstructor
 public class LogoutResponse implements Serializable {
     private static final long serialVersionUID = -133371944006730313L;
 
-    private String message;
+    private String message = "Logout successful. Tokens are removed from cookie.";
+
+    @NonNull
     private OperationStatus status;
 }

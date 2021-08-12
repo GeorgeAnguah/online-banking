@@ -12,6 +12,7 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -33,12 +34,10 @@ import java.util.Objects;
 public class JwtServiceImpl implements JwtService {
 
     private static final String TOKEN_CREATED_SUCCESS = "Token successfully created as {}";
+    private static final int NUMBER_OF_DAYS_TO_EXPIRE = 1;
 
     @Value("${jwt.secret}")
     private String jwtSecret;
-
-    @Value("${jwt.expiration}")
-    private int jwtExpiration;
 
 
     /**
@@ -51,7 +50,7 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public String generateJwtToken(String username) {
         InputValidationUtils.validateInputs(getClass(), username);
-        return generateJwtToken(username, new Date(System.currentTimeMillis() + jwtExpiration));
+        return generateJwtToken(username, DateUtils.addDays(new Date(), NUMBER_OF_DAYS_TO_EXPIRE));
     }
 
     /**
@@ -143,7 +142,7 @@ public class JwtServiceImpl implements JwtService {
         var headerAuth = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (StringUtils.isNotBlank(headerAuth) && headerAuth.startsWith(SecurityConstants.BEARER_PREFIX)) {
-            return headerAuth.split(StringUtils.SPACE)[1];
+            return headerAuth.split(StringUtils.SPACE)[NUMBER_OF_DAYS_TO_EXPIRE];
         }
         return null;
     }

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -24,7 +25,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final Environment environment;
-    private final SecurityBean securityBean;
+    private final PersistentTokenRepository persistentRepository;
 
     /**
      * Override this method to configure the {@link HttpSecurity}.
@@ -56,6 +57,6 @@ public class FormLoginSecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies(SecurityConstants.JSESSIONID).permitAll()
                 .deleteCookies(SecurityConstants.REMEMBER_ME).permitAll();
         http.rememberMe()
-                .tokenRepository(securityBean.persistentRepository());
+                .tokenRepository(persistentRepository);
     }
 }

@@ -4,6 +4,7 @@ import com.onlinebanking.backend.service.JwtService;
 import com.onlinebanking.backend.service.UserService;
 import com.onlinebanking.backend.service.security.EncryptionService;
 import com.onlinebanking.constant.SecurityConstants;
+import com.onlinebanking.enums.ErrorMessage;
 import com.onlinebanking.enums.OperationStatus;
 import com.onlinebanking.enums.TokenType;
 import com.onlinebanking.shared.util.CookieUtils;
@@ -13,12 +14,12 @@ import com.onlinebanking.web.payload.response.JwtResponseBuilder;
 import com.onlinebanking.web.payload.response.LogoutResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Date;
+import java.time.Duration;
 
 /**
  * This class attempt to authenticate with AuthenticationManager bean, add authentication object to
@@ -40,7 +41,6 @@ import java.util.Date;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RequestMapping(SecurityConstants.API_AUTH_ROOT_URL)
 public class AuthRestApi {
 
@@ -49,7 +49,7 @@ public class AuthRestApi {
     private final EncryptionService encryptionService;
     private final AuthenticationManager authenticationManager;
 
-    private static final int DEFAULT_DURATION = 3_600_000;
+    private static final int DURATION = 7;
 
     /**
      * Attempts to authenticate with the provided credentials.
@@ -97,7 +97,7 @@ public class AuthRestApi {
         boolean refreshTokenValid = jwtService.isValidJwtToken(decryptedRefreshToken);
 
         if (!refreshTokenValid) {
-            throw new IllegalArgumentException("Refresh Token is invalid!");
+            throw new IllegalArgumentException(ErrorMessage.INVALID_REFRESH_TOKEN.getErrorMsg());
         }
 
         String username = jwtService.getUsernameFromToken(decryptedRefreshToken);
@@ -123,8 +123,7 @@ public class AuthRestApi {
         CookieUtils.deleteCookie(responseHeaders, TokenType.ACCESS);
         CookieUtils.deleteCookie(responseHeaders, TokenType.REFRESH);
 
-        String message = "Logout successful. Tokens are removed from cookie.";
-        LogoutResponse logoutResponse = new LogoutResponse(message, OperationStatus.SUCCESS);
+        LogoutResponse logoutResponse = new LogoutResponse(OperationStatus.SUCCESS);
         return ResponseEntity.ok().headers(responseHeaders).body(logoutResponse);
     }
 
@@ -141,17 +140,13 @@ public class AuthRestApi {
         if (!isAccessValid && !isRefreshValid || isAccessValid && isRefreshValid) {
             generateNewAccessToken = true;
             String newRefreshToken = jwtService.generateJwtToken(username);
-            long duration = new Date().getTime() + DEFAULT_DURATION;
-            CookieUtils.addCookieToHeaders(headers, TokenType.REFRESH, newRefreshToken, duration);
+
+            CookieUtils.addCookieToHeaders(headers, TokenType.REFRESH, newRefreshToken, Duration.ofDays(DURATION));
         }
         if (!isAccessValid && isRefreshValid) {
             generateNewAccessToken = true;
         }
-
-        if (generateNewAccessToken) {
-            return jwtService.generateJwtToken(username);
-        }
-        return "";
+        return generateNewAccessToken ? jwtService.generateJwtToken(username) : StringUtils.EMPTY;
     }
 
 }

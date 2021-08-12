@@ -13,6 +13,7 @@ import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 
+import java.time.Duration;
 import java.util.Arrays;
 
 /**
@@ -41,7 +42,7 @@ public final class CookieUtils {
      *
      * @return the cookie
      */
-    public static HttpCookie createTokenCookie(String token, TokenType tokenType, Long duration) {
+    public static HttpCookie createTokenCookie(String token, TokenType tokenType, Duration duration) {
         InputValidationUtils.validateInputs(CookieUtils.class, token, tokenType, duration);
         String encryptedToken = ENCRYPT_SERVICE.encrypt(token);
 
@@ -70,7 +71,7 @@ public final class CookieUtils {
                 .secure(Arrays.asList(ENV.getActiveProfiles()).contains(ProfileTypeConstants.PROD))
                 .sameSite(SecurityConstants.SAME_SITE)
                 .path(SecurityConstants.ROOT_PATH)
-                .maxAge(0)
+                .maxAge(Duration.ZERO)
                 .httpOnly(true)
                 .build();
     }
@@ -79,12 +80,12 @@ public final class CookieUtils {
      * creates a cookie with the specified token and type with duration then adds it to the headers.
      *
      * @param httpHeaders the httpHeaders
-     * @param tokenType   the tokenType
+     * @param type   the tokenType
      * @param token       the token
      * @param duration    the duration
      */
-    public static void addCookieToHeaders(HttpHeaders httpHeaders, TokenType tokenType, String token, long duration) {
-        httpHeaders.add(HttpHeaders.SET_COOKIE, CookieUtils.createTokenCookie(token, tokenType, duration).toString());
+    public static void addCookieToHeaders(HttpHeaders httpHeaders, TokenType type, String token, Duration duration) {
+        httpHeaders.add(HttpHeaders.SET_COOKIE, CookieUtils.createTokenCookie(token, type, duration).toString());
     }
 
     /**

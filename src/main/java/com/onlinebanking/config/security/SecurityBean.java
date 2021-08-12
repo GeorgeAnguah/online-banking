@@ -2,6 +2,7 @@ package com.onlinebanking.config.security;
 
 import com.onlinebanking.constant.SecurityConstants;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -29,8 +30,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SecurityBean {
 
-    private final DataSource dataSource;
-
     /**
      * PasswordEncoder bean used in security operations.
      *
@@ -47,7 +46,7 @@ public class SecurityBean {
      * @return persistentTokenRepository
      */
     @Bean
-    public PersistentTokenRepository persistentRepository() {
+    public PersistentTokenRepository persistentRepository(DataSource dataSource) {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
 
@@ -60,11 +59,11 @@ public class SecurityBean {
      * @return CorsConfigurationSource
      */
     @Bean
-    public static CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource(@Value("${cors.allowed-origins}") List<String> origins) {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setMaxAge(Duration.ofSeconds(3600));
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000/"));
+        corsConfiguration.setMaxAge(Duration.ofHours(1));
+        corsConfiguration.setAllowedOrigins(origins);
         corsConfiguration.setAllowedHeaders(SecurityConstants.ALLOWED_HTTP_HEADERS);
         corsConfiguration.setAllowedMethods(SecurityConstants.ALLOWED_HTTP_METHODS);
         corsConfiguration.setExposedHeaders(List.of(HttpHeaders.AUTHORIZATION, HttpHeaders.SET_COOKIE));

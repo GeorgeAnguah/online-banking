@@ -16,13 +16,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpCookie;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.Date;
+import java.time.Duration;
 
 @SpringBootTest
 @ActiveProfiles(ProfileTypeConstants.TEST)
 class CookieUtilsTest {
 
-    private static final int DEFAULT_DURATION = 3600000;
+    private static final int DURATION = 1;
 
     @Autowired
     private JwtService jwtService;
@@ -48,13 +48,11 @@ class CookieUtilsTest {
     }
 
     @Test
-    @DisplayName("testGeneratesEncryptedCookieWithTokenThenDecrypt")
     void testGeneratesEncryptedCookieWithTokenThenDecrypt(TestInfo testInfo) {
         var jwtToken = jwtService.generateJwtToken(testInfo.getDisplayName());
         Assertions.assertTrue(jwtService.isValidJwtToken(jwtToken));
 
-        long duration = new Date().getTime() + DEFAULT_DURATION; // 1 hour from now
-        HttpCookie tokenCookie = CookieUtils.createTokenCookie(jwtToken, TokenType.ACCESS, duration);
+        HttpCookie tokenCookie = CookieUtils.createTokenCookie(jwtToken, TokenType.ACCESS, Duration.ofHours(DURATION));
         String cookieValue = tokenCookie.getValue();
         String decryptedJwtToken = encryptionService.decrypt(cookieValue);
 
@@ -63,18 +61,19 @@ class CookieUtilsTest {
 
     @Test
     void testCreateTokenCookieWithNullThrowsException() {
-        long duration = new Date().getTime() + DEFAULT_DURATION; // 1 hour from now
 
         Class<IllegalArgumentException> e = IllegalArgumentException.class;
-        Assertions.assertThrows(e, () -> CookieUtils.createTokenCookie(null, TokenType.ACCESS, duration));
+        Assertions.assertThrows(e, () -> {
+            Duration duration = Duration.ofHours(DURATION);
+            CookieUtils.createTokenCookie(null, TokenType.ACCESS, duration);
+        });
     }
 
     @Test
     void testGeneratesCookieTokenThenDeletesIt(TestInfo testInfo) {
         var jwtToken = jwtService.generateJwtToken(testInfo.getDisplayName());
 
-        long duration = new Date().getTime() + DEFAULT_DURATION; // 1 hour from now
-        HttpCookie tokenCookie = CookieUtils.createTokenCookie(jwtToken, TokenType.ACCESS, duration);
+        HttpCookie tokenCookie = CookieUtils.createTokenCookie(jwtToken, TokenType.ACCESS, Duration.ofHours(DURATION));
         Assertions.assertTrue(StringUtils.isNotBlank(tokenCookie.getValue()));
 
         HttpCookie httpCookie = CookieUtils.deleteTokenCookie(TokenType.ACCESS);

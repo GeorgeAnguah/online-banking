@@ -1,28 +1,32 @@
 package com.onlinebanking.backend.service.security;
 
-import com.onlinebanking.constant.ProfileTypeConstants;
+import com.onlinebanking.backend.service.security.impl.EncryptionServiceImpl;
 import com.onlinebanking.excepton.EncryptionException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-@SpringBootTest
-@ActiveProfiles(value = {ProfileTypeConstants.TEST})
 class EncryptionServiceTest {
 
-    @Autowired
     protected EncryptionService encryptionService;
+
+    @BeforeEach
+    void setUp() {
+        encryptionService = new EncryptionServiceImpl();
+
+        ReflectionTestUtils.setField(encryptionService, "salt", "salt");
+        ReflectionTestUtils.setField(encryptionService, "password", "password");
+    }
 
     @Test
     void encryptAndDecryptRequestUri() {
