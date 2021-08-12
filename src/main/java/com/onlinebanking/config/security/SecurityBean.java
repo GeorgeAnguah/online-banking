@@ -54,15 +54,20 @@ public class SecurityBean {
         return jdbcTokenRepository;
     }
 
+    /**
+     * Configures cors for all requests towards the API.
+     *
+     * @return CorsConfigurationSource
+     */
     @Bean
     public static CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setMaxAge(Duration.ofSeconds(3600));
         corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000/"));
+        corsConfiguration.setAllowedHeaders(SecurityConstants.ALLOWED_HTTP_HEADERS);
         corsConfiguration.setAllowedMethods(SecurityConstants.ALLOWED_HTTP_METHODS);
         corsConfiguration.setExposedHeaders(List.of(HttpHeaders.AUTHORIZATION, HttpHeaders.SET_COOKIE));
-        corsConfiguration.setAllowedHeaders(List.of(HttpHeaders.AUTHORIZATION, HttpHeaders.CACHE_CONTROL, HttpHeaders.CONTENT_TYPE));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration(SecurityConstants.API_ROOT_URL_MAPPING, corsConfiguration);

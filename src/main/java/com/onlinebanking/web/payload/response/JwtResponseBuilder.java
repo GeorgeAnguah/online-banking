@@ -5,27 +5,33 @@ import com.onlinebanking.constant.SecurityConstants;
 import com.onlinebanking.shared.util.SecurityUtils;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * This class models the format of the login response produced.
  *
- * @author Eric Opoku
+ * @author George on 8/9/2021
  * @version 1.0
  * @since 1.0
  */
 @Data
 @Builder
-public class JwtResponseBuilder {
+public class JwtResponseBuilder implements Serializable {
+    private static final long serialVersionUID = -3625429150594757621L;
+
     private String accessToken;
     private String type;
     private String publicId;
     private String username;
     private String email;
+
+    @EqualsAndHashCode.Exclude
     private List<String> roles;
 
     /**
@@ -40,32 +46,34 @@ public class JwtResponseBuilder {
     }
 
     /**
-     * Builds jwtResponseBuilder object from the specified userDetails.
+     * Build jwtResponse object from the specified userDetails.
      *
-     * @param jwtToken    the jwtToken
-     * @param userDetails the userDetails
+     * @param jwToken     the jwToken.
+     * @param userDetails the userDetails.
      *
-     * @return the jwtResponse
+     * @return the jwtResponse object.
      */
-    public static JwtResponseBuilder buildJwtResponse(final String jwtToken, final UserDetailsBuilder userDetails) {
+    public static JwtResponseBuilder buildJwtResponse(String jwToken, UserDetailsBuilder userDetails) {
         var localUserDetails = userDetails;
         if (Objects.isNull(localUserDetails)) {
             localUserDetails = SecurityUtils.getAuthenticatedUserDetails();
         }
 
         if (Objects.nonNull(localUserDetails)) {
-            var roles = localUserDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-                    .collect(Collectors.toList());
-
+            List<String> roleList = new ArrayList<>();
+            for (GrantedAuthority authority : localUserDetails.getAuthorities()) {
+                roleList.add(authority.getAuthority());
+            }
             return JwtResponseBuilder.builder()
-                    .type(SecurityConstants.BEARER)
-                    .accessToken(jwtToken)
-                    .publicId(localUserDetails.getPublicId())
-                    .username(localUserDetails.getUsername())
+                    .accessToken(jwToken)
                     .email(localUserDetails.getEmail())
-                    .roles(roles)
+                    .username(localUserDetails.getUsername())
+                    .publicId(localUserDetails.getPublicId())
+                    .type(SecurityConstants.BEARER)
+                    .roles(roleList)
                     .build();
         }
-        return builder().build();
+        return JwtResponseBuilder.builder().build();
     }
 }
+

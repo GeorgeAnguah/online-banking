@@ -4,6 +4,8 @@ import com.onlinebanking.enums.OperationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * This class models the format of the login response produced.
  *
@@ -13,7 +15,8 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class LogoutResponse {
+public class LogoutResponse implements Serializable {
+    private static final long serialVersionUID = -133371944006730313L;
 
     private String message;
     private OperationStatus status;

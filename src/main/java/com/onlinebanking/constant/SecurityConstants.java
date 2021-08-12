@@ -1,6 +1,7 @@
 package com.onlinebanking.constant;
 
 import com.onlinebanking.enums.ErrorMessage;
+import org.springframework.http.HttpHeaders;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,7 +49,11 @@ public final class SecurityConstants {
     };
 
     public static final List<String> ALLOWED_HTTP_METHODS = List.of(
-            "GET", "POST", "PUT", "DELETE","OPTIONS", "PATCH", "DELETE"
+            "GET", "POST", "PUT", "DELETE","OPTIONS", "PATCH"
+    );
+
+    public static final List<String> ALLOWED_HTTP_HEADERS = List.of(
+            HttpHeaders.AUTHORIZATION, HttpHeaders.CACHE_CONTROL, HttpHeaders.CONTENT_TYPE
     );
 
     private SecurityConstants() {
