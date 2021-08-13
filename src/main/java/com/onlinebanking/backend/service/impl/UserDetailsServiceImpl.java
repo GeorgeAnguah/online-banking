@@ -1,6 +1,7 @@
 package com.onlinebanking.backend.service.impl;
 
 import com.onlinebanking.backend.persistent.repository.UserRepository;
+import com.onlinebanking.shared.util.UserUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -30,26 +31,28 @@ class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
 
     /**
-     * Locates the user based on the username. In the actual implementation, the search
+     * Locates the user based on the usernameOrEmail. In the actual implementation, the search
      * may possibly be case sensitive, or case insensitive depending on how the
      * implementation instance is configured. In this case, the <code>UserDetails</code>
-     * object that comes back may have a username that is of a different case than what
+     * object that comes back may have a usernameOrEmail that is of a different case than what
      * was actually requested..
      *
-     * @param username the username identifying the user whose data is required.
+     * @param usernameOrEmail the usernameOrEmail identifying the user whose data is required.
      *
      * @return a fully populated user record (never <code>null</code>)
      * @throws UsernameNotFoundException if the user could not be found or the user has no
      *                                   GrantedAuthority
      */
     @Override
-    public UserDetails loadUserByUsername(final String username) {
-        // Ensure that username is not empty or null.
-        if (StringUtils.isNotBlank(username)) {
-            var storedUser = userRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(final String usernameOrEmail) {
+        // Ensure that usernameOrEmail is not empty or null.
+        if (StringUtils.isNotBlank(usernameOrEmail)) {
+            var storedUser = UserUtils.isEmail(usernameOrEmail)
+                    ? userRepository.findByEmail(usernameOrEmail)
+                    : userRepository.findByUsername(usernameOrEmail);
             if (Objects.isNull(storedUser)) {
-                LOG.warn("No record found for storedUser with username {}", username);
-                throw new UsernameNotFoundException("User with username " + username + " not found");
+                LOG.warn("No record found for storedUser with usernameOrEmail {}", usernameOrEmail);
+                throw new UsernameNotFoundException("User with usernameOrEmail " + usernameOrEmail + " not found");
             }
             return UserDetailsBuilder.buildUserDetails(storedUser);
         }

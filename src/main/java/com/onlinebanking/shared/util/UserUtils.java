@@ -6,6 +6,7 @@ import com.onlinebanking.enums.ErrorMessage;
 import com.onlinebanking.shared.dto.UserDto;
 import com.onlinebanking.shared.dto.mapper.UserDtoMapper;
 import com.onlinebanking.shared.util.validation.InputValidationUtils;
+import org.apache.commons.validator.routines.EmailValidator;
 
 /**
  * User utility class that holds methods used across application.
@@ -37,6 +38,7 @@ public final class UserUtils {
      * Create a user with some flexibility.
      *
      * @param username username used to create user.
+     *
      * @return a user
      */
     public static User createUser(String username) {
@@ -48,7 +50,8 @@ public final class UserUtils {
      *
      * @param username username used to create user
      * @param password password used to create user.
-     * @param email email used to create user.
+     * @param email    email used to create user.
+     *
      * @return a user
      */
     public static User createUser(String username, String password, String email) {
@@ -60,8 +63,9 @@ public final class UserUtils {
      *
      * @param username username used to create user.
      * @param password password used to create user.
-     * @param email email used to create user.
-     * @param enabled boolean value used to evaluate if user enabled.
+     * @param email    email used to create user.
+     * @param enabled  boolean value used to evaluate if user enabled.
+     *
      * @return a user
      */
     public static User createUser(String username, String password, String email, boolean enabled) {
@@ -95,6 +99,7 @@ public final class UserUtils {
      * Transfers data from entity to transfer object.
      *
      * @param user stored user details
+     *
      * @return user dto
      */
     public static UserDto convertToUserDto(final User user) {
@@ -108,6 +113,7 @@ public final class UserUtils {
      * Transfers data from transfer object to entity.
      *
      * @param userDto the userDto
+     *
      * @return user
      */
     public static User convertToUser(final UserDto userDto) {
@@ -124,5 +130,16 @@ public final class UserUtils {
     public static void enableUser(final UserDto userDto) {
         InputValidationUtils.validateInputs(userDto);
         userDto.setEnabled(true);
+    }
+
+    /**
+     * Verifies input string is an email.
+     *
+     * @param email email.
+     *
+     * @return true if pattern matches valid email, otherwise false.
+     */
+    public static boolean isEmail(String email) {
+        return EmailValidator.getInstance().isValid(email);
     }
 }
