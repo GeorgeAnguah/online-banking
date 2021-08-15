@@ -9,7 +9,7 @@
     </description>
 
     <exclude-pattern>.*/src/test/.*</exclude-pattern>
-    <exclude-pattern>.*/src/integrationTest/.*</exclude-pattern>
+    <exclude-pattern>.*/src/integration/.*</exclude-pattern>
 
     <rule ref="category/java/bestpractices.xml">
         <!-- We do not care about this minor overhead, we are not Android application and we do not

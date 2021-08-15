@@ -1,5 +1,6 @@
 package com.onlinebanking;
 
+import com.google.gson.Gson;
 import com.onlinebanking.constant.ProfileTypeConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -87,6 +88,31 @@ public class TestUtils {
             auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
         }
         SecurityContextHolder.getContext().setAuthentication(auth);
+    }
+
+    /**
+     * Converts an object to JSON string.
+     *
+     * @param object the object
+     * @param <T>    the type of object passed
+     *
+     * @return the json string
+     */
+    public static <T> String toJson(T object) {
+        return new Gson().toJson(object);
+    }
+
+    /**
+     * Parse a JSON string to an object.
+     *
+     * @param content   the content to be parsed
+     * @param classType the class to be returned
+     * @param <T>       the class type
+     *
+     * @return the parsed object
+     */
+    public static <T> T parse(String content, Class<T> classType) {
+        return new Gson().fromJson(content, classType);
     }
 
 }

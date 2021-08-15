@@ -18,8 +18,8 @@ import java.util.List;
 public final class SecurityConstants {
 
     public static final String ACCOUNT_OVERVIEW = "/account-overview";
-    public static final String API_AUTH_ROOT_URL = "/api/auth";
-    public static final String API_AUTH_URL_MAPPING = "/api/auth/**";
+    public static final String API_V1_AUTH_ROOT_URL = "/api/v1/auth";
+    public static final String API_V1_AUTH_URL_MAPPING = "/api/v1/auth/**";
     public static final String API_ROOT_URL_MAPPING = "/api/**";
     public static final String BEARER = "Bearer";
     public static final String BEARER_PREFIX = "Bearer ";
@@ -29,10 +29,12 @@ public final class SecurityConstants {
     public static final String LOGIN_ERROR = "/?error";
     public static final String LOGOUT = "/logout";
     public static final String LOGIN = "/login";
-    public static final String REFRESH = "/refresh";
+    public static final String REFRESH_TOKEN = "/refresh-token";
     public static final String REMEMBER_ME = "remember-me";
     public static final String ROOT_PATH = "/";
     public static final String SAME_SITE = "strict";
+
+    public static final int REFRESH_TOKEN_DURATION = 7;
 
     public static final int SECURITY_STRENGTH = 12;
 
@@ -49,7 +51,7 @@ public final class SecurityConstants {
     };
 
     public static final List<String> ALLOWED_HTTP_METHODS = List.of(
-            "GET", "POST", "PUT", "DELETE","OPTIONS", "PATCH"
+            "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"
     );
 
     public static final List<String> ALLOWED_HTTP_HEADERS = List.of(

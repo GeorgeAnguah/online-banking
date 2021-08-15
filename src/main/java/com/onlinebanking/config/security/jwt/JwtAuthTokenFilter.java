@@ -1,7 +1,7 @@
 package com.onlinebanking.config.security.jwt;
 
-import com.onlinebanking.backend.service.JwtService;
 import com.onlinebanking.backend.service.security.EncryptionService;
+import com.onlinebanking.backend.service.security.JwtService;
 import com.onlinebanking.shared.util.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

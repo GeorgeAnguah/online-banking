@@ -16,7 +16,6 @@ class BaseEntityTest {
     @Test
     void equalsContract() {
         EqualsVerifier.forClass(BaseEntity.class)
-                .withRedefinedSuperclass()
                 .withIgnoredFields(TestUtils.getIgnoredFields().toArray(new String[0]))
                 .verify();
     }

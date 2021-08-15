@@ -25,6 +25,6 @@ public class LoginRequest {
     private String username;
 
     @NotBlank(message = ErrorMessage.BLANK_PASSWORD)
-    @Size(min = 4, max = 15, message = ErrorMessage.PASSWORD_SIZE)
+    @Size(min = 4, message = ErrorMessage.PASSWORD_SIZE)
     private String password;
 }

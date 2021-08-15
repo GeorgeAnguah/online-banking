@@ -1,8 +1,8 @@
 package com.onlinebanking.config.security.jwt;
 
-import com.onlinebanking.backend.service.JwtService;
 import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
 import com.onlinebanking.backend.service.security.EncryptionService;
+import com.onlinebanking.backend.service.security.JwtService;
 import com.onlinebanking.shared.util.UserUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

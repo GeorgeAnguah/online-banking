@@ -32,7 +32,7 @@ public enum ErrorMessage {
     public static final String BLANK_EMAIL = "Email cannot be left blank";
     public static final String INVALID_EMAIL = "A valid email format is required";
     public static final String BLANK_PASSWORD = "Password cannot be left blank";
-    public static final String PASSWORD_SIZE = "Password should be at least 4 and at most 15 characters";
+    public static final String PASSWORD_SIZE = "Password should be at least 4 characters";
 
     private final String errorMsg;
 

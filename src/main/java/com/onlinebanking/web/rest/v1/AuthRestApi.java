@@ -1,13 +1,13 @@
 package com.onlinebanking.web.rest.v1;
 
-import com.onlinebanking.backend.service.JwtService;
 import com.onlinebanking.backend.service.UserService;
+import com.onlinebanking.backend.service.security.CookieService;
 import com.onlinebanking.backend.service.security.EncryptionService;
+import com.onlinebanking.backend.service.security.JwtService;
 import com.onlinebanking.constant.SecurityConstants;
 import com.onlinebanking.enums.ErrorMessage;
 import com.onlinebanking.enums.OperationStatus;
 import com.onlinebanking.enums.TokenType;
-import com.onlinebanking.shared.util.CookieUtils;
 import com.onlinebanking.shared.util.SecurityUtils;
 import com.onlinebanking.web.payload.request.LoginRequest;
 import com.onlinebanking.web.payload.response.JwtResponseBuilder;
@@ -15,11 +15,15 @@ import com.onlinebanking.web.payload.response.LogoutResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +33,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.time.Duration;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * This class attempt to authenticate with AuthenticationManager bean, add authentication object to
@@ -41,15 +48,14 @@ import java.time.Duration;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(SecurityConstants.API_AUTH_ROOT_URL)
+@RequestMapping(SecurityConstants.API_V1_AUTH_ROOT_URL)
 public class AuthRestApi {
 
     private final JwtService jwtService;
     private final UserService userService;
+    private final CookieService cookieService;
     private final EncryptionService encryptionService;
     private final AuthenticationManager authenticationManager;
-
-    private static final int DURATION = 7;
 
     /**
      * Attempts to authenticate with the provided credentials.
@@ -91,20 +97,20 @@ public class AuthRestApi {
      *
      * @return the jwt token details
      */
-    @PostMapping(SecurityConstants.REFRESH)
-    public ResponseEntity<String> refreshToken(@CookieValue String refreshToken) {
+    @CrossOrigin(origins = "http://localhost:3000/")
+    @GetMapping(SecurityConstants.REFRESH_TOKEN)
+    public ResponseEntity<Map<String, String>> refreshToken(@CookieValue String refreshToken) {
         String decryptedRefreshToken = encryptionService.decrypt(refreshToken);
         boolean refreshTokenValid = jwtService.isValidJwtToken(decryptedRefreshToken);
 
         if (!refreshTokenValid) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_REFRESH_TOKEN.getErrorMsg());
         }
-
         String username = jwtService.getUsernameFromToken(decryptedRefreshToken);
         String newAccessToken = jwtService.generateJwtToken(username);
         String encryptedAccessToken = encryptionService.encrypt(newAccessToken);
 
-        return ResponseEntity.ok(encryptedAccessToken);
+        return ResponseEntity.ok(Collections.singletonMap(TokenType.ACCESS.getName(), encryptedAccessToken));
     }
 
     /**
@@ -115,15 +121,13 @@ public class AuthRestApi {
      *
      * @return response entity
      */
-    @PostMapping(SecurityConstants.LOGOUT)
+    @DeleteMapping(SecurityConstants.LOGOUT)
     public ResponseEntity<LogoutResponse> logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityUtils.logout(request, response);
 
-        HttpHeaders responseHeaders = new HttpHeaders();
-        CookieUtils.deleteCookie(responseHeaders, TokenType.ACCESS);
-        CookieUtils.deleteCookie(responseHeaders, TokenType.REFRESH);
+        var responseHeaders = cookieService.addDeletedCookieToHeaders(TokenType.REFRESH);
+        var logoutResponse = new LogoutResponse(OperationStatus.SUCCESS);
 
-        LogoutResponse logoutResponse = new LogoutResponse(OperationStatus.SUCCESS);
         return ResponseEntity.ok().headers(responseHeaders).body(logoutResponse);
     }
 
@@ -141,12 +145,15 @@ public class AuthRestApi {
             generateNewAccessToken = true;
             String newRefreshToken = jwtService.generateJwtToken(username);
 
-            CookieUtils.addCookieToHeaders(headers, TokenType.REFRESH, newRefreshToken, Duration.ofDays(DURATION));
+            Duration duration = Duration.ofDays(SecurityConstants.REFRESH_TOKEN_DURATION);
+            cookieService.addCookieToHeaders(headers, TokenType.REFRESH, newRefreshToken, duration);
         }
         if (!isAccessValid && isRefreshValid) {
             generateNewAccessToken = true;
         }
-        return generateNewAccessToken ? jwtService.generateJwtToken(username) : StringUtils.EMPTY;
+
+        Date expiration = DateUtils.addSeconds(new Date(), 10);
+        return generateNewAccessToken ? jwtService.generateJwtToken(username, expiration) : StringUtils.EMPTY;
     }
 
 }

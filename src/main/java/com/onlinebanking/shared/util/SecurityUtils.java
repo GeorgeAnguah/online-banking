@@ -93,9 +93,8 @@ public final class SecurityUtils {
      * @return the user details
      */
     public static UserDetailsBuilder getAuthenticatedUserDetails() {
-        var authentication = getAuthentication();
-        if (Objects.nonNull(authentication)) {
-            return (UserDetailsBuilder) authentication.getPrincipal();
+        if (isUserAuthenticated()) {
+            return (UserDetailsBuilder) getAuthentication().getPrincipal();
         }
         return null;
     }

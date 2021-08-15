@@ -1,9 +1,7 @@
-import com.github.spotbugs.snom.SpotBugsTask
-
 plugins {
     id 'org.springframework.boot' version '2.5.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.unbroken-dome.test-sets' version '4.0.0'
+    id 'com.coditory.integration-test' version '1.2.3'
     id 'com.github.spotbugs' version '4.7.1'
     id 'checkstyle'
     id 'eclipse'
@@ -28,10 +26,6 @@ repositories {
     mavenCentral()
 }
 
-testSets {
-    integrationTest
-}
-
 ext {
     mapstructVersion = '1.4.2.Final'
 }
@@ -45,15 +39,18 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
-    implementation 'commons-validator:commons-validator:1.7'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    implementation 'com.h2database:h2'
-    runtimeOnly 'mysql:mysql-connector-java'
 
     // Utilities
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'com.google.code.gson:gson:2.8.7'
     implementation 'com.github.javafaker:javafaker:1.0.2'
+    implementation 'commons-validator:commons-validator:1.7'
+
+    // Database
+    implementation 'com.h2database:h2'
+    runtimeOnly 'mysql:mysql-connector-java'
 
     // Webjars
     implementation 'org.webjars:jquery:3.6.0'
@@ -79,28 +76,17 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
 }
 
-test {
+tasks.withType(Test) {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
 
 // Checkstyle task to disable xml reports and load config file
 tasks.withType(Checkstyle) {
     configFile file("${project.rootDir}/config/checkstyle.xml")
-    include '**/*.java'
-    exclude '**/gen/**'
     reports {
-        xml.enabled = false
-        html.enabled = true
-    }
-
-    classpath = files()
-}
-
-// SpotBugs task to disable xml reports and load config file
-tasks.withType(SpotBugsTask) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
+        xml.required = false
+        html.required = true
     }
 }
 
@@ -109,18 +95,38 @@ pmd {
     ruleSets = []
 }
 
+jacocoTestReport {
+    executionData(fileTree(project.buildDir).include("jacoco/*.exec"))
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    finalizedBy jacocoTestCoverageVerification
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "**/exception/*",
+                    "**/enums/*",
+                    "**/constants/*",
+                    "**/config/*"
+            ])
+        }))
+    }
+}
+
 jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.95
+                minimum = 0.5
             }
         }
     }
 }
 
-test.finalizedBy jacocoTestReport // report is always generated after tests run
-jacocoTestReport.dependsOn test // tests are required to run before generating the report
-check.dependsOn integrationTest, jacocoTestCoverageVerification
+integrationTest.mustRunAfter test
+check.dependsOn integrationTest
+

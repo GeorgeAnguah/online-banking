@@ -2,11 +2,16 @@ package com.onlinebanking.shared.util;
 
 import com.github.javafaker.Faker;
 import com.onlinebanking.backend.persistent.domain.User;
+import com.onlinebanking.backend.persistent.domain.UserRole;
 import com.onlinebanking.enums.ErrorMessage;
 import com.onlinebanking.shared.dto.UserDto;
 import com.onlinebanking.shared.dto.mapper.UserDtoMapper;
 import com.onlinebanking.shared.util.validation.InputValidationUtils;
 import org.apache.commons.validator.routines.EmailValidator;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * User utility class that holds methods used across application.
@@ -96,6 +101,20 @@ public final class UserUtils {
     }
 
     /**
+     * Create a test user with flexibility.
+     *
+     * @param username the username
+     * @param enabled  if the user should be enabled to authenticate
+     *
+     * @return the userEntity
+     */
+    public static UserDto createUserDto(final String username, boolean enabled) {
+        User user = createUser(username);
+        user.setEnabled(enabled);
+        return UserUtils.convertToUserDto(user);
+    }
+
+    /**
      * Transfers data from entity to transfer object.
      *
      * @param user stored user details
@@ -141,5 +160,21 @@ public final class UserUtils {
      */
     public static boolean isEmail(String email) {
         return EmailValidator.getInstance().isValid(email);
+    }
+
+    /**
+     * Retrieves the roles from the userRoles.
+     *
+     * @param userRoles the userRoles
+     *
+     * @return set of the roles as strings
+     */
+    public static List<String> getRoles(Set<UserRole> userRoles) {
+        List<String> roles = new ArrayList<>();
+
+        for (UserRole userRole : userRoles) {
+            roles.add(userRole.getRole().getName());
+        }
+        return roles;
     }
 }

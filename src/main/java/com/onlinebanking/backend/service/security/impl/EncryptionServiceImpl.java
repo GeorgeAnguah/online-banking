@@ -1,7 +1,7 @@
 package com.onlinebanking.backend.service.security.impl;
 
 import com.onlinebanking.backend.service.security.EncryptionService;
-import com.onlinebanking.excepton.EncryptionException;
+import com.onlinebanking.exception.EncryptionException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;

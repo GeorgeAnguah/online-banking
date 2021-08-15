@@ -61,9 +61,6 @@ public class UserHistory extends BaseEntity implements Serializable {
             return false;
         }
         UserHistory that = (UserHistory) o;
-        if (!that.canEqual(this)) {
-            return false;
-        }
         return
                 Objects.equals(publicId, that.publicId)
                 && Objects.equals(getUser(), that.getUser())

@@ -2,7 +2,11 @@ package com.onlinebanking.config.security;
 
 import com.onlinebanking.constant.SecurityConstants;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -71,5 +75,11 @@ public class SecurityBean {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration(SecurityConstants.API_ROOT_URL_MAPPING, corsConfiguration);
         return source;
+    }
+
+    @Bean
+    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> cookieProcessorCustomizer() {
+        return tomcatServletWebServerFactory -> tomcatServletWebServerFactory
+                .addContextCustomizers(context -> context.setCookieProcessor(new LegacyCookieProcessor()));
     }
 }

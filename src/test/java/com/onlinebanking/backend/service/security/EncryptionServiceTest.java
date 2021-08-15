@@ -1,7 +1,7 @@
 package com.onlinebanking.backend.service.security;
 
 import com.onlinebanking.backend.service.security.impl.EncryptionServiceImpl;
-import com.onlinebanking.excepton.EncryptionException;
+import com.onlinebanking.exception.EncryptionException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

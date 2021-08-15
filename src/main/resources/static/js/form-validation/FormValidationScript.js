@@ -31,6 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     validators: {
                         notEmpty: {
                             message: 'The password is required'
+                        },
+                        stringLength: {
+                            min: 4,
+                            message: 'The password must be more than 3 characters long'
                         }
                     }
                 },
