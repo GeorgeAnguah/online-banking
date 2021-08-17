@@ -21,7 +21,7 @@ public abstract class IntegrationTestUtils {
      * Creates and verify user with flexible field creation.
      *
      * @param userService the userService
-     * @param username    if a custom user name is needed
+     * @param username    if a custom username is needed
      * @param enabled     if the user should be enabled
      *
      * @return persisted user

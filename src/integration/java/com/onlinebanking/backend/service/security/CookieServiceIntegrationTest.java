@@ -1,20 +1,16 @@
 package com.onlinebanking.backend.service.security;
 
-import com.onlinebanking.constant.ProfileTypeConstants;
+import com.onlinebanking.IntegrationTestUtils;
 import com.onlinebanking.enums.TokenType;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Duration;
 
-@SpringBootTest
-@ActiveProfiles(ProfileTypeConstants.TEST)
-class CookieServiceIntegrationTest {
+class CookieServiceIntegrationTest extends IntegrationTestUtils {
 
     private static final int DURATION = 1;
 

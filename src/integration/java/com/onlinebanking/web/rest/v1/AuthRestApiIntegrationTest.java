@@ -101,18 +101,13 @@ class AuthRestApiIntegrationTest extends IntegrationTestUtils {
 
     @Test
     void testRefreshPathWithValidRefreshTokenReturnsOk() throws Exception {
-        var value = refreshTokenDuration.toSeconds();
         var jwtToken = jwtService.generateJwtToken(storedUser.getUsername());
         var cookie = cookieService.createTokenCookie(jwtToken, TokenType.REFRESH);
 
         performRequest(MockMvcRequestBuilders
-                .post(refreshUri)
+                .get(refreshUri)
                 .cookie(cookieService.createCookie(cookie)))
-                .andExpect(ResultMatcher.matchAll(
-                        MockMvcResultMatchers.status().isOk(),
-                        MockMvcResultMatchers.cookie().exists(TokenType.REFRESH.getName()),
-                        MockMvcResultMatchers.cookie().httpOnly(TokenType.REFRESH.getName(), true),
-                        MockMvcResultMatchers.cookie().maxAge(TokenType.REFRESH.getName(), Math.toIntExact(value))));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     /**

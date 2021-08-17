@@ -4,7 +4,6 @@ import com.onlinebanking.constant.SecurityConstants;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.LegacyCookieProcessor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -77,6 +76,11 @@ public class SecurityBean {
         return source;
     }
 
+    /**
+     * Enables support for legacy cookie processing.
+     *
+     * @return WebServerFactoryCustomizer
+     */
     @Bean
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> cookieProcessorCustomizer() {
         return tomcatServletWebServerFactory -> tomcatServletWebServerFactory

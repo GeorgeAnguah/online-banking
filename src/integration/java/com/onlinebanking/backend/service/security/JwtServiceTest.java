@@ -1,20 +1,15 @@
 package com.onlinebanking.backend.service.security;
 
-import com.onlinebanking.backend.service.security.JwtService;
-import com.onlinebanking.constant.ProfileTypeConstants;
+import com.onlinebanking.IntegrationTestUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Date;
 
-@SpringBootTest
-@ActiveProfiles(value = {ProfileTypeConstants.TEST})
-class JwtServiceTest {
+class JwtServiceTest extends IntegrationTestUtils {
 
     private enum TokenType {
         BAD_SIGNATURE, MALFORMED, UNSUPPORTED

@@ -377,7 +377,7 @@
                  Checker collects external resource locations and sets up the configuration.
                  CheckstyleAntTask integrates Checkstyle with Ant.
                   -->
-            <property name="minimum" value="35.0"/>
+            <property name="minimum" value="40.0"/>
             <property name="violationSuppressXPath" value="//ClassOrInterfaceDeclaration[@SimpleName='Main'
         or @Image='Checker' or @Image='CheckstyleAntTask']"/>
         </properties>
