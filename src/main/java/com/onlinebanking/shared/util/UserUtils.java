@@ -37,6 +37,7 @@ public final class UserUtils {
      * Create a user with some flexibility.
      *
      * @param username username used to create user.
+     *
      * @return a user
      */
     public static User createUser(String username) {
@@ -48,7 +49,8 @@ public final class UserUtils {
      *
      * @param username username used to create user
      * @param password password used to create user.
-     * @param email email used to create user.
+     * @param email    email used to create user.
+     *
      * @return a user
      */
     public static User createUser(String username, String password, String email) {
@@ -60,8 +62,9 @@ public final class UserUtils {
      *
      * @param username username used to create user.
      * @param password password used to create user.
-     * @param email email used to create user.
-     * @param enabled boolean value used to evaluate if user enabled.
+     * @param email    email used to create user.
+     * @param enabled  boolean value used to evaluate if user enabled.
+     *
      * @return a user
      */
     public static User createUser(String username, String password, String email, boolean enabled) {
@@ -95,6 +98,7 @@ public final class UserUtils {
      * Transfers data from entity to transfer object.
      *
      * @param user stored user details
+     *
      * @return user dto
      */
     public static UserDto convertToUserDto(final User user) {
@@ -108,6 +112,7 @@ public final class UserUtils {
      * Transfers data from transfer object to entity.
      *
      * @param userDto the userDto
+     *
      * @return user
      */
     public static User convertToUser(final UserDto userDto) {
