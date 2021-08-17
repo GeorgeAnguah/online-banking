@@ -101,7 +101,6 @@ jacocoTestReport {
         xml.enabled = true
         html.enabled = true
     }
-    finalizedBy jacocoTestCoverageVerification
 
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
@@ -112,18 +111,6 @@ jacocoTestReport {
                     "**/config/*"
             ])
         }))
-    }
-}
-
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                counter = 'LINE'
-                value = 'COVEREDRATIO'
-                minimum = 0.5
-            }
-        }
     }
 }
 

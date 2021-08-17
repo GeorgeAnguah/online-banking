@@ -61,7 +61,7 @@ class AuthRestApiTest {
 
     @Test
     void testRefreshPathWithoutCookieReturnsBadRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(refreshUri))
+        mockMvc.perform(MockMvcRequestBuilders.get(refreshUri))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
 }

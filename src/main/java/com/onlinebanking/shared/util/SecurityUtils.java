@@ -23,7 +23,7 @@ import java.util.Objects;
 /**
  * This utility class holds custom operations on security used in the application.
  *
- * @author Eric Opoku
+ * @author Stephen on 08/12/2021
  * @version 1.0
  * @since 1.0
  */
