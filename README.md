@@ -35,7 +35,7 @@ This project is an updated implementation of [Le Dang](https://github.com/rayden
 
 ## Notes
 
-* The following environment variables need to be configured before application starts: ADMIN_USERNAME, ADMIN_PASSWORD, JWT_SECRET
+* The following environment variables need to be configured before application starts: ADMIN_USERNAME, ADMIN_PASSWORD, JWT_SECRET, ENCRYPTION_SECRET_SALT, ENCRYPTION_SECRET_PASSWORD
 - For example:
 
         ADMIN_USERNAME = NAME
