@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -22,6 +23,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
+@Cacheable
 @NoArgsConstructor
 public class Role implements Serializable {
     private static final long serialVersionUID = 7008351760784988067L;

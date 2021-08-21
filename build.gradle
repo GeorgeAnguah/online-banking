@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.3'
+    id 'org.springframework.boot' version '2.5.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'com.coditory.integration-test' version '1.2.3'
     id 'com.github.spotbugs' version '4.7.1'
@@ -42,6 +42,12 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
+    // caching
+    implementation 'org.ehcache:ehcache'
+    implementation 'org.hibernate:hibernate-jcache'
+    implementation 'org.ehcache:ehcache-transactions'
+
+
     // Utilities
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'com.google.code.gson:gson:2.8.7'
@@ -71,7 +77,7 @@ dependencies {
 
     // Testing
     testImplementation 'org.mockito:mockito-inline'
-    testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.7'
+    testImplementation 'nl.jqno.equalsverifier:equalsverifier:3.7.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }

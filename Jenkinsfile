@@ -9,15 +9,9 @@ pipeline {
     }
     stages {
 
-        stage('Scm Checkout') {
-            steps {
-                git branch: '${BRANCH}', credentialsId: 'e3ea4bcb-1415-47dd-86f0-79285bb927b4', url: 'git@github.com:GeorgeAnguah/online-banking.git'
-            }
-        }
-
         stage('Build Project') {
             steps {
-                sh "./gradlew clean build"
+                sh './gradlew clean build'
             }
         }
     }

@@ -51,6 +51,8 @@ import java.util.Map;
 @RequestMapping(SecurityConstants.API_V1_AUTH_ROOT_URL)
 public class AuthRestApi {
 
+    private static final int NUMBER_OF_MINUTES_TO_EXPIRE = 30;
+
     private final JwtService jwtService;
     private final UserService userService;
     private final CookieService cookieService;
@@ -152,7 +154,7 @@ public class AuthRestApi {
             generateNewAccessToken = true;
         }
 
-        Date expiration = DateUtils.addSeconds(new Date(), 10);
+        Date expiration = DateUtils.addMinutes(new Date(), NUMBER_OF_MINUTES_TO_EXPIRE);
         return generateNewAccessToken ? jwtService.generateJwtToken(username, expiration) : StringUtils.EMPTY;
     }
 

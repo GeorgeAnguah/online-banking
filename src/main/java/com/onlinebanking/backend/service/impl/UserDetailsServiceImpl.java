@@ -1,10 +1,12 @@
 package com.onlinebanking.backend.service.impl;
 
 import com.onlinebanking.backend.persistent.repository.UserRepository;
+import com.onlinebanking.constant.CacheConstants;
 import com.onlinebanking.shared.util.UserUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,7 +34,7 @@ class UserDetailsServiceImpl implements UserDetailsService {
 
     /**
      * Locates the user based on the usernameOrEmail. In the actual implementation, the search
-     * may possibly be case sensitive, or case insensitive depending on how the
+     * may be case-sensitive, or case-insensitive depending on how the
      * implementation instance is configured. In this case, the <code>UserDetails</code>
      * object that comes back may have a usernameOrEmail that is of a different case than what
      * was actually requested..
@@ -44,6 +46,7 @@ class UserDetailsServiceImpl implements UserDetailsService {
      *                                   GrantedAuthority
      */
     @Override
+    @Cacheable(key = "{ #root.methodName, #usernameOrEmail }", value = CacheConstants.USER_DETAILS)
     public UserDetails loadUserByUsername(final String usernameOrEmail) {
         // Ensure that usernameOrEmail is not empty or null.
         if (StringUtils.isNotBlank(usernameOrEmail)) {
