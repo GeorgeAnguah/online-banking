@@ -6,6 +6,7 @@ import com.onlinebanking.enums.ErrorMessage;
 
 import java.text.MessageFormat;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * This utility class holds custom operations on strings used in the application.
@@ -15,8 +16,6 @@ import java.util.Locale;
  * @since 1.0
  */
 public final class StringUtils {
-
-    public static final int DEFAULT_ID_LENGTH = 30;
 
     /**
      * Generate an alpha-numeric with specified length.
@@ -35,7 +34,7 @@ public final class StringUtils {
      * @return the publicId
      */
     public static String generatePublicId() {
-        return StringUtils.generateAlphaNumericId(DEFAULT_ID_LENGTH);
+        return UUID.randomUUID().toString();
     }
 
     private StringUtils() {
