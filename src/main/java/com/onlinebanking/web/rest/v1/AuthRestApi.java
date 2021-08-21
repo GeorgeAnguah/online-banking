@@ -19,6 +19,7 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,9 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.time.Duration;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * This class attempt to authenticate with AuthenticationManager bean, add authentication object to
@@ -57,6 +56,7 @@ public class AuthRestApi {
     private final UserService userService;
     private final CookieService cookieService;
     private final EncryptionService encryptionService;
+    private final UserDetailsService userDetailsService;
     private final AuthenticationManager authenticationManager;
 
     /**
@@ -101,7 +101,7 @@ public class AuthRestApi {
      */
     @CrossOrigin(origins = "http://localhost:3000/")
     @GetMapping(SecurityConstants.REFRESH_TOKEN)
-    public ResponseEntity<Map<String, String>> refreshToken(@CookieValue String refreshToken) {
+    public ResponseEntity<JwtResponseBuilder> refreshToken(@CookieValue String refreshToken) {
         String decryptedRefreshToken = encryptionService.decrypt(refreshToken);
         boolean refreshTokenValid = jwtService.isValidJwtToken(decryptedRefreshToken);
 
@@ -109,10 +109,14 @@ public class AuthRestApi {
             throw new IllegalArgumentException(ErrorMessage.INVALID_REFRESH_TOKEN.getErrorMsg());
         }
         String username = jwtService.getUsernameFromToken(decryptedRefreshToken);
+        var userDetails = userDetailsService.loadUserByUsername(username);
+        SecurityUtils.authenticateUser(userDetails);
+
         String newAccessToken = jwtService.generateJwtToken(username);
         String encryptedAccessToken = encryptionService.encrypt(newAccessToken);
 
-        return ResponseEntity.ok(Collections.singletonMap(TokenType.ACCESS.getName(), encryptedAccessToken));
+        return ResponseEntity
+                .ok(JwtResponseBuilder.buildJwtResponse(encryptedAccessToken));
     }
 
     /**
@@ -136,10 +140,10 @@ public class AuthRestApi {
     /**
      * Updates the accessToken and refreshToken accordingly.
      *
-     * @param username          the username
+     * @param username       the username
      * @param isAccessValid  if the access token is valid
      * @param isRefreshValid if the refresh token is valid
-     * @param headers   the accessToken
+     * @param headers        the accessToken
      */
     private String updateCookies(String username, boolean isAccessValid, boolean isRefreshValid, HttpHeaders headers) {
         boolean generateNewAccessToken = false;
