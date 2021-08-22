@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -27,7 +28,7 @@ public class CheckingAccount extends BaseEntity  implements Serializable {
     @Column(unique = true, nullable = false)
     private String publicId;
 
-    private Double primaryBalance;
+    private BigDecimal primaryBalance;
 
     @Override
     public boolean equals(Object o) {
