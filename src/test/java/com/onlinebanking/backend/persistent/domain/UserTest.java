@@ -36,7 +36,7 @@ class UserTest {
                 .withPrefabValues(User.class, client, admin)
                 .withIgnoredFields(TestUtils.getIgnoredFields().toArray(new String[0]))
                 .withIgnoredFields("password", "firstName", "lastName",
-                        "phone", "verificationToken", "enabled", "userRoles", "userHistories")
+                        "phone", "verificationToken", "enabled", "userRoles", "userHistories", "checkingAccount")
                 .verify();
     }
 
