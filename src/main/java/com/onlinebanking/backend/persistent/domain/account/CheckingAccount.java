@@ -1,4 +1,4 @@
-package com.onlinebanking.backend.persistent.domain;
+package com.onlinebanking.backend.persistent.domain.account;
 
 import com.onlinebanking.backend.persistent.domain.base.BaseEntity;
 import lombok.Getter;

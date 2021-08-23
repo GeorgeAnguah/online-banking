@@ -1,5 +1,7 @@
 package com.onlinebanking.backend.persistent.domain;
 
+import com.onlinebanking.backend.persistent.domain.account.CheckingAccount;
+import com.onlinebanking.backend.persistent.domain.account.SavingsAccount;
 import com.onlinebanking.backend.persistent.domain.base.BaseEntity;
 import com.onlinebanking.enums.ErrorMessage;
 import lombok.Getter;
@@ -67,6 +69,9 @@ public class User extends BaseEntity implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     private CheckingAccount checkingAccount;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private SavingsAccount savingsAccount;
 
     @Override
     public boolean equals(Object o) {
