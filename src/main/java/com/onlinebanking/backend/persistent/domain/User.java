@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -63,6 +64,9 @@ public class User extends BaseEntity implements Serializable {
     @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserHistory> userHistories = new HashSet<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private CheckingAccount checkingAccount;
 
     @Override
     public boolean equals(Object o) {
