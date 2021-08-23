@@ -1,5 +1,6 @@
 package com.onlinebanking.backend.service;
 
+import com.onlinebanking.backend.persistent.domain.User;
 import com.onlinebanking.enums.RoleType;
 import com.onlinebanking.shared.dto.UserDto;
 
@@ -13,6 +14,16 @@ import java.util.Set;
  * @since 1.0
  */
 public interface UserService {
+
+    /**
+     * Saves or updates the user with the user instance given.
+     *
+     * @param user the user with updated information
+     *
+     * @return the updated user.
+     * @throws IllegalArgumentException in case the given entity is {@literal null}
+     */
+    UserDto saveOrUpdate(User user);
 
     /**
      * Create the userDto with the userDto instance given.
@@ -59,6 +70,7 @@ public interface UserService {
      * Checks if the username already exists and enabled.
      *
      * @param username the username
+     *
      * @return <code>true</code> if username exists
      */
     boolean existsByUsername(String username);
