@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 class StringUtilsTest {
 
     private static final int LENGTH = 5;
-    private static final int DEFAULT_LENGTH = 30;
+    private static final int DEFAULT_LENGTH = 36;
 
     @Test
     void callingPrivateConstructorShouldThrowException() {

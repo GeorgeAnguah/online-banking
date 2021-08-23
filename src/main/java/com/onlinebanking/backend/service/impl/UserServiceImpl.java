@@ -40,6 +40,23 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     /**
+     * Saves or updates the user with the user instance given.
+     *
+     * @param user the user with updated information
+     *
+     * @return the updated user.
+     * @throws IllegalArgumentException in case the given entity is {@literal null}
+     */
+    @Override
+    @Transactional
+    public UserDto saveOrUpdate(User user) {
+        User persistedUser = userRepository.save(user);
+        LOG.debug(UserConstants.USER_CREATED_SUCCESSFULLY, persistedUser);
+
+        return UserUtils.convertToUserDto(persistedUser);
+    }
+
+    /**
      * Create the userDto with the userDto instance given.
      *
      * @param userDto the userDto with updated information
@@ -76,8 +93,9 @@ public class UserServiceImpl implements UserService {
             }
             LOG.warn(UserConstants.USER_ALREADY_EXIST, userDto.getEmail());
         } else {
-            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
             userDto.setPublicId(StringUtils.generatePublicId());
+            userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
             return persistUser(userDto, roleTypes, UserHistoryType.CREATED);
         }
         return null;
@@ -147,8 +165,6 @@ public class UserServiceImpl implements UserService {
         }
         user.addUserHistory(new UserHistory(StringUtils.generatePublicId(), user, userHistoryType));
 
-        var persistedUser = userRepository.save(user);
-        LOG.debug(UserConstants.USER_CREATED_SUCCESSFULLY, persistedUser);
-        return UserUtils.convertToUserDto(persistedUser);
+        return saveOrUpdate(user);
     }
 }
