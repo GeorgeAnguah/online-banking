@@ -1,24 +1,30 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
+import { Action, AnyAction, combineReducers, configureStore, ThunkAction } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
+import { authSlice } from "./slices/auth";
 
-import counterReducer from '../features/counter/counterSlice'
+const combinedReducers = combineReducers({
+    authReducer: authSlice.reducer,
+});
+export type OurStore = ReturnType<typeof combinedReducers>;
 
-export function makeStore() {
-  return configureStore({
-    reducer: { counter: counterReducer },
-  })
-}
+const rootReducer = (state: ReturnType<typeof combinedReducers>, action: AnyAction) => {
+    if (action.type === HYDRATE) {
+        return {
+            ...state,
+            ...action.payload,
+        };
+    }
+    return combinedReducers(state, action);
+};
 
-const store = makeStore()
+const store = configureStore<OurStore>({
+    reducer: rootReducer,
+});
 
-export type AppState = ReturnType<typeof store.getState>
+export type AppState = ReturnType<typeof store.getState>;
 
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;
 
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  AppState,
-  unknown,
-  Action<string>
->
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action<string>>;
 
-export default store
+export default store;
