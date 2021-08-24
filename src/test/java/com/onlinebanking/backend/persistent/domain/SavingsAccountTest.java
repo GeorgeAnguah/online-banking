@@ -1,21 +1,21 @@
 package com.onlinebanking.backend.persistent.domain;
 
 import com.onlinebanking.TestUtils;
-import com.onlinebanking.backend.persistent.domain.account.CheckingAccount;
+import com.onlinebanking.backend.persistent.domain.account.SavingsAccount;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test class for CheckingAccount.
+ * Test class for SavingsAccount.
  *
- * @author Matthew Puentes on 8/21/2021
+ * @author Matthew Puentes on 8/22/2021
  * @version 1.0
  * @since 1.0
  */
-class CheckingAccountTest {
+class SavingsAccountTest {
     @Test
     void equalsContract() {
-        EqualsVerifier.forClass(CheckingAccount.class)
+        EqualsVerifier.forClass(SavingsAccount.class)
                 .withRedefinedSuperclass()
                 .withIgnoredFields(TestUtils.getIgnoredFields().toArray(new String[0]))
                 .verify();
