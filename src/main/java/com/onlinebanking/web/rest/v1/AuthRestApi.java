@@ -112,7 +112,8 @@ public class AuthRestApi {
         var userDetails = userDetailsService.loadUserByUsername(username);
         SecurityUtils.authenticateUser(userDetails);
 
-        String newAccessToken = jwtService.generateJwtToken(username);
+        Date expiration = DateUtils.addMinutes(new Date(), NUMBER_OF_MINUTES_TO_EXPIRE);
+        String newAccessToken = jwtService.generateJwtToken(username, expiration);
         String encryptedAccessToken = encryptionService.encrypt(newAccessToken);
 
         return ResponseEntity

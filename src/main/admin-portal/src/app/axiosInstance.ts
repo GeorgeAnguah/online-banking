@@ -19,7 +19,7 @@ createAuthRefreshInterceptor(axiosInstance, (failedRequest) =>
     axiosInstance
         .get<User>("/api/v1/auth/refresh-token")
         .then((resp) => {
-            const { dispatch }: { dispatch: AppDispatch } = store; // get dispatch action
+            const { dispatch }: { dispatch: AppDispatch } = store;
             const user = resp.data;
             dispatch(updateAuthState({ user }));
 
