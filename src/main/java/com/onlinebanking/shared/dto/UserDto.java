@@ -2,6 +2,8 @@ package com.onlinebanking.shared.dto;
 
 import com.onlinebanking.backend.persistent.domain.UserHistory;
 import com.onlinebanking.backend.persistent.domain.UserRole;
+import com.onlinebanking.backend.persistent.domain.account.CheckingAccount;
+import com.onlinebanking.backend.persistent.domain.account.SavingsAccount;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -36,6 +38,9 @@ public class UserDto extends BaseDto implements Serializable {
     private String phone;
     private boolean enabled;
     private String verificationToken;
+
+    private CheckingAccount checkingAccount;
+    private SavingsAccount savingsAccount;
 
     @ToString.Exclude
     private Set<UserRole> userRoles = new HashSet<>();

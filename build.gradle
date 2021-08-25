@@ -113,7 +113,7 @@ jacocoTestReport {
             fileTree(dir: it, exclude: [
                     "**/exception/*",
                     "**/enums/*",
-                    "**/constants/*",
+                    "**/constant/*",
                     "**/config/*"
             ])
         }))
