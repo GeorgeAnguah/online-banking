@@ -94,7 +94,7 @@ public final class UserUtils {
      *
      * @param username the username
      *
-     * @return the userEntity
+     * @return the userDto
      */
     public static UserDto createUserDto(final String username) {
         return UserUtils.convertToUserDto(createUser(username));
@@ -106,11 +106,27 @@ public final class UserUtils {
      * @param username the username
      * @param enabled  if the user should be enabled to authenticate
      *
-     * @return the userEntity
+     * @return the userDto
      */
     public static UserDto createUserDto(final String username, boolean enabled) {
         User user = createUser(username);
         user.setEnabled(enabled);
+        return UserUtils.convertToUserDto(user);
+    }
+
+    /**
+     * Create user with some flexibility.
+     *
+     * @param username username used to create user.
+     * @param password password used to create user.
+     * @param email    email used to create user.
+     * @param enabled  boolean value used to evaluate if user enabled.
+     *
+     * @return a userDto
+     */
+    public static UserDto createUserDto(String username, String password, String email, boolean enabled) {
+        var user = createUser(username, password, email, enabled);
+
         return UserUtils.convertToUserDto(user);
     }
 

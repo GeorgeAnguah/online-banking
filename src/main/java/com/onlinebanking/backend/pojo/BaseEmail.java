@@ -3,6 +3,8 @@ package com.onlinebanking.backend.pojo;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -23,6 +25,22 @@ public class BaseEmail {
 
     private List<String> recipients;
     private Map<String, String> urls;
+
+    public List<String> getRecipients() {
+        return new ArrayList<>(recipients);
+    }
+
+    public void setRecipients(List<String> recipients) {
+        this.recipients = new ArrayList<>(recipients);
+    }
+
+    public Map<String, String> getUrls() {
+        return new HashMap<>(urls);
+    }
+
+    public void setUrls(Map<String, String> urls) {
+        this.urls = new HashMap<>(urls);
+    }
 
     @Override
     public final boolean equals(Object o) {

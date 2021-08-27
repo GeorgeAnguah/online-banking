@@ -1,7 +1,9 @@
+import com.github.spotbugs.snom.SpotBugsTask
+
 plugins {
     id 'org.springframework.boot' version '2.5.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'com.coditory.integration-test' version '1.2.3'
+    id 'com.coditory.integration-test' version '1.3.0'
     id 'com.github.spotbugs' version '4.7.1'
     id 'checkstyle'
     id 'eclipse'
@@ -13,6 +15,8 @@ plugins {
 
 group = 'com.onlinebanking'
 version = '0.0.1-SNAPSHOT'
+description = 'A web application for online banking'
+
 sourceCompatibility = '11'
 targetCompatibility = '11'
 
@@ -50,7 +54,7 @@ dependencies {
 
     // Utilities
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
-    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.google.code.gson:gson:2.8.8'
     implementation 'com.github.javafaker:javafaker:1.0.2'
     implementation 'commons-validator:commons-validator:1.7'
 
@@ -92,6 +96,14 @@ tasks.withType(Checkstyle) {
     configFile file("${project.rootDir}/config/checkstyle.xml")
     reports {
         xml.required = false
+        html.required = true
+    }
+}
+
+// SpotBugs task to disable xml reports and load config file
+tasks.withType(SpotBugsTask) {
+    reports {
+        xml.required = true
         html.required = true
     }
 }

@@ -2,6 +2,7 @@ package com.onlinebanking.backend.service.security.impl;
 
 import com.onlinebanking.backend.service.security.EncryptionService;
 import com.onlinebanking.exception.EncryptionException;
+import com.onlinebanking.shared.util.RandomUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
@@ -70,7 +70,7 @@ public class EncryptionServiceImpl implements EncryptionService {
 
         try {
             byte[] iv = new byte[GCM_IV_LENGTH];
-            (new SecureRandom()).nextBytes(iv);
+            RandomUtils.RANDOM.nextBytes(iv);
 
             Cipher cipher = Cipher.getInstance(ENCRYPT_ALGORITHM);
             GCMParameterSpec ivSpec = new GCMParameterSpec(GCM_TAG_LENGTH * Byte.SIZE, iv);

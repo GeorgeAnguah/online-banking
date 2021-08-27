@@ -1,6 +1,7 @@
 package com.onlinebanking.web.controller;
 
 import com.onlinebanking.constant.HomeConstants;
+import com.onlinebanking.shared.util.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,11 @@ public class HomeController {
      */
     @GetMapping
     public String home() {
+        // if the user is authenticated, redirect to the account overview.
+        if (SecurityUtils.isUserAuthenticated()) {
+            return HomeConstants.REDIRECT_TO_ACCOUNT_OVERVIEW;
+        }
+
         return HomeConstants.INDEX_VIEW_NAME;
     }
 }
