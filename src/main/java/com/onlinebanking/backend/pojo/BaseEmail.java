@@ -21,6 +21,7 @@ public class BaseEmail {
     private final String from;
     private final String subject;
 
+    private String contents;
     private List<String> recipients;
     private Map<String, String> urls;
 
@@ -35,11 +36,12 @@ public class BaseEmail {
         BaseEmail baseEmail = (BaseEmail) o;
         return Objects.equals(getTo(), baseEmail.getTo())
                && Objects.equals(getFrom(), baseEmail.getFrom())
-               && Objects.equals(getSubject(), baseEmail.getSubject());
+               && Objects.equals(getSubject(), baseEmail.getSubject())
+               && Objects.equals(getContents(), baseEmail.getContents());
     }
 
     @Override
     public final int hashCode() {
-        return Objects.hash(getTo(), getFrom(), getSubject());
+        return Objects.hash(getTo(), getFrom(), getSubject(), getContents());
     }
 }
