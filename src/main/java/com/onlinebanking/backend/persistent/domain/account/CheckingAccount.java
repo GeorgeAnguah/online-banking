@@ -26,9 +26,9 @@ public class CheckingAccount extends BaseEntity  implements Serializable {
     private static final long serialVersionUID = 8693929414833339020L;
 
     @Column(unique = true, nullable = false)
-    private String publicId;
+    private int accountNumber;
 
-    private BigDecimal primaryBalance;
+    private BigDecimal checkingBalance;
 
     @Override
     public boolean equals(Object o) {
@@ -39,8 +39,8 @@ public class CheckingAccount extends BaseEntity  implements Serializable {
             return false;
         }
         var checkingAccount = (CheckingAccount) o;
-        return Objects.equals(getPublicId(), checkingAccount.getPublicId())
-               && Objects.equals(getPrimaryBalance(), checkingAccount.getPrimaryBalance());
+        return Objects.equals(getAccountNumber(), checkingAccount.getAccountNumber())
+               && Objects.equals(getCheckingBalance(), checkingAccount.getCheckingBalance());
     }
 
     @Override
@@ -50,6 +50,6 @@ public class CheckingAccount extends BaseEntity  implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getPublicId(), getPrimaryBalance());
+        return Objects.hash(super.hashCode(), getAccountNumber(), getCheckingBalance());
     }
 }

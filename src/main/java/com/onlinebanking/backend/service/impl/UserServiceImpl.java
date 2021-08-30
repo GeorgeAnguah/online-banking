@@ -6,6 +6,7 @@ import com.onlinebanking.backend.persistent.domain.UserHistory;
 import com.onlinebanking.backend.persistent.domain.UserRole;
 import com.onlinebanking.backend.persistent.repository.UserRepository;
 import com.onlinebanking.backend.service.UserService;
+import com.onlinebanking.backend.service.account.impl.AccountServiceImpl;
 import com.onlinebanking.constant.UserConstants;
 import com.onlinebanking.enums.RoleType;
 import com.onlinebanking.enums.UserHistoryType;
@@ -38,6 +39,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AccountServiceImpl accountServiceImpl;
 
     /**
      * Saves or updates the user with the user instance given.
@@ -95,6 +97,8 @@ public class UserServiceImpl implements UserService {
         } else {
             userDto.setPublicId(StringUtils.generatePublicId());
             userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            userDto.setCheckingAccount(accountServiceImpl.createCheckingAccount());
+            userDto.setSavingsAccount(accountServiceImpl.createSavingsAccount());
 
             return persistUser(userDto, roleTypes, UserHistoryType.CREATED);
         }

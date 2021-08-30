@@ -26,7 +26,7 @@ public class SavingsAccount extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -3497998863675085296L;
 
     @Column(unique = true, nullable = false)
-    private String publicId;
+    private int accountNumber;
 
     private BigDecimal savingsBalance;
 
@@ -39,7 +39,7 @@ public class SavingsAccount extends BaseEntity implements Serializable {
             return false;
         }
         var savingsAccount = (SavingsAccount) o;
-        return Objects.equals(getPublicId(), savingsAccount.getPublicId())
+        return Objects.equals(getAccountNumber(), savingsAccount.getAccountNumber())
                && Objects.equals(getSavingsBalance(), savingsAccount.getSavingsBalance());
     }
 
@@ -50,6 +50,6 @@ public class SavingsAccount extends BaseEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getPublicId(), getSavingsBalance());
+        return Objects.hash(super.hashCode(), getAccountNumber(), getSavingsBalance());
     }
 }

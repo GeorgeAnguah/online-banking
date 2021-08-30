@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.lang3.SerializationUtils;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -49,6 +51,12 @@ public class UserDto extends BaseDto implements Serializable {
 
     @ToString.Exclude
     private Set<UserHistory> userHistories = new HashSet<>();
+
+    @ToString.Exclude
+    private CheckingAccount checkingAccount;
+
+    @ToString.Exclude
+    private SavingsAccount savingsAccount;
 
     public Set<UserRole> getUserRoles() {
         return new HashSet<>(userRoles);
