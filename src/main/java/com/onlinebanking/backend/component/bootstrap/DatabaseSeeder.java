@@ -3,11 +3,13 @@ package com.onlinebanking.backend.component.bootstrap;
 import com.onlinebanking.backend.persistent.domain.Role;
 import com.onlinebanking.backend.persistent.repository.RoleRepository;
 import com.onlinebanking.backend.service.UserService;
+import com.onlinebanking.constant.ProfileTypeConstants;
 import com.onlinebanking.enums.RoleType;
 import com.onlinebanking.shared.util.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -25,8 +27,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class DatabaseSeeder implements CommandLineRunner {
 
-    private final RoleRepository roleRepository;
+    private final Environment environment;
     private final UserService userService;
+    private final RoleRepository roleRepository;
 
     @Value("${admin.username}")
     private String adminUsername;
@@ -37,13 +40,19 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        var adminEmail = "admin@gmail.com";
-        var admin = UserUtils.createUser(adminUsername, adminPassword, adminEmail, true);
-        var adminDto = UserUtils.convertToUserDto(admin);
-
         Arrays.stream(RoleType.values()).forEach(roleTypeValue -> roleRepository.save(new Role(roleTypeValue)));
+
+        // only run these initial data if we are not in test mode.
+        if (!Arrays.asList(environment.getActiveProfiles()).contains(ProfileTypeConstants.TEST)) {
+            persistDefaultAdminUser();
+        }
+    }
+
+
+    private void persistDefaultAdminUser() {
+        var adminDto = UserUtils.createUserDto(adminUsername, adminPassword, "admin@gmail.com", true);
+
         Set<RoleType> adminRoleType = Collections.singleton(RoleType.ROLE_ADMIN);
         userService.createUser(adminDto, adminRoleType);
-
     }
 }

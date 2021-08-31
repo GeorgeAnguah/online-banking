@@ -2,6 +2,7 @@ package com.onlinebanking.shared.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.apache.commons.lang3.SerializationUtils;
 
 import java.time.LocalDateTime;
 
@@ -23,4 +24,20 @@ public class BaseDto {
     private String createdBy;
     private LocalDateTime updatedAt;
     private String updatedBy;
+
+    public LocalDateTime getCreatedAt() {
+        return SerializationUtils.clone(createdAt);
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = SerializationUtils.clone(createdAt);
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return SerializationUtils.clone(updatedAt);
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = SerializationUtils.clone(updatedAt);
+    }
 }
