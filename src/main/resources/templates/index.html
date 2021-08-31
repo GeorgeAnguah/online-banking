@@ -31,7 +31,8 @@
                     <div class="mb-3">
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
-                            <input type="text" class="form-control rounded" id="username" name="username" placeholder="Username"
+                            <input type="text" class="form-control rounded" id="username" name="username"
+                                   th:placeholder="#{form.username}"
                                    aria-label="Username" aria-describedby="username" required autofocus>
                         </div>
                     </div>
@@ -40,8 +41,9 @@
                     <div class="mb-3">
                         <div class="input-group">
                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                            <input type="password" class="form-control rounded" id="password" name="password" placeholder="Password"
-                                   aria-label="Password" aria-describedby="password" required autofocus>
+                            <input type="password" class="form-control rounded" id="password" name="password"
+                                   th:placeholder="#{form.password}"
+                                   aria-label="Password" aria-describedby="password" required>
                             <button id="toggle-password" type="button" class="d-none"
                                     aria-label="Show password as plain text. Warning: this will display your password on the screen.">
                             </button>
@@ -56,7 +58,7 @@
                     <!-- Remember me ends-->
                     <!-- Sign in button starts -->
                     <div class="mb-3 d-grid gap-2 mx-auto">
-                        <button class="btn btn-primary" type="submit">Sign in</button>
+                        <button class="btn btn-primary" type="submit" th:text="#{form.login}"></button>
                     </div>
                     <!-- Sign in button ends -->
                 </fieldset>
@@ -69,7 +71,7 @@
             </div>
             <!-- Sign in button starts -->
             <div class="d-grid gap-2 mx-auto">
-                <a class="btn btn-info" th:href="@{/sign-up}" type="submit">Sign up</a>
+                <a class="btn btn-info" th:href="@{/sign-up}" type="submit" th:text="#{form.signup}"></a>
             </div>
             <!-- Sign in button ends -->
         </div>

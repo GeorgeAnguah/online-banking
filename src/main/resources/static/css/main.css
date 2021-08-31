@@ -13,3 +13,11 @@ body {
     background-color: transparent;
     font-family: Arial, sans-serif;
 }
+
+.ms-8 {
+    margin-left: 8rem;
+}
+
+.me-8 {
+    margin-right: 8rem;
+}
