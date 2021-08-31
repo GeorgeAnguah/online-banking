@@ -19,6 +19,65 @@
 </head>
 
 
+<!-- Navigation -->
+<div th:fragment="common-navbar">
+    <img alt="banner" class="img-fluid" src="#" th:src="@{/images/banner.png}"/>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand ms-8" th:href="@{/account-overview}" th:text="#{navbar.home.text}"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item dropdown mx-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="accountsDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span th:text="#{navbar.account.text}"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="accountsDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#" th:text="#{navbar.checking.text}"></a></li>
+                            <li><a class="dropdown-item" href="#" th:text="#{navbar.savings.text}"></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown mx-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="transferDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span th:text="#{navbar.transfer.text}"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="transferDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#" th:text="#{navbar.transfer.between.text}"></a></li>
+                            <li><a class="dropdown-item" href="#" th:text="#{navbar.transfer.another.text}"></a></li>
+                            <li role="separator" class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" th:text="#{navbar.add.edit.recipient.text}"></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown mx-3">
+                        <a class="nav-link dropdown-toggle" href="#" id="appointmentDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span th:text="#{navbar.appointment.text}"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="appointmentDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#" th:text="#{navbar.appointment.schedule.text}"></a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="navbar-nav me-8">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span th:text="#{navbar.me.text}"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/profile}" th:text="#{navbar.profile.text}"></a></li>
+                            <li role="separator" class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:href="@{/logout}" th:text="#{navbar.logout.text}"></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+
 <div th:fragment="common-scripts">
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
