@@ -7,7 +7,6 @@ import com.onlinebanking.enums.ErrorMessage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.commons.lang3.SerializationUtils;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

@@ -7,13 +7,9 @@ import com.onlinebanking.backend.persistent.domain.account.SavingsAccount;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.apache.commons.lang3.SerializationUtils;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
