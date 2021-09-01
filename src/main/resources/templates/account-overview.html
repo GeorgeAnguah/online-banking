@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!-- Head -->
-<th:block
-        th:replace="common/template :: common-head(title='Account Overview', togglePassword=true, formValidation=true)"/>
+<th:block th:replace="common/template :: common-head(title='Account Overview')"/>
 
 <body>
-<div class="container main">
+<!-- Navigation Section -->
+<th:block th:replace="common/template :: common-navbar"/>
+<div class="container">
     <div class="row">
         <div class="col-lg-12">
         </div>
@@ -14,43 +15,42 @@
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-6 col-md-6">
-            <div class="panel panel-info">
-                <div class="panel-heading">
+            <div class="card mb-5 mt-5" style="background-color: #d9edf7">
+                <div class="card-header">
                     <div class="row">
-                        <div class="col-xs-6">
+                        <div class="col-sm">
                             <!--<i class="fa fa-comments fa-5x"></i>-->
-                            <h2>Checking Balance: </h2>
+                            <h2 class="text-nowrap">Checking Balance: </h2>
                         </div>
-                        <div class="col-xs-6 text-right">
+                        <div class="col-sm text-end">
                             <h1><i class="fa fa-usd" aria-hidden="true"></i> <span
-                                    th:text="${checkingAccount?.checkingBalance}">...</span></h1>
+                                    th:inline="text">$ [[${checkingAccount?.checkingBalance}]]</span></h1>
                         </div>
                     </div>
                 </div>
                 <a>
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
+                    <div class="card-body" style="background-color: #fff">
+                        <span class="float-start">View Details</span>
+                        <span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
                     </div>
                 </a>
             </div>
-            <div class="panel panel-success">
-                <div class="panel-heading">
+            <div class="card" style="background-color:#dff0d8 ">
+                <div class="card-header">
                     <div class="row">
-                        <div class="col-xs-6">
-                            <h2>Savings Balance: </h2>
+                        <div class="col-sm">
+                            <h2 class="text-nowrap">Savings Balance: </h2>
                         </div>
-                        <div class="col-xs-6 text-right">
+                        <div class="col-sm text-end">
                             <h1><i class="fa fa-usd" aria-hidden="true"></i> <span
-                                    th:text="${savingsAccount?.savingsBalance}">...</span></h1>
+                                    th:inline="text">$ [[${savingsAccount?.savingsBalance}]]</span></h1>
                         </div>
                     </div>
                 </div>
                 <a>
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="card-body" style="background-color: #fff">
+                        <span class="float-start">View Details</span>
+                        <span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
                 </a>
@@ -58,42 +58,42 @@
         </div>
 
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-yellow">
-                <div class="panel-heading">
+            <div class="card mb-5 mt-5">
+                <div class="card-header">
                     <div class="row">
-                        <div class="col-xs-3">
+                        <div class="col-sm">
                             <i class="fa fa-credit-card fa-5x"></i>
                         </div>
-                        <div class="col-xs-9 text-right">
+                        <div class="col-sm text-end">
                             <div>Deposit</div>
                         </div>
                     </div>
                 </div>
                 <a>
-                    <div class="panel-footer">
+                    <div class="card-body">
                         <span class="pull-left">Go to Deposit</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
                 </a>
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-red">
-                <div class="panel-heading">
+            <div class="card mb-5 mt-5">
+                <div class="card-header">
                     <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-money fa-5x"></i>
+                        <div class="col-sm">
+                            <i class="fas fa-money-bill-alt fa-5x"></i>
                         </div>
-                        <div class="col-xs-9 text-right">
+                        <div class="col-sm text-end">
                             <div>Withdraw</div>
                         </div>
                     </div>
                 </div>
                 <a>
-                    <div class="panel-footer">
+                    <div class="card-body">
                         <span class="pull-left">Go to Withdrawal</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
                         <div class="clearfix"></div>
                     </div>
                 </a>
@@ -103,6 +103,6 @@
     <!-- /.row -->
 </div>
 
-<div th:replace="common/template :: common-scripts(togglePassword=true, formValidation=true)"></div>
+<div th:replace="common/template :: common-scripts"></div>
 </body>
 </html>

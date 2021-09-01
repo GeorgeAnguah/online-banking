@@ -4,9 +4,11 @@ import com.onlinebanking.backend.persistent.domain.User;
 import com.onlinebanking.backend.persistent.domain.account.CheckingAccount;
 import com.onlinebanking.backend.persistent.domain.account.SavingsAccount;
 import com.onlinebanking.backend.service.UserService;
+import com.onlinebanking.constant.AccountConstants;
 import com.onlinebanking.constant.HomeConstants;
-import com.onlinebanking.shared.util.UserUtils;
 import com.onlinebanking.shared.util.SecurityUtils;
+import com.onlinebanking.shared.util.UserUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,12 +25,9 @@ import java.security.Principal;
  */
 @Controller
 @RequestMapping(HomeConstants.INDEX_URL_MAPPING)
+@RequiredArgsConstructor
 public class HomeController {
     private final UserService userService;
-
-    public HomeController(UserService userService) {
-        this.userService = userService;
-    }
 
     /**
      * Maps index url request.
@@ -52,14 +51,14 @@ public class HomeController {
      * @param model model to map appropriate attributes.
      * @return account overview name.
      */
-    @GetMapping("/account-overview")
+    @GetMapping(HomeConstants.ACCOUNT_OVERVIEW_URL_MAPPING)
     public String accountOverview(Principal principal, Model model) {
         User user = UserUtils.convertToUser(userService.findByUsername(principal.getName()));
         CheckingAccount checkingAccount = user.getCheckingAccount();
         SavingsAccount savingsAccount = user.getSavingsAccount();
 
-        model.addAttribute("CheckingAccount", checkingAccount);
-        model.addAttribute("SavingsAccount", savingsAccount);
+        model.addAttribute(AccountConstants.CHECKING_ACCOUNT_OVERVIEW_MODEL_ATTRIBUTE, checkingAccount);
+        model.addAttribute(AccountConstants.SAVINGS_ACCOUNT_OVERVIEW_MODEL_ATTRIBUTE, savingsAccount);
 
         return HomeConstants.ACCOUNT_OVERVIEW_NAME;
     }

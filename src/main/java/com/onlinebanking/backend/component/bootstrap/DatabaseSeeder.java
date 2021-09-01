@@ -3,6 +3,7 @@ package com.onlinebanking.backend.component.bootstrap;
 import com.onlinebanking.backend.persistent.domain.Role;
 import com.onlinebanking.backend.persistent.repository.RoleRepository;
 import com.onlinebanking.backend.service.UserService;
+import com.onlinebanking.backend.service.account.impl.AccountServiceImpl;
 import com.onlinebanking.constant.ProfileTypeConstants;
 import com.onlinebanking.enums.RoleType;
 import com.onlinebanking.shared.util.UserUtils;
@@ -29,6 +30,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private final Environment environment;
     private final UserService userService;
+    private final AccountServiceImpl accountServiceImpl;
     private final RoleRepository roleRepository;
 
     @Value("${admin.username}")
@@ -40,6 +42,12 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        var adminEmail = "admin@gmail.com";
+        var admin = UserUtils.createUser(adminUsername, adminPassword, adminEmail, true);
+        admin.setCheckingAccount(accountServiceImpl.createCheckingAccount());
+        admin.setSavingsAccount(accountServiceImpl.createSavingsAccount());
+        var adminDto = UserUtils.convertToUserDto(admin);
+
         Arrays.stream(RoleType.values()).forEach(roleTypeValue -> roleRepository.save(new Role(roleTypeValue)));
 
         // only run these initial data if we are not in test mode.
@@ -51,6 +59,8 @@ public class DatabaseSeeder implements CommandLineRunner {
 
     private void persistDefaultAdminUser() {
         var adminDto = UserUtils.createUserDto(adminUsername, adminPassword, "admin@gmail.com", true);
+//        adminDto.setCheckingAccount(accountServiceImpl.createCheckingAccount());
+//        adminDto.setSavingsAccount(accountServiceImpl.createSavingsAccount());
 
         Set<RoleType> adminRoleType = Collections.singleton(RoleType.ROLE_ADMIN);
         userService.createUser(adminDto, adminRoleType);

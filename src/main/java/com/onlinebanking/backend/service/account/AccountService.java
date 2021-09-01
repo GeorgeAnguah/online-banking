@@ -19,6 +19,7 @@ public interface AccountService {
      * @return CheckingAccount that's created.
      */
     CheckingAccount createCheckingAccount();
+
     /**
      * Create a savings account.
      *
@@ -34,13 +35,4 @@ public interface AccountService {
      * @param principal principal for currently logged in user.
      */
     void deposit(String accountType, Double amount, Principal principal);
-    /**
-     * Withdraw money from bank account.
-     *
-     * @param accountType accountType that specifies a savings or checking account.
-     * @param amount amount to be withdrawn.
-     * @param principal principal for currently logged in user.
-     */
-    void withdraw(String accountType, Double amount, Principal principal);
-
 }

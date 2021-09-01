@@ -7,6 +7,7 @@ import com.onlinebanking.backend.persistent.repository.CheckingAccountRepository
 import com.onlinebanking.backend.persistent.repository.SavingsAccountRepository;
 import com.onlinebanking.backend.persistent.repository.UserRepository;
 import com.onlinebanking.backend.service.account.AccountService;
+import com.onlinebanking.constant.AccountConstants;
 import com.onlinebanking.shared.util.AccountUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,13 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.security.Principal;
 
+/**
+ * Implementation of the AccountService used for account business logic.
+ *
+ * @author Matthew Puentes on 8/31/2021
+ * @version 1.0
+ * @since 1.0
+ */
 @RequiredArgsConstructor
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -29,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public CheckingAccount createCheckingAccount() {
         CheckingAccount checkingAccount = new CheckingAccount();
-        checkingAccount.setCheckingBalance(new BigDecimal("0.0"));
+        checkingAccount.setCheckingBalance(BigDecimal.ZERO);
         checkingAccount.setAccountNumber(AccountUtils.accountNumberGenerator());
         return checkingAccountRepository.save(checkingAccount);
     }
@@ -42,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public SavingsAccount createSavingsAccount() {
         SavingsAccount savingsAccount = new SavingsAccount();
-        savingsAccount.setSavingsBalance(new BigDecimal("0.0"));
+        savingsAccount.setSavingsBalance(BigDecimal.ZERO);
         savingsAccount.setAccountNumber(AccountUtils.accountNumberGenerator());
         return savingsAccountRepository.save(savingsAccount);
     }
@@ -58,27 +66,14 @@ public class AccountServiceImpl implements AccountService {
     public void deposit(String accountType, Double amount, Principal principal) {
         User user = userRepository.findByUsername(principal.getName());
 
-        //make enum for checking and saving account
-        if(accountType.equalsIgnoreCase("CheckingAccount")) {
+        if (accountType.equalsIgnoreCase(AccountConstants.CHECKING_ACCOUNT)) {
             CheckingAccount checkingAccount = user.getCheckingAccount();
-            checkingAccount.setCheckingBalance(checkingAccount.getCheckingBalance().add(new BigDecimal(amount)));
+            checkingAccount.setCheckingBalance(checkingAccount.getCheckingBalance().add(BigDecimal.ZERO));
             checkingAccountRepository.save(checkingAccount);
-        }
-        else if(accountType.equalsIgnoreCase("SavingsAccount")) {
+        } else if (accountType.equalsIgnoreCase(AccountConstants.SAVINGS_ACCOUNT)) {
             SavingsAccount savingsAccount = user.getSavingsAccount();
-            savingsAccount.setSavingsBalance(savingsAccount.getSavingsBalance().add(new BigDecimal(amount)));
+            savingsAccount.setSavingsBalance(savingsAccount.getSavingsBalance().add(BigDecimal.ZERO));
             savingsAccountRepository.save(savingsAccount);
         }
-    }
-
-    /**
-     * Withdraw money from bank account.
-     *
-     * @param accountType accountType that specifies a savings or checking account.
-     * @param amount      amount to be withdrawn.
-     * @param principal   principal for currently logged in user.
-     */
-    @Override
-    public void withdraw(String accountType, Double amount, Principal principal) {
     }
 }

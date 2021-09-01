@@ -67,7 +67,8 @@ class AccountServiceTest {
 
     @Test
     void createCheckingAccount() {
-        Mockito.when(checkingAccountRepository.save(ArgumentMatchers.any(CheckingAccount.class))).thenReturn(checkingAccount);
+        Mockito.when(checkingAccountRepository.save(ArgumentMatchers.any(CheckingAccount.class)))
+                .thenReturn(checkingAccount);
         Assertions.assertAll(() -> {
             Assertions.assertNotNull(checkingAccount);
             Assertions.assertEquals(accountNumber, checkingAccount.getAccountNumber());
@@ -77,7 +78,8 @@ class AccountServiceTest {
 
     @Test
     void createSavingsAccount() {
-        Mockito.when(savingsAccountRepository.save(ArgumentMatchers.any(SavingsAccount.class))).thenReturn(savingsAccount);
+        Mockito.when(savingsAccountRepository.save(ArgumentMatchers.any(SavingsAccount.class)))
+                .thenReturn(savingsAccount);
         Assertions.assertAll(() -> {
             Assertions.assertNotNull(savingsAccount);
             Assertions.assertEquals(savingsAccount.getAccountNumber(), accountNumber);
@@ -85,30 +87,6 @@ class AccountServiceTest {
         });
     }
 
-    @Test
-    void depositMoneyIntoCheckingAccount() {
-//        var accountType = "CheckingAccount";
-//        var amount = 10.00;
-//        var username = principal.getName();
-//        user.setCheckingAccount(checkingAccount);
-//        Mockito.when(principal.getName()).thenReturn(user.getUsername());
-//        Mockito.when(userRepository.findByUsername(username)).thenReturn(user);
-//        Mockito.when(checkingAccountRepository.save(ArgumentMatchers.any(CheckingAccount.class))).thenReturn(checkingAccount);
-//
-//
-//
-//        Assertions.assertAll(() -> {
-//            Assertions.assertEquals("CheckingAccount", accountType);
-//            Assertions.assertEquals(user.getUsername(), principal.getName());
-//            Assertions.assertEquals(user, userRepository.findByUsername(username));
-//            Assertions.assertNotNull(user.getCheckingAccount());
-//        });
-//
-//        Mockito.verify(accountService, Mockito.times(1)).deposit(accountType, amount, principal);
-
-    }
-
-    //add mockito verify to deposit method or create separate test?
     @Test
     public void whenCheckingDepositCalledValueCaptured() {
         AccountServiceImpl accountTest = Mockito.mock(AccountServiceImpl.class);
