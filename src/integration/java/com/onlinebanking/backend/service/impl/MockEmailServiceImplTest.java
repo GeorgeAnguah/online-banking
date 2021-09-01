@@ -13,15 +13,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Test production EmailService implementation.
+ * Test MockEmailService.
  *
- * @author George on 8/26/2021
+ * @author George on 8/13/2021
  * @version 1.0
  * @since 1.0
  */
 @SpringBootTest
-class OnlineBankingEmailServiceImplTest {
-    private final String url = "https://spring.io/projects/spring-boot";
+class MockEmailServiceImplTest {
     @Autowired
     private EmailService emailService;
 
@@ -33,14 +32,14 @@ class OnlineBankingEmailServiceImplTest {
     @BeforeEach
     void setUp() {
         email = BaseEmail.builder()
-                .from(emailConfig.getUsername())
-                .to(emailConfig.getUsername())
-                .subject("Test email sending")
-                .contents("Congratulation, test email sending").build();
+                .from("developBoard@gmail.com")
+                .to("User@gmail.com")
+                .contents("MockEmailService email test")
+                .subject("Testing email").build();
     }
 
     @Test
-    void sendEmailToUserWithoutLinkOrRecipients() {
+    void testMockEmailServiceSendEmail() {
         Assertions.assertAll(() -> {
             Assertions.assertNotNull(emailService);
             Assertions.assertNotNull(emailConfig);
@@ -51,6 +50,7 @@ class OnlineBankingEmailServiceImplTest {
     @Test
     void sendEmailToUserWithLink() {
         Map<String, String> links = new HashMap<>();
+        String url = "https://spring.io/projects/spring-boot";
         links.put("spring", url);
         email.setUrls(links);
         email.setContents("Congratulation, email sent with link : " + links.get("spring"));

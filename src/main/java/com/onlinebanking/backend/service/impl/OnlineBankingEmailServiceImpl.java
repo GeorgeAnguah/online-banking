@@ -1,6 +1,5 @@
 package com.onlinebanking.backend.service.impl;
 
-import com.onlinebanking.backend.service.mail.EmailConfig;
 import com.onlinebanking.constant.ProfileTypeConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -28,17 +27,16 @@ public class OnlineBankingEmailServiceImpl extends AbstractEmailService {
      * Creates the OnlineBankingEmailServiceImpl instance.
      *
      * @param mailSender  mailSender that sends email.
-     * @param emailConfig emailConfig holds email properties.
      */
-    public OnlineBankingEmailServiceImpl(JavaMailSenderImpl mailSender, EmailConfig emailConfig) {
-        super(mailSender, emailConfig);
+    public OnlineBankingEmailServiceImpl(JavaMailSenderImpl mailSender) {
+        super(mailSender);
     }
 
     @Override
     public void send(MimeMessage message) {
         try {
             getMailSender().send(message);
-            LOG.info("Mock email message sent : {}", message.getContent());
+            LOG.info("Email message sent : {}", message.getContent());
         } catch (IOException | MessagingException e) {
             LOG.error("OnlineBankingEmailServiceImpl error : " + e.getMessage());
         }

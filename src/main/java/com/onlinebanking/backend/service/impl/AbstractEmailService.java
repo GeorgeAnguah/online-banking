@@ -1,14 +1,12 @@
 package com.onlinebanking.backend.service.impl;
 
 import com.onlinebanking.backend.pojo.BaseEmail;
-import com.onlinebanking.backend.service.mail.EmailConfig;
 import com.onlinebanking.backend.service.mail.EmailService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -25,16 +23,13 @@ import java.util.Objects;
  * @since 1.0
  */
 @Slf4j
-@Service
 @RequiredArgsConstructor
 public abstract class AbstractEmailService implements EmailService {
     @Getter
     private final JavaMailSenderImpl mailSender;
-    private final EmailConfig emailConfig;
 
     @Override
     public void sendEmail(BaseEmail email) {
-        configureEmailSenderProperties();
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         try {
@@ -55,16 +50,10 @@ public abstract class AbstractEmailService implements EmailService {
 
     }
 
-    private void configureEmailSenderProperties() {
-        mailSender.setHost(emailConfig.getHost());
-        mailSender.setPort(emailConfig.getPort());
-        mailSender.setUsername(emailConfig.getUsername());
-        mailSender.setPassword(emailConfig.getPassword());
-    }
-
     /**
      * send email options.
      * Subclasses must override to send either a mock or actual email.
+     *
      * @param message message containing email content.
      */
     public abstract void send(MimeMessage message);

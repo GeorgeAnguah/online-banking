@@ -1,6 +1,5 @@
 package com.onlinebanking.backend.service.impl;
 
-import com.onlinebanking.backend.service.mail.EmailConfig;
 import com.onlinebanking.constant.ProfileTypeConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
@@ -28,11 +27,10 @@ public class MockEmailServiceImpl extends AbstractEmailService {
     /**
      * Creates the MockEmailServiceImpl instance.
      *
-     * @param mailSender  mailSender that sends email.
-     * @param emailConfig emailConfig holds email properties.
+     * @param mailSender mailSender that sends email.
      */
-    public MockEmailServiceImpl(JavaMailSenderImpl mailSender, EmailConfig emailConfig) {
-        super(mailSender, emailConfig);
+    public MockEmailServiceImpl(JavaMailSenderImpl mailSender) {
+        super(mailSender);
     }
 
     @Override
