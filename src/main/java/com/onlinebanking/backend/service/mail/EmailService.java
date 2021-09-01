@@ -11,5 +11,5 @@ public interface EmailService {
      *
      * @param email email to send
      */
-    void sendSimpleEmail(BaseEmail email);
+    void sendEmail(BaseEmail email);
 }
