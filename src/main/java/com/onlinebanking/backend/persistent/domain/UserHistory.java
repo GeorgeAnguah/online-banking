@@ -23,8 +23,8 @@ import java.util.Objects;
  * @version 1.0
  * @since 1.0
  */
-@Entity
 @Getter
+@Entity
 @NoArgsConstructor(force = true)
 public class UserHistory extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -418682848586685969L;
@@ -62,7 +62,7 @@ public class UserHistory extends BaseEntity implements Serializable {
         }
         UserHistory that = (UserHistory) o;
         return
-                Objects.equals(publicId, that.publicId)
+                Objects.equals(getPublicId(), that.getPublicId())
                 && Objects.equals(getUser(), that.getUser())
                 && Objects.equals(getUserHistoryType(), that.getUserHistoryType());
 

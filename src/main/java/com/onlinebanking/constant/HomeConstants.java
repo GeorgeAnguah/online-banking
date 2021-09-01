@@ -18,6 +18,11 @@ public final class HomeConstants {
     public static final String INDEX_URL_MAPPING = "/";
 
     /**
+     * Redirect URL Mapping Constants.
+     */
+    public static final String REDIRECT_TO_ACCOUNT_OVERVIEW = "redirect:/account-overview";
+
+    /**
      * View Name Constants.
      */
     public static final String INDEX_VIEW_NAME = "index";
