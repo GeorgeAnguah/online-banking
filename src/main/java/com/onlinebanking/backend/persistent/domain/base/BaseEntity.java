@@ -3,6 +3,7 @@ package com.onlinebanking.backend.persistent.domain.base;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.lang3.SerializationUtils;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedBy;
@@ -63,6 +64,22 @@ public class BaseEntity {
     @Column(name = "updated_by")
     @LastModifiedBy
     private String updatedBy;
+
+    public LocalDateTime getCreatedAt() {
+        return SerializationUtils.clone(createdAt);
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = SerializationUtils.clone(createdAt);
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return SerializationUtils.clone(updatedAt);
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = SerializationUtils.clone(updatedAt);
+    }
 
     /**
      * Evaluate the equality of BaseEntity class.

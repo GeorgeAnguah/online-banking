@@ -47,7 +47,11 @@ public class CookieServiceImpl implements CookieService {
     @Override
     public Cookie createCookie(HttpCookie httpCookie) {
         InputValidationUtils.validateInputs(getClass(), httpCookie);
-        return new Cookie(httpCookie.getName(), httpCookie.getValue());
+        var cookie = new Cookie(httpCookie.getName(), httpCookie.getValue());
+        cookie.setSecure(Arrays.asList(environment.getActiveProfiles()).contains(ProfileTypeConstants.PROD));
+        cookie.setHttpOnly(true);
+
+        return cookie;
     }
 
     /**
