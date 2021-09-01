@@ -39,7 +39,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         Arrays.stream(RoleType.values()).forEach(roleTypeValue -> roleRepository.save(new Role(roleTypeValue)));
 
         // only run these initial data if we are not in test mode.
@@ -48,10 +48,8 @@ public class DatabaseSeeder implements CommandLineRunner {
         }
     }
 
-
     private void persistDefaultAdminUser() {
         var adminDto = UserUtils.createUserDto(adminUsername, adminPassword, "admin@gmail.com", true);
-
         Set<RoleType> adminRoleType = Collections.singleton(RoleType.ROLE_ADMIN);
         userService.createUser(adminDto, adminRoleType);
     }

@@ -7,7 +7,6 @@ import com.onlinebanking.enums.ErrorMessage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.commons.lang3.SerializationUtils;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -73,46 +72,6 @@ public class User extends BaseEntity implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     private SavingsAccount savingsAccount;
-
-    public Set<UserRole> getUserRoles() {
-        return new HashSet<>(userRoles);
-    }
-
-    public void setUserRoles(Set<UserRole> userRoles) {
-        if (Objects.nonNull(userRoles)) {
-            this.userRoles = new HashSet<>(userRoles);
-        }
-    }
-
-    public Set<UserHistory> getUserHistories() {
-        return new HashSet<>(userHistories);
-    }
-
-    public void setUserHistories(Set<UserHistory> userHistories) {
-        if (Objects.nonNull(userHistories)) {
-            this.userHistories = new HashSet<>(userHistories);
-        }
-    }
-
-    public CheckingAccount getCheckingAccount() {
-        return SerializationUtils.clone(checkingAccount);
-    }
-
-    public void setCheckingAccount(CheckingAccount checkingAccount) {
-        if (Objects.nonNull(checkingAccount)) {
-            this.checkingAccount = SerializationUtils.clone(checkingAccount);
-        }
-    }
-
-    public SavingsAccount getSavingsAccount() {
-        return SerializationUtils.clone(savingsAccount);
-    }
-
-    public void setSavingsAccount(SavingsAccount savingsAccount) {
-        if (Objects.nonNull(savingsAccount)) {
-            this.savingsAccount = SerializationUtils.clone(savingsAccount);
-        }
-    }
 
     @Override
     public boolean equals(Object o) {

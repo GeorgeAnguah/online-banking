@@ -7,11 +7,9 @@ import com.onlinebanking.backend.persistent.domain.account.SavingsAccount;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -49,44 +47,4 @@ public class UserDto extends BaseDto implements Serializable {
 
     @ToString.Exclude
     private Set<UserHistory> userHistories = new HashSet<>();
-
-    public Set<UserRole> getUserRoles() {
-        return new HashSet<>(userRoles);
-    }
-
-    public void setUserRoles(Set<UserRole> userRoles) {
-        if (Objects.nonNull(userRoles)) {
-            this.userRoles = new HashSet<>(userRoles);
-        }
-    }
-
-    public Set<UserHistory> getUserHistories() {
-        return new HashSet<>(userHistories);
-    }
-
-    public void setUserHistories(Set<UserHistory> userHistories) {
-        if (Objects.nonNull(userHistories)) {
-            this.userHistories = new HashSet<>(userHistories);
-        }
-    }
-
-    public CheckingAccount getCheckingAccount() {
-        return SerializationUtils.clone(checkingAccount);
-    }
-
-    public void setCheckingAccount(CheckingAccount checkingAccount) {
-        if (Objects.nonNull(checkingAccount)) {
-            this.checkingAccount = SerializationUtils.clone(checkingAccount);
-        }
-    }
-
-    public SavingsAccount getSavingsAccount() {
-        return SerializationUtils.clone(savingsAccount);
-    }
-
-    public void setSavingsAccount(SavingsAccount savingsAccount) {
-        if (Objects.nonNull(savingsAccount)) {
-            this.savingsAccount = SerializationUtils.clone(savingsAccount);
-        }
-    }
 }
