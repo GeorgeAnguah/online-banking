@@ -1,5 +1,6 @@
-package com.onlinebanking.backend.service.impl;
+package com.onlinebanking.backend.service.mail.impl;
 
+import com.onlinebanking.backend.service.mail.AbstractEmailService;
 import com.onlinebanking.constant.ProfileTypeConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Profile;
