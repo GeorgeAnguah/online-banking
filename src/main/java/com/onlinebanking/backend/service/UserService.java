@@ -2,7 +2,9 @@ package com.onlinebanking.backend.service;
 
 import com.onlinebanking.backend.persistent.domain.User;
 import com.onlinebanking.enums.RoleType;
+import com.onlinebanking.enums.UserHistoryType;
 import com.onlinebanking.shared.dto.UserDto;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Set;
 
@@ -67,6 +69,16 @@ public interface UserService {
     UserDto findByEmail(String email);
 
     /**
+     * Returns a userDetails for the given username or null if a user could not be found.
+     *
+     * @param username The username associated to the user to find
+     *
+     * @return a user for the given username or null if a user could not be found
+     * @throws IllegalArgumentException in case the given entity is {@literal null}
+     */
+    UserDetails getUserDetails(String username);
+
+    /**
      * Checks if the username already exists and enabled.
      *
      * @param username the username
@@ -75,4 +87,14 @@ public interface UserService {
      */
     boolean existsByUsername(String username);
 
+    /**
+     * Update the user with the user instance given and the update type for record.
+     *
+     * @param userDto         The user with updated information
+     * @param userHistoryType the history type to be recorded
+     *
+     * @return the updated user
+     * @throws IllegalArgumentException in case the given entity is {@literal null}
+     */
+    UserDto updateUser(UserDto userDto, UserHistoryType userHistoryType);
 }

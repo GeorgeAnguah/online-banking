@@ -1,8 +1,10 @@
 package com.onlinebanking.shared.dto.mapper;
 
 import com.onlinebanking.backend.persistent.domain.User;
+import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
 import com.onlinebanking.shared.dto.UserDto;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -12,7 +14,7 @@ import org.mapstruct.factory.Mappers;
  * @version 1.0
  * @since 1.0
  */
-@Mapper
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserDtoMapper {
 
     UserDtoMapper MAPPER = Mappers.getMapper(UserDtoMapper.class);
@@ -28,9 +30,16 @@ public interface UserDtoMapper {
     /**
      * Convert and populate a userDto to User object.
      *
+     * @param userDetailsBuilder the userDetailsBuilder
+     * @return the user
+     */
+    UserDto toUserDto(UserDetailsBuilder userDetailsBuilder);
+
+    /**
+     * Convert and populate a userDto to User object.
+     *
      * @param userDto the userDto
      * @return the user
      */
     User toUser(UserDto userDto);
-
 }

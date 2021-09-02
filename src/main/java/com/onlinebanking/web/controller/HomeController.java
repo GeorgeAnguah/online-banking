@@ -9,6 +9,7 @@ import com.onlinebanking.constant.HomeConstants;
 import com.onlinebanking.shared.util.SecurityUtils;
 import com.onlinebanking.shared.util.UserUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +25,8 @@ import java.security.Principal;
  * @since 1.0
  */
 @Controller
-@RequestMapping(HomeConstants.INDEX_URL_MAPPING)
 @RequiredArgsConstructor
+@RequestMapping(HomeConstants.INDEX_URL_MAPPING)
 public class HomeController {
     private final UserService userService;
 
@@ -51,6 +52,7 @@ public class HomeController {
      * @param model model to map appropriate attributes.
      * @return account overview name.
      */
+    @PreAuthorize("isAuthenticated() and hasAnyRole(T(com.onlinebanking.enums.RoleType).values())")
     @GetMapping(HomeConstants.ACCOUNT_OVERVIEW_URL_MAPPING)
     public String accountOverview(Principal principal, Model model) {
         User user = UserUtils.convertToUser(userService.findByUsername(principal.getName()));

@@ -25,6 +25,7 @@ public enum ErrorMessage {
     EMAIL_ADDRESS_NOT_VERIFIED("Email address could not be verified"),
     NULL_ELEMENTS_NOT_ALLOWED("Null elements are not allowed"),
     INVALID_REFRESH_TOKEN("Refresh Token is invalid!"),
+    UNAUTHORIZED_ACCESS_MESSAGE("Unauthorized Access detected... Returning to login page."),
     NOT_INSTANTIABLE("This class cannot be instantiated");
 
     public static final String BLANK_USERNAME = "Username cannot be left blank";

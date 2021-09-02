@@ -7,17 +7,22 @@ A web application for online banking
 * [Bootstrap 5](https://getbootstrap.com/docs/5.0/getting-started/introduction/) - HTML, CSS, and JavaScript framework
 * [Thymeleaf](https://www.thymeleaf.org/) - Modern server-side Java template engine
 * [Gradle](https://gradle.org/) - Dependency Management and Build Tool
-* [React](https://reactjs.org/) - React JS
+* [Lombok](https://projectlombok.org/) - Automatically plugs into your editor and build tools, spicing up your java.
+* [NextJS](https://nextjs.org/) - The React Framework for production
 * [MySQL](https://www.mysql.com/) - Open-source relational database management system
 * [AWS](https://aws.amazon.com/) - On-demand cloud computing platforms
 * [H2](http://www.h2database.com/) - In-Memory Database for development
+
+
+## Running Instance on AWS
+<a href="http://crestbank.sytes.net/" target="_blank">Crest Bank Inc.</a>
 
 ## Contributing
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) 
 for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Credit
-This project is an updated implementation of [Le Dang](https://github.com/raydeng83/OnlineBanking)'s project. 
+This project is an updated implementation of [Le Dang's](https://github.com/raydeng83/OnlineBanking/) project. 
 
 ## Authors
 
@@ -35,14 +40,18 @@ This project is an updated implementation of [Le Dang](https://github.com/rayden
 
 ## Notes
 
-* The following environment variables need to be configured before application starts:
-- For example:
+* The following environment variables can be customized as necessary.:
+- The defaults are:
 
-        ADMIN_USERNAME = NAME
-        ADMIN_PASSWORD = PASSWORD
-        ENCRYPTION_SECRET_SALT = salt
-        ENCRYPTION_SECRET_PASSWORD = password
-        JWT_SECRET = 33ee9048-716d-4166-b532-43702a756f59
+        ADMIN_USERNAME=admin
+        ADMIN_PASSWORD=password
+        ENCRYPTION_SECRET_SALT=salt
+        ENCRYPTION_SECRET_PASSWORD=password
+        JWT_SECRET=salt
+
+* Default profile for the application is **dev** and **prod** to test out production functionalities.
+  - Datasource must be provided for production profile for the application to run.
+
         
 * Start Spring Boot application first using - **./gradlew bootRun**
 * Start React application using - **npm install** then **npm start**

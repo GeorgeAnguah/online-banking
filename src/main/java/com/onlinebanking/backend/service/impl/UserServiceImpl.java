@@ -7,7 +7,8 @@ import com.onlinebanking.backend.persistent.domain.UserRole;
 import com.onlinebanking.backend.persistent.repository.UserRepository;
 import com.onlinebanking.backend.service.UserService;
 import com.onlinebanking.backend.service.account.impl.AccountServiceImpl;
-import com.onlinebanking.constant.UserConstants;
+import com.onlinebanking.constant.CacheConstants;
+import com.onlinebanking.constant.user.UserConstants;
 import com.onlinebanking.enums.RoleType;
 import com.onlinebanking.enums.UserHistoryType;
 import com.onlinebanking.shared.dto.UserDto;
@@ -16,6 +17,9 @@ import com.onlinebanking.shared.util.UserUtils;
 import com.onlinebanking.shared.util.validation.InputValidationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto saveOrUpdate(User user) {
         User persistedUser = userRepository.save(user);
-        LOG.debug(UserConstants.USER_CREATED_SUCCESSFULLY, persistedUser);
+        LOG.debug(UserConstants.USER_PERSISTED_SUCCESSFULLY, persistedUser);
 
         return UserUtils.convertToUserDto(persistedUser);
     }
@@ -142,6 +146,22 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * Returns a userDetails for the given username or null if a user could not be found.
+     *
+     * @param username The username associated to the user to find
+     *
+     * @return a user for the given username or null if a user could not be found
+     * @throws IllegalArgumentException in case the given entity is {@literal null}
+     */
+    @Override
+    public UserDetails getUserDetails(String username) {
+        InputValidationUtils.validateInputs(getClass(), username);
+        User storedUser = userRepository.findByUsername(username);
+
+        return UserDetailsBuilder.buildUserDetails(storedUser);
+    }
+
+    /**
      * Checks if the username already exists and enabled.
      *
      * @param username the username
@@ -151,6 +171,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsernameOrderById(username);
+    }
+
+    /**
+     * Update the user with the user instance given and the update type for record.
+     *
+     * @param userDto         The user with updated information
+     * @param userHistoryType the history type to be recorded
+     *
+     * @return the updated user
+     * @throws IllegalArgumentException in case the given entity is {@literal null}
+     */
+    @Override
+    @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = CacheConstants.USERS, key = "#userDto.email"),
+            @CacheEvict(value = CacheConstants.USERS, key = "#userDto.publicId")
+    })
+    public UserDto updateUser(UserDto userDto, UserHistoryType userHistoryType) {
+        InputValidationUtils.validateInputs(getClass(), userDto, userHistoryType);
+        userDto.setVerificationToken(null);
+
+        return persistUser(userDto, Collections.emptySet(), UserHistoryType.PROFILE_UPDATE);
     }
 
     /**

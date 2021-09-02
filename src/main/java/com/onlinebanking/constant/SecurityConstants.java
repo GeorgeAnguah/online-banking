@@ -47,7 +47,8 @@ public final class SecurityConstants {
             "/webjars/**",
             "/resources/**",
             "/static/**",
-            "/console/**"
+            "/console/**",
+            "/actuator/health"
     };
 
     public static final List<String> ALLOWED_HTTP_METHODS = List.of(
