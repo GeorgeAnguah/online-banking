@@ -1,4 +1,4 @@
-package com.onlinebanking.backend.service.impl;
+package com.onlinebanking.backend.service.mail;
 
 import com.onlinebanking.backend.pojo.BaseEmail;
 import com.onlinebanking.backend.service.mail.EmailService;
