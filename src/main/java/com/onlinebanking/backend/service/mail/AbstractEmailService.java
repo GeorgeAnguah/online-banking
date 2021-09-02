@@ -1,4 +1,4 @@
-package com.onlinebanking.backend.service.impl;
+package com.onlinebanking.backend.service.mail;
 
 import com.onlinebanking.backend.pojo.BaseEmail;
 import com.onlinebanking.backend.service.mail.EmailService;
@@ -41,7 +41,7 @@ public abstract class AbstractEmailService implements EmailService {
             // add recipients if any to this email
             List<String> recipients = email.getRecipients();
             if (Objects.nonNull(recipients)) {
-                helper.setBcc(recipients.toArray(new String[0]));
+                helper.setCc(recipients.toArray(new String[0]));
             }
             send(message);          // send email message
         } catch (MessagingException e) {
