@@ -11,6 +11,7 @@ import com.onlinebanking.constant.AccountConstants;
 import com.onlinebanking.shared.util.AccountUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -24,6 +25,7 @@ import java.security.Principal;
  */
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class AccountServiceImpl implements AccountService {
     private final CheckingAccountRepository checkingAccountRepository;
     private final SavingsAccountRepository savingsAccountRepository;
@@ -35,6 +37,7 @@ public class AccountServiceImpl implements AccountService {
      * @return CheckingAccount that's created.
      */
     @Override
+    @Transactional
     public CheckingAccount createCheckingAccount() {
         CheckingAccount checkingAccount = new CheckingAccount();
         checkingAccount.setCheckingBalance(BigDecimal.ZERO);
@@ -48,6 +51,7 @@ public class AccountServiceImpl implements AccountService {
      * @return SavingsAccount that's created.
      */
     @Override
+    @Transactional
     public SavingsAccount createSavingsAccount() {
         SavingsAccount savingsAccount = new SavingsAccount();
         savingsAccount.setSavingsBalance(BigDecimal.ZERO);
@@ -63,17 +67,18 @@ public class AccountServiceImpl implements AccountService {
      * @param principal   principal for currently logged in user.
      */
     @Override
+    @Transactional
     public void deposit(String accountType, Double amount, Principal principal) {
         User user = userRepository.findByUsername(principal.getName());
 
         if (accountType.equalsIgnoreCase(AccountConstants.CHECKING_ACCOUNT)) {
-            CheckingAccount checkingAccount = user.getCheckingAccount();
-            checkingAccount.setCheckingBalance(checkingAccount.getCheckingBalance().add(BigDecimal.ZERO));
-            checkingAccountRepository.save(checkingAccount);
+            var checkingAccount = user.getCheckingAccount();
+            checkingAccount.setCheckingBalance(checkingAccount.getCheckingBalance().add(new BigDecimal(amount)));
+            checkingAccountRepository.saveAndFlush(checkingAccount);
         } else if (accountType.equalsIgnoreCase(AccountConstants.SAVINGS_ACCOUNT)) {
-            SavingsAccount savingsAccount = user.getSavingsAccount();
-            savingsAccount.setSavingsBalance(savingsAccount.getSavingsBalance().add(BigDecimal.ZERO));
-            savingsAccountRepository.save(savingsAccount);
+            var savingsAccount = user.getSavingsAccount();
+            savingsAccount.setSavingsBalance(savingsAccount.getSavingsBalance().add(new BigDecimal(amount)));
+            savingsAccountRepository.saveAndFlush(savingsAccount);
         }
     }
 }

@@ -11,6 +11,7 @@ import com.onlinebanking.enums.ErrorMessage;
  */
 public final class AccountConstants {
 
+    public static final String ACCOUNT_URL_MAPPING = "/account";
     public static final String CHECKING_ACCOUNT_OVERVIEW_MODEL_ATTRIBUTE = "checkingAccount";
     public static final String SAVINGS_ACCOUNT_OVERVIEW_MODEL_ATTRIBUTE = "savingsAccount";
     public static final String CHECKING_ACCOUNT = "CheckingAccount";
