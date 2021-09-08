@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,8 +33,7 @@ class OnlineBankingEmailServiceImplTest {
     void setUp() {
         email = BaseEmail.builder()
                 .from(emailConfig.getUsername())
-                .to("georgeanguah@yahoo.com")
-                .recipients(Arrays.asList("eric.opoku20@yahoo.com", "boakye1140@gmail.com", "mpuent18@gmail.com"))
+                .to(emailConfig.getUsername())
                 .subject("Test email sending")
                 .contents("Congratulation, test email sending").build();
     }

@@ -21,11 +21,12 @@ public interface UserService {
      * Saves or updates the user with the user instance given.
      *
      * @param user the user with updated information
+     * @param isUpdate if the operation is an update
      *
      * @return the updated user.
      * @throws IllegalArgumentException in case the given entity is {@literal null}
      */
-    UserDto saveOrUpdate(User user);
+    UserDto saveOrUpdate(User user, boolean isUpdate);
 
     /**
      * Create the userDto with the userDto instance given.

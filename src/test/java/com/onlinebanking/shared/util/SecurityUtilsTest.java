@@ -19,18 +19,18 @@ class SecurityUtilsTest {
 
     @Test
     void testingIsUserAuthenticatedNotAuthenticated() {
-        Assertions.assertFalse(SecurityUtils.isUserAuthenticated());
+        Assertions.assertFalse(SecurityUtils.isAuthenticated());
     }
 
     @Test
     void testingIsUserAuthenticatedAsAnonymous(TestInfo testInfo) {
         TestUtils.setAuthentication(testInfo.getDisplayName(), TestUtils.ANONYMOUS_USER);
-        Assertions.assertFalse(SecurityUtils.isUserAuthenticated());
+        Assertions.assertFalse(SecurityUtils.isAuthenticated());
     }
 
     @Test
     void testingIsUserAuthenticatedAuthenticated(TestInfo testInfo) {
-        TestUtils.setAuthentication(testInfo.getDisplayName(), TestUtils.ROLE_USER);
-        Assertions.assertTrue(SecurityUtils.isUserAuthenticated());
+        TestUtils.setAuthentication(testInfo.getDisplayName(), TestUtils.ROLE_CUSTOMER);
+        Assertions.assertTrue(SecurityUtils.isAuthenticated());
     }
 }

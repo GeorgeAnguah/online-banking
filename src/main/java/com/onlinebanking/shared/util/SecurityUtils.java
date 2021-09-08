@@ -51,11 +51,19 @@ public final class SecurityUtils {
      *
      * @return if user is authenticated
      */
-    public static boolean isUserAuthenticated() {
-        Authentication authentication = getAuthentication();
+    public static boolean isAuthenticated(Authentication authentication) {
         return Objects.nonNull(authentication)
                && authentication.isAuthenticated()
                && !(authentication instanceof AnonymousAuthenticationToken);
+    }
+
+    /**
+     * Returns true if the user is authenticated.
+     *
+     * @return if user is authenticated
+     */
+    public static boolean isAuthenticated() {
+        return isAuthenticated(getAuthentication());
     }
 
     /**
@@ -74,6 +82,14 @@ public final class SecurityUtils {
      */
     public static void setAuthentication(Authentication authentication) {
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    /**
+     * Clears the securityContextHolder.
+     *
+     */
+    public static void clearAuthentication() {
+        SecurityContextHolder.getContext().setAuthentication(null);
     }
 
     /**
@@ -119,7 +135,7 @@ public final class SecurityUtils {
      * @return the user details
      */
     public static UserDetailsBuilder getAuthenticatedUserDetails() {
-        if (isUserAuthenticated()) {
+        if (isAuthenticated()) {
             return (UserDetailsBuilder) getAuthentication().getPrincipal();
         }
         return null;

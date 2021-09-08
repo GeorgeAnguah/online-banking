@@ -28,7 +28,7 @@ public final class HomeConstants {
      * View Name Constants.
      */
     public static final String INDEX_VIEW_NAME = "index";
-    public static final String ACCOUNT_OVERVIEW_NAME = "account-overview";
+    public static final String ACCOUNT_OVERVIEW_NAME = "overview";
 
     private HomeConstants() {
         throw new AssertionError(ErrorMessage.NOT_INSTANTIABLE.getErrorMsg());

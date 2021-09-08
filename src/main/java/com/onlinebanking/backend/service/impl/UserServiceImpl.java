@@ -18,6 +18,7 @@ import com.onlinebanking.shared.util.validation.InputValidationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,14 +50,15 @@ public class UserServiceImpl implements UserService {
      * Saves or updates the user with the user instance given.
      *
      * @param user the user with updated information
+     * @param isUpdate if the operation is an update
      *
      * @return the updated user.
      * @throws IllegalArgumentException in case the given entity is {@literal null}
      */
     @Override
     @Transactional
-    public UserDto saveOrUpdate(User user) {
-        User persistedUser = userRepository.save(user);
+    public UserDto saveOrUpdate(User user, boolean isUpdate) {
+        User persistedUser = isUpdate ? userRepository.saveAndFlush(user) : userRepository.save(user);
         LOG.debug(UserConstants.USER_PERSISTED_SUCCESSFULLY, persistedUser);
 
         return UserUtils.convertToUserDto(persistedUser);
@@ -104,7 +106,7 @@ public class UserServiceImpl implements UserService {
             userDto.setCheckingAccount(accountServiceImpl.createCheckingAccount());
             userDto.setSavingsAccount(accountServiceImpl.createSavingsAccount());
 
-            return persistUser(userDto, roleTypes, UserHistoryType.CREATED);
+            return persistUser(userDto, roleTypes, UserHistoryType.CREATED, false);
         }
         return null;
     }
@@ -118,6 +120,7 @@ public class UserServiceImpl implements UserService {
      * @throws IllegalArgumentException in case the given entity is {@literal null}
      */
     @Override
+    @Cacheable(CacheConstants.USERS)
     public UserDto findByUsername(String username) {
         InputValidationUtils.validateInputs(this, username);
         User storedUser = userRepository.findByUsername(username);
@@ -185,32 +188,33 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     @Caching(evict = {
-            @CacheEvict(value = CacheConstants.USERS, key = "#userDto.email"),
+            @CacheEvict(value = CacheConstants.USERS, key = "#userDto.username"),
             @CacheEvict(value = CacheConstants.USERS, key = "#userDto.publicId")
     })
     public UserDto updateUser(UserDto userDto, UserHistoryType userHistoryType) {
         InputValidationUtils.validateInputs(getClass(), userDto, userHistoryType);
         userDto.setVerificationToken(null);
 
-        return persistUser(userDto, Collections.emptySet(), UserHistoryType.PROFILE_UPDATE);
+        return persistUser(userDto, Collections.emptySet(), UserHistoryType.PROFILE_UPDATE, true);
     }
 
     /**
      * Transfers user details to a user object then persist to database.
      *
      * @param userDto         the userDto
-     * @param roleTypes       the roleTypes
-     * @param userHistoryType the user history type
+     * @param roles       the roles
+     * @param historyType the user history type
+     * @param isUpdate if the operation is an update
      *
      * @return the userDto
      */
-    private UserDto persistUser(UserDto userDto, Set<RoleType> roleTypes, UserHistoryType userHistoryType) {
+    private UserDto persistUser(UserDto userDto, Set<RoleType> roles, UserHistoryType historyType, boolean isUpdate) {
         var user = UserUtils.convertToUser(userDto);
-        for (RoleType roleType : roleTypes) {
+        for (RoleType roleType : roles) {
             user.addUserRole(new UserRole(user, new Role(roleType)));
         }
-        user.addUserHistory(new UserHistory(StringUtils.generatePublicId(), user, userHistoryType));
+        user.addUserHistory(new UserHistory(StringUtils.generatePublicId(), user, historyType));
 
-        return saveOrUpdate(user);
+        return saveOrUpdate(user, isUpdate);
     }
 }

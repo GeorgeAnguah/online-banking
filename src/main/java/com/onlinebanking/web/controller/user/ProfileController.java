@@ -14,14 +14,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Objects;
 
 /**
@@ -34,7 +36,7 @@ import java.util.Objects;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(ProfileConstants.USER_PROFILE_URL_MAPPING)
+@RequestMapping(ProfileConstants.PROFILE_MAPPING)
 @PreAuthorize("isAuthenticated() and hasAnyRole(T(com.onlinebanking.enums.RoleType).values())")
 public class ProfileController {
 
@@ -43,36 +45,35 @@ public class ProfileController {
     /**
      * View user's page.
      *
-     * @param model The model to convey objects to view layer
+     * @param model              The model to convey objects to view layer
+     * @param redirectAttributes the redirectAttribute
+     *
      * @return profile page.
      */
     @Loggable
     @GetMapping
-    public String profile(final RedirectAttributes model) {
-        var userDetails = SecurityUtils.getAuthenticatedUserDetails();
-        if (Objects.isNull(userDetails)) {
-            model.addFlashAttribute(SystemConstants.ERROR, true);
+    public String profile(final Principal principal, final Model model, RedirectAttributes redirectAttributes) {
+        UserDto storedUserDto = userService.findByUsername(principal.getName());
+        if (Objects.isNull(storedUserDto)) {
+            redirectAttributes.addFlashAttribute(SystemConstants.ERROR, true);
             return HomeConstants.REDIRECT_TO_LOGIN;
         }
-
-        UserDto storedUserDto = userService.findByEmail(userDetails.getEmail());
-        if (Objects.nonNull(storedUserDto)) {
-            model.addAttribute(UserConstants.USER_MODEL_KEY, storedUserDto);
-        }
+        model.addAttribute(UserConstants.USER_MODEL_KEY, storedUserDto);
         return ProfileConstants.USER_PROFILE_VIEW_NAME;
     }
 
     /**
      * Updates the user profile with the details provided.
      *
-     * @param user               the user
-     * @param result             the binding result
-     * @param model              the model with redirection
+     * @param user   the user
+     * @param result the binding result
+     * @param model  the model with redirection
+     *
      * @return the view to profile page.
      */
     @Loggable
     @PreAuthorize("isFullyAuthenticated()")
-    @PostMapping(ProfileConstants.USER_PROFILE_UPDATE_URL_MAPPING)
+    @PutMapping(ProfileConstants.PROFILE_UPDATE_MAPPING)
     public String updateProfile(@Valid @ModelAttribute UserDto user, BindingResult result, RedirectAttributes model) {
         var userDetails = SecurityUtils.getAuthenticatedUserDetails();
         if (result.hasErrors() || Objects.isNull(userDetails) || !user.getEmail().equals(userDetails.getEmail())) {

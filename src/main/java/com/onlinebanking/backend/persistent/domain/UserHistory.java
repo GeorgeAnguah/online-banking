@@ -33,7 +33,7 @@ public class UserHistory extends BaseEntity implements Serializable {
     private String publicId;
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private User user;
 
     @Enumerated(EnumType.STRING)

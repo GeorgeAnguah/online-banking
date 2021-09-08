@@ -38,7 +38,7 @@ public class HomeController {
     @GetMapping
     public String home() {
         // if the user is authenticated, redirect to the account overview.
-        if (SecurityUtils.isUserAuthenticated()) {
+        if (SecurityUtils.isAuthenticated()) {
             return HomeConstants.REDIRECT_TO_ACCOUNT_OVERVIEW;
         }
 
@@ -59,8 +59,8 @@ public class HomeController {
         CheckingAccount checkingAccount = user.getCheckingAccount();
         SavingsAccount savingsAccount = user.getSavingsAccount();
 
-        model.addAttribute(AccountConstants.CHECKING_ACCOUNT_OVERVIEW_MODEL_ATTRIBUTE, checkingAccount);
-        model.addAttribute(AccountConstants.SAVINGS_ACCOUNT_OVERVIEW_MODEL_ATTRIBUTE, savingsAccount);
+        model.addAttribute(AccountConstants.CHECKING_ACCOUNT_MODEL_KEY, checkingAccount);
+        model.addAttribute(AccountConstants.SAVINGS_ACCOUNT_MODEL_KEY, savingsAccount);
 
         return HomeConstants.ACCOUNT_OVERVIEW_NAME;
     }

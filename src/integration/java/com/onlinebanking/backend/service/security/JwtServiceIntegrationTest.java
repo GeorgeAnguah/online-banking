@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
-class JwtServiceTest extends IntegrationTestUtils {
+class JwtServiceIntegrationTest extends IntegrationTestUtils {
 
     private enum TokenType {
         BAD_SIGNATURE, MALFORMED, UNSUPPORTED

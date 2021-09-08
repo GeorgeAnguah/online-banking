@@ -12,8 +12,8 @@ public final class ProfileConstants {
     /**
      * URL Mapping Constants.
      */
-    public static final String USER_PROFILE_URL_MAPPING = "/profile";
-    public static final String USER_PROFILE_UPDATE_URL_MAPPING = "/update";
+    public static final String PROFILE_MAPPING = "/profile";
+    public static final String PROFILE_UPDATE_MAPPING = "/update";
 
     /**
      * URL Redirect Mapping Constants.
