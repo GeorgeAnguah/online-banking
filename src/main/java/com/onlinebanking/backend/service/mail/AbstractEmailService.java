@@ -1,6 +1,7 @@
 package com.onlinebanking.backend.service.mail;
 
 import com.onlinebanking.backend.pojo.BaseEmail;
+import com.onlinebanking.constant.SystemConstants;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,9 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,7 +45,11 @@ public abstract class AbstractEmailService implements EmailService {
             if (Objects.nonNull(recipients)) {
                 helper.setCc(recipients.toArray(new String[0]));
             }
-            send(message);          // send email message
+
+            // prepare the update the simpleMailMessage with senders name.
+            configureInternetAddress(email, helper);
+
+            send(message);
         } catch (MessagingException e) {
             LOG.info("email error : {}", e.getMessage());
         }
@@ -56,4 +63,19 @@ public abstract class AbstractEmailService implements EmailService {
      * @param message message containing email content.
      */
     public abstract void send(MimeMessage message);
+
+    /**
+     * Masks the email address with the senders name.
+     *
+     * @param baseEmail         the baseEmail
+     * @param mimeMessageHelper the mimeMessageHelper
+     */
+    private void configureInternetAddress(BaseEmail baseEmail, MimeMessageHelper mimeMessageHelper) {
+        try {
+            InternetAddress address = new InternetAddress(baseEmail.getFrom(), SystemConstants.SYSTEM_NAME);
+            mimeMessageHelper.setFrom(String.valueOf(address));
+        } catch (UnsupportedEncodingException | MessagingException e) {
+            LOG.error("Could not create an internet address for the baseEmail {}", baseEmail, e);
+        }
+    }
 }
