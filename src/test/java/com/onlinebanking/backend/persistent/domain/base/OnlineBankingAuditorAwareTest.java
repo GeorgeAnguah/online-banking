@@ -39,7 +39,7 @@ class OnlineBankingAuditorAwareTest {
 
     @Test
     void getCurrentAuditorWithAuthenticatedUser(TestInfo testInfo) {
-        TestUtils.setAuthentication(TestUtils.ROLE_USER, testInfo.getDisplayName());
+        TestUtils.setAuthentication(TestUtils.ROLE_CUSTOMER, testInfo.getDisplayName());
         Assertions.assertEquals(getAuditor(), testInfo.getDisplayName());
     }
 

@@ -4,7 +4,6 @@ import com.onlinebanking.backend.persistent.domain.account.CheckingAccount;
 import com.onlinebanking.backend.persistent.domain.account.SavingsAccount;
 import com.onlinebanking.backend.persistent.repository.CheckingAccountRepository;
 import com.onlinebanking.backend.persistent.repository.SavingsAccountRepository;
-import com.onlinebanking.backend.persistent.repository.UserRepository;
 import com.onlinebanking.backend.service.account.impl.AccountServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +21,7 @@ import java.security.Principal;
 
 class AccountServiceTest {
 
-    private int accountNumber;
+    private long accountNumber;
     private CheckingAccount checkingAccount;
     private SavingsAccount savingsAccount;
     private final Principal principal = Mockito.mock(Principal.class);
@@ -37,9 +36,6 @@ class AccountServiceTest {
 
     @Mock
     SavingsAccountRepository savingsAccountRepository;
-
-    @Mock
-    UserRepository userRepository;
 
     /**
      * TODO: create three captors for deposit arguments.

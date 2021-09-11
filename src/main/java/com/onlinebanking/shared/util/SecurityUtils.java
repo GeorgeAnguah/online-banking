@@ -1,8 +1,10 @@
 package com.onlinebanking.shared.util;
 
+import com.onlinebanking.backend.service.UserService;
 import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
 import com.onlinebanking.constant.ProfileTypeConstants;
 import com.onlinebanking.enums.ErrorMessage;
+import com.onlinebanking.shared.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -49,11 +51,19 @@ public final class SecurityUtils {
      *
      * @return if user is authenticated
      */
-    public static boolean isUserAuthenticated() {
-        Authentication authentication = getAuthentication();
+    public static boolean isAuthenticated(Authentication authentication) {
         return Objects.nonNull(authentication)
                && authentication.isAuthenticated()
                && !(authentication instanceof AnonymousAuthenticationToken);
+    }
+
+    /**
+     * Returns true if the user is authenticated.
+     *
+     * @return if user is authenticated
+     */
+    public static boolean isAuthenticated() {
+        return isAuthenticated(getAuthentication());
     }
 
     /**
@@ -72,6 +82,27 @@ public final class SecurityUtils {
      */
     public static void setAuthentication(Authentication authentication) {
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    /**
+     * Clears the securityContextHolder.
+     *
+     */
+    public static void clearAuthentication() {
+        SecurityContextHolder.getContext().setAuthentication(null);
+    }
+
+    /**
+     * Authenticate the user with the provided username programmatically.
+     *
+     * @param userService the user service
+     * @param username    the username
+     */
+    public static void authenticateUser(final UserService userService, final String username) {
+        var userDetails = userService.getUserDetails(username);
+        if (Objects.nonNull(userDetails)) {
+            authenticateUser(userDetails);
+        }
     }
 
     /**
@@ -104,10 +135,33 @@ public final class SecurityUtils {
      * @return the user details
      */
     public static UserDetailsBuilder getAuthenticatedUserDetails() {
-        if (isUserAuthenticated()) {
+        if (isAuthenticated()) {
             return (UserDetailsBuilder) getAuthentication().getPrincipal();
         }
         return null;
+    }
+
+    /**
+     * Retrieve the authenticated user from the current session.
+     *
+     * @return the userDetailsBuilder
+     */
+    public static UserDto getAuthorizedUserDto() {
+        return UserUtils.convertToUserDto(getAuthorizedUserDetails());
+    }
+
+    /**
+     * Retrieve the authenticated user from the current session.
+     *
+     * @return the userDetailsBuilder
+     */
+    public static UserDetailsBuilder getAuthorizedUserDetails() {
+        var userDetails = getAuthenticatedUserDetails();
+        if (Objects.isNull(userDetails)) {
+            LOG.warn(ErrorMessage.UNAUTHORIZED_ACCESS_MESSAGE.getErrorMsg());
+            return null;
+        }
+        return userDetails;
     }
 
     /**

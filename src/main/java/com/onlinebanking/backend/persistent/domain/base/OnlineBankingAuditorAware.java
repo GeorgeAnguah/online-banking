@@ -1,12 +1,10 @@
 package com.onlinebanking.backend.persistent.domain.base;
 
+import com.onlinebanking.shared.util.SecurityUtils;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.lang.NonNull;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -18,7 +16,6 @@ import java.util.Optional;
  */
 @EqualsAndHashCode
 public final class OnlineBankingAuditorAware implements AuditorAware<String> {
-
     private static final String CURRENT_AUDITOR = "system";
 
     /**
@@ -31,13 +28,11 @@ public final class OnlineBankingAuditorAware implements AuditorAware<String> {
     public Optional<String> getCurrentAuditor() {
 
         // Check if there is a user logged in.
-        // If so, use the logged in user as the current auditor.
+        // If so, use the logged-in user as the current auditor.
         // spring injects an anonymousUser if there is no
         // authentication and authorization
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (Objects.nonNull(authentication)
-            && authentication.isAuthenticated()
-            && !(authentication instanceof AnonymousAuthenticationToken)) {
+        var authentication = SecurityUtils.getAuthentication();
+        if (SecurityUtils.isAuthenticated(authentication)) {
             return Optional.ofNullable(authentication.getName());
         }
         // If there is no authentication,

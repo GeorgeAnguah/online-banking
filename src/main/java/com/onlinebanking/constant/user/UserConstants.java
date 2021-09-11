@@ -1,4 +1,4 @@
-package com.onlinebanking.constant;
+package com.onlinebanking.constant.user;
 
 import com.onlinebanking.enums.ErrorMessage;
 
@@ -11,7 +11,13 @@ import com.onlinebanking.enums.ErrorMessage;
  */
 public final class UserConstants {
 
-    public static final String USER_CREATED_SUCCESSFULLY = "User successfully created {}";
+    public static final String USER_MODEL_KEY = "user";
+    public static final String EMAIL = "email";
+    public static final String PASSWORD = "password";
+    public static final String USERNAME = "username";
+    public static final String PUBLIC_ID = "publicId";
+
+    public static final String USER_PERSISTED_SUCCESSFULLY = "User successfully persisted {}";
     public static final String USER_ALREADY_EXIST = "Email {} already exist and nothing will be done";
     public static final String USER_EXIST_BUT_NOT_ENABLED = "Email {} exists but not enabled. Returning user {}";
 

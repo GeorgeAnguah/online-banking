@@ -4,10 +4,13 @@ import com.onlinebanking.backend.persistent.domain.UserHistory;
 import com.onlinebanking.backend.persistent.domain.UserRole;
 import com.onlinebanking.backend.persistent.domain.account.CheckingAccount;
 import com.onlinebanking.backend.persistent.domain.account.SavingsAccount;
+import com.onlinebanking.enums.ErrorMessage;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,12 +31,18 @@ public class UserDto extends BaseDto implements Serializable {
     private String publicId;
 
     @EqualsAndHashCode.Include
+    @NotBlank(message = ErrorMessage.BLANK_USERNAME)
     private String username;
+
+    @ToString.Exclude
+    @NotBlank(message = ErrorMessage.BLANK_PASSWORD)
     private String password;
     private String firstName;
     private String lastName;
 
     @EqualsAndHashCode.Include
+    @NotBlank(message = ErrorMessage.BLANK_EMAIL)
+    @Email(message = ErrorMessage.INVALID_EMAIL)
     private String email;
     private String phone;
     private boolean enabled;

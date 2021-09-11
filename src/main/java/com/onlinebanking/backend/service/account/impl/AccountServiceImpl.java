@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public CheckingAccount createCheckingAccount() {
         CheckingAccount checkingAccount = new CheckingAccount();
-        checkingAccount.setCheckingBalance(BigDecimal.ZERO);
+        checkingAccount.setBalance(BigDecimal.ZERO);
         checkingAccount.setAccountNumber(AccountUtils.accountNumberGenerator());
         return checkingAccountRepository.save(checkingAccount);
     }
@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public SavingsAccount createSavingsAccount() {
         SavingsAccount savingsAccount = new SavingsAccount();
-        savingsAccount.setSavingsBalance(BigDecimal.ZERO);
+        savingsAccount.setBalance(BigDecimal.ZERO);
         savingsAccount.setAccountNumber(AccountUtils.accountNumberGenerator());
         return savingsAccountRepository.save(savingsAccount);
     }
@@ -68,11 +68,11 @@ public class AccountServiceImpl implements AccountService {
 
         if (accountType.equalsIgnoreCase(AccountConstants.CHECKING_ACCOUNT)) {
             CheckingAccount checkingAccount = user.getCheckingAccount();
-            checkingAccount.setCheckingBalance(checkingAccount.getCheckingBalance().add(BigDecimal.ZERO));
+            checkingAccount.setBalance(checkingAccount.getBalance().add(BigDecimal.ZERO));
             checkingAccountRepository.save(checkingAccount);
         } else if (accountType.equalsIgnoreCase(AccountConstants.SAVINGS_ACCOUNT)) {
             SavingsAccount savingsAccount = user.getSavingsAccount();
-            savingsAccount.setSavingsBalance(savingsAccount.getSavingsBalance().add(BigDecimal.ZERO));
+            savingsAccount.setBalance(savingsAccount.getBalance().add(BigDecimal.ZERO));
             savingsAccountRepository.save(savingsAccount);
         }
     }

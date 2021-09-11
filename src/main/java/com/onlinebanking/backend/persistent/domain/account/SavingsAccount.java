@@ -1,14 +1,11 @@
 package com.onlinebanking.backend.persistent.domain.account;
 
-import com.onlinebanking.backend.persistent.domain.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -22,13 +19,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-public class SavingsAccount extends BaseEntity implements Serializable {
+public class SavingsAccount extends BaseAccount implements Serializable {
     private static final long serialVersionUID = -3497998863675085296L;
-
-    @Column(unique = true, nullable = false)
-    private int accountNumber;
-
-    private BigDecimal savingsBalance;
 
     @Override
     public boolean equals(Object o) {
@@ -38,9 +30,7 @@ public class SavingsAccount extends BaseEntity implements Serializable {
         if (!(o instanceof SavingsAccount) || !super.equals(o)) {
             return false;
         }
-        var savingsAccount = (SavingsAccount) o;
-        return Objects.equals(getAccountNumber(), savingsAccount.getAccountNumber())
-               && Objects.equals(getSavingsBalance(), savingsAccount.getSavingsBalance());
+        return super.equals(o);
     }
 
     @Override
@@ -50,6 +40,6 @@ public class SavingsAccount extends BaseEntity implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getAccountNumber(), getSavingsBalance());
+        return Objects.hash(super.hashCode());
     }
 }

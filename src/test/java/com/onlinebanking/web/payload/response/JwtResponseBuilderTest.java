@@ -7,9 +7,11 @@ import com.onlinebanking.backend.persistent.domain.UserRole;
 import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
 import com.onlinebanking.constant.SecurityConstants;
 import com.onlinebanking.enums.RoleType;
+import com.onlinebanking.shared.util.SecurityUtils;
 import com.onlinebanking.shared.util.UserUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -28,6 +30,11 @@ class JwtResponseBuilderTest {
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9."
             + "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6InRlc3QgdXNlciIsImlhdCI6MTUxNjIzOTAyMn0."
             + "WUwx8SdGax2poWdgIbL3mMLamAVYb6fF1t87jSyGh94";
+
+    @BeforeAll
+    static void beforeAll() {
+        SecurityUtils.clearAuthentication();
+    }
 
     @BeforeEach
     void setUp(TestInfo testInfo) {

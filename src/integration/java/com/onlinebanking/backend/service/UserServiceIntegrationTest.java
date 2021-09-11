@@ -2,7 +2,9 @@ package com.onlinebanking.backend.service;
 
 import com.onlinebanking.IntegrationTestUtils;
 import com.onlinebanking.backend.persistent.domain.Role;
+import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
 import com.onlinebanking.enums.RoleType;
+import com.onlinebanking.enums.UserHistoryType;
 import com.onlinebanking.shared.dto.UserDto;
 import com.onlinebanking.shared.util.UserUtils;
 import org.junit.jupiter.api.Assertions;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.stream.Collectors;
 
@@ -104,5 +107,29 @@ class UserServiceIntegrationTest extends IntegrationTestUtils {
     void getUserByEmailNotExisting(TestInfo testInfo) {
         UserDto userByEmail = userService.findByEmail(testInfo.getDisplayName());
         Assertions.assertNull(userByEmail);
+    }
+
+    @Test
+    @DisplayName("getUserDetails")
+    void getUserDetails(TestInfo testInfo) {
+        UserDto userDto = createAndAssertUser(userService, testInfo.getDisplayName(), false);
+        UserDetails userDetails = userService.getUserDetails(userDto.getUsername());
+        Assertions.assertTrue(userDetails instanceof UserDetailsBuilder);
+    }
+
+    @Test
+    @DisplayName("updateUser")
+    void updateUser(TestInfo testInfo) {
+        UserDto userDto = createAndAssertUser(userService, testInfo.getDisplayName(), false);
+        String previousFirstName = userDto.getFirstName();
+        userDto.setFirstName(testInfo.getDisplayName());
+
+        UserDto updatedUserDto = userService.updateUser(userDto, UserHistoryType.PROFILE_UPDATE);
+        Assertions.assertNotNull(updatedUserDto.getId());
+        Assertions.assertNotEquals(previousFirstName, updatedUserDto.getFirstName());
+        Assertions.assertEquals(updatedUserDto.getId(), userDto.getId());
+
+        Assertions.assertTrue(updatedUserDto.getVersion() > userDto.getVersion());
+        Assertions.assertTrue(updatedUserDto.getUpdatedAt().isAfter(updatedUserDto.getCreatedAt()));
     }
 }

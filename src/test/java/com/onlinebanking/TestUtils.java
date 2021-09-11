@@ -1,7 +1,10 @@
 package com.onlinebanking;
 
 import com.google.gson.Gson;
+import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
 import com.onlinebanking.constant.ProfileTypeConstants;
+import com.onlinebanking.shared.dto.UserDto;
+import com.onlinebanking.shared.util.UserUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Assertions;
@@ -12,6 +15,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -32,7 +37,7 @@ public class TestUtils {
     public static final String TEST_EMAIL_SUFFIX = "@email.com";
     public static final String ANONYMOUS_ROLE = "ROLE_ANONYMOUS";
     public static final String ANONYMOUS_USER = "anonymousUser";
-    public static final String ROLE_USER = "ROLE_USER";
+    public static final String ROLE_CUSTOMER = "ROLE_CUSTOMER";
 
     public static Collection<String> getIgnoredFields() {
         return Collections.unmodifiableCollection(Arrays.asList(IGNORED_FIELDS));
@@ -76,6 +81,25 @@ public class TestUtils {
      * Sets the authentication object for unit testing purposes.
      *
      * @param role     the role to be assigned
+     * @param userDto the user to authenticate
+     */
+    public static void setAuthentication(String role, UserDto userDto) {
+        var authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
+        Authentication auth;
+        if (userDto.getUsername().equals(ANONYMOUS_USER)) {
+            auth = new AnonymousAuthenticationToken(userDto.getUsername(), userDto, authorities);
+        } else {
+            var user = UserUtils.convertToUser(userDto);
+            var principal = UserDetailsBuilder.buildUserDetails(user);
+            auth = new UsernamePasswordAuthenticationToken(principal, null, authorities);
+        }
+        SecurityContextHolder.getContext().setAuthentication(auth);
+    }
+
+    /**
+     * Sets the authentication object for unit testing purposes.
+     *
+     * @param role     the role to be assigned
      * @param username the user to authenticate
      */
     public static void setAuthentication(String role, String username) {
@@ -85,7 +109,9 @@ public class TestUtils {
             var user = User.builder().username(username).password(username).authorities(authorities).build();
             auth = new AnonymousAuthenticationToken(username, user, authorities);
         } else {
-            auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
+            var user = UserUtils.createUser(username);
+            var principal = UserDetailsBuilder.buildUserDetails(user);
+            auth = new UsernamePasswordAuthenticationToken(principal, null, authorities);
         }
         SecurityContextHolder.getContext().setAuthentication(auth);
     }

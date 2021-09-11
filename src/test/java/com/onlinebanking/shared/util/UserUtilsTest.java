@@ -79,11 +79,6 @@ class UserUtilsTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenUserInputIsNull() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> UserUtils.convertToUserDto(null));
-    }
-
-    @Test
     void convertToUser() {
         User user = UserUtils.createUser();
         var userDto = UserUtils.convertToUserDto(user);

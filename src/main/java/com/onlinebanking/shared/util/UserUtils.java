@@ -3,6 +3,7 @@ package com.onlinebanking.shared.util;
 import com.github.javafaker.Faker;
 import com.onlinebanking.backend.persistent.domain.User;
 import com.onlinebanking.backend.persistent.domain.UserRole;
+import com.onlinebanking.backend.service.impl.UserDetailsBuilder;
 import com.onlinebanking.enums.ErrorMessage;
 import com.onlinebanking.shared.dto.UserDto;
 import com.onlinebanking.shared.dto.mapper.UserDtoMapper;
@@ -142,6 +143,19 @@ public final class UserUtils {
         InputValidationUtils.validateInputs(userDto);
         return userDto;
 
+    }
+
+    /**
+     * Transfers data from userDetails to dto object.
+     *
+     * @param userDetailsBuilder stored user details
+     *
+     * @return user dto
+     */
+    public static UserDto convertToUserDto(UserDetailsBuilder userDetailsBuilder) {
+        var userDto = UserDtoMapper.MAPPER.toUserDto(userDetailsBuilder);
+        InputValidationUtils.validateInputs(userDto);
+        return userDto;
     }
 
     /**

@@ -11,8 +11,8 @@ import com.onlinebanking.enums.ErrorMessage;
  */
 public final class AccountConstants {
 
-    public static final String CHECKING_ACCOUNT_OVERVIEW_MODEL_ATTRIBUTE = "checkingAccount";
-    public static final String SAVINGS_ACCOUNT_OVERVIEW_MODEL_ATTRIBUTE = "savingsAccount";
+    public static final String CHECKING_ACCOUNT_MODEL_KEY = "checkingAccount";
+    public static final String SAVINGS_ACCOUNT_MODEL_KEY = "savingsAccount";
     public static final String CHECKING_ACCOUNT = "CheckingAccount";
     public static final String SAVINGS_ACCOUNT = "SavingsAccount";
 

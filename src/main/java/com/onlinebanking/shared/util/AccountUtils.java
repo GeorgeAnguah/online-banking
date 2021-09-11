@@ -10,7 +10,7 @@ import com.onlinebanking.enums.ErrorMessage;
  * @since 1.0
  */
 public final class AccountUtils {
-    private static int nextAccountNumber = 11_223_145;
+    private static long nextAccountNumber = 69_119_573;
 
     private AccountUtils() {
         throw new AssertionError(ErrorMessage.NOT_INSTANTIABLE.getErrorMsg());
@@ -21,7 +21,7 @@ public final class AccountUtils {
      *
      * @return account number.
      */
-    public static int accountNumberGenerator() {
+    public static long accountNumberGenerator() {
         return ++nextAccountNumber;
     }
 }
