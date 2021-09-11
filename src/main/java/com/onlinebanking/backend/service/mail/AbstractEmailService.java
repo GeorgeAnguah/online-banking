@@ -1,7 +1,6 @@
 package com.onlinebanking.backend.service.mail;
 
 import com.onlinebanking.backend.pojo.BaseEmail;
-import com.onlinebanking.backend.service.mail.EmailService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
