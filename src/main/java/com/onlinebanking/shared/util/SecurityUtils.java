@@ -39,9 +39,9 @@ public final class SecurityUtils {
      * @param http the http request
      */
     public static void configureDevEnvironmentAccess(HttpSecurity http, Environment environment) throws Exception {
-        var activeProfiles = Arrays.asList(environment.getActiveProfiles());
+        var profiles = Arrays.asList(environment.getActiveProfiles());
 
-        if (activeProfiles.contains(ProfileTypeConstants.DEV)) {
+        if (profiles.contains(ProfileTypeConstants.DEV) || profiles.contains(ProfileTypeConstants.DEV_DOCKER)) {
             http.headers().frameOptions().sameOrigin().and().csrf().disable().cors();
         }
     }

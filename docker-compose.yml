@@ -1,0 +1,83 @@
+version: '3.9'
+
+services:
+
+  # MySQL database
+  mysql-db:
+    image: mysql
+    restart: always
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_DATABASE: online_banking
+      MYSQL_USER: dba
+      MYSQL_PASSWORD: dba_password
+      MYSQL_ROOT_PASSWORD: online_banking
+      MYSQL_ROOT_HOST: '%'
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=root --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 20s
+      retries: 10
+    networks:
+      - backend
+
+  # App backend service
+  spring-boot-backend:
+    image: online-banking/spring-boot-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    restart: always
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev-docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/online_banking?autoReconnect=true&useSSL=false
+      - DB_USERNAME=root
+      - DB_PASSWORD=online_banking
+    healthcheck:
+      test: "curl --fail --silent localhost:8081/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - backend
+      - frontend
+
+  # React Admin Portal
+  admin-portal:
+    image: online-banking/admin-portal
+    build:
+      context: ./src/main/admin-portal
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - './src/main/admin-portal:/app'
+      - '/app/node_modules'
+      - '/app/.next'
+    restart: always
+    depends_on:
+      - spring-boot-backend
+    command: ["./wait-for-it.sh", "spring-boot-backend:8080", "--", "node_modules/.bin/next", "start"]
+    networks:
+      - frontend
+
+# Volumes
+volumes:
+  db-data:
+
+# Networks to be created to facilitate communication between containers
+networks:
+  frontend:
+  backend:
