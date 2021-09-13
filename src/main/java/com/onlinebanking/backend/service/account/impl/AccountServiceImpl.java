@@ -73,11 +73,11 @@ public class AccountServiceImpl implements AccountService {
 
         if (accountType.equalsIgnoreCase(AccountConstants.CHECKING_ACCOUNT)) {
             var checkingAccount = user.getCheckingAccount();
-            checkingAccount.setCheckingBalance(checkingAccount.getCheckingBalance().add(new BigDecimal(amount)));
+            checkingAccount.setBalance(checkingAccount.getBalance().add(new BigDecimal(amount)));
             checkingAccountRepository.saveAndFlush(checkingAccount);
         } else if (accountType.equalsIgnoreCase(AccountConstants.SAVINGS_ACCOUNT)) {
             var savingsAccount = user.getSavingsAccount();
-            savingsAccount.setSavingsBalance(savingsAccount.getSavingsBalance().add(new BigDecimal(amount)));
+            savingsAccount.setBalance(savingsAccount.getBalance().add(new BigDecimal(amount)));
             savingsAccountRepository.saveAndFlush(savingsAccount);
         }
     }
