@@ -15,6 +15,11 @@ public final class ProfileTypeConstants {
      * Dev Profile Constant.
      */
     public static final String DEV = "dev";
+
+    /**
+     * Dev Profile Constant.
+     */
+    public static final String DEV_DOCKER = "dev-docker";
     /**
      * Prod Profile Constant.
      */
