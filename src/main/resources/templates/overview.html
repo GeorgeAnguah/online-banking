@@ -13,14 +13,14 @@
             <div class="card mb-4">
                 <div class="card-header" style="background-color: #d9edf7">
                     <div class="row my-1 py-2">
-                        <div class="col-9">
-                            <h2>Checking Balance: </h2>
+                        <div class="col-3">
+                            <h5>Checking Balance: </h5>
                         </div>
-                        <div class="col-3 text-end">
-                            <h1>
+                        <div class="col-8 text-end">
+                            <h2>
                                 <i class="fa fa-usd" aria-hidden="true"></i>
-                                <span th:inline="text">[[${checkingAccount?.balance}]]</span>
-                            </h1>
+                                <span th:text="${checkingAccount.balance}"></span>
+                            </h2>
                         </div>
                     </div>
                 </div>
@@ -34,14 +34,14 @@
             <div class="card">
                 <div class="card-header" style="background-color:#dff0d8">
                     <div class="row my-1 py-2">
-                        <div class="col-9">
-                            <h2>Savings Balance: </h2>
+                        <div class="col-3">
+                            <h5>Savings Balance: </h5>
                         </div>
-                        <div class="col-3 text-end">
-                            <h1>
+                        <div class="col-8 text-end">
+                            <h2>
                                 <i class="fa fa-usd" aria-hidden="true"></i>
                                 <span th:inline="text">[[${savingsAccount?.balance}]]</span>
-                            </h1>
+                            </h2>
                         </div>
                     </div>
                 </div>
