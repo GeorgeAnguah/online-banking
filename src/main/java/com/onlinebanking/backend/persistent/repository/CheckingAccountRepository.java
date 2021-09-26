@@ -1,7 +1,7 @@
 package com.onlinebanking.backend.persistent.repository;
 
 import com.onlinebanking.backend.persistent.domain.account.CheckingAccount;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * @since 1.0
  */
 @Repository
-public interface CheckingAccountRepository extends CrudRepository<CheckingAccount, Long> {
+public interface CheckingAccountRepository extends JpaRepository<CheckingAccount, Long> {
     /**
      * Find checking account by checking account number.
      *

@@ -1,8 +1,5 @@
 package com.onlinebanking.web.controller;
 
-import com.onlinebanking.backend.persistent.domain.User;
-import com.onlinebanking.backend.persistent.domain.account.CheckingAccount;
-import com.onlinebanking.backend.persistent.domain.account.SavingsAccount;
 import com.onlinebanking.backend.service.UserService;
 import com.onlinebanking.constant.AccountConstants;
 import com.onlinebanking.constant.HomeConstants;
@@ -55,9 +52,9 @@ public class HomeController {
     @PreAuthorize("isAuthenticated() and hasAnyRole(T(com.onlinebanking.enums.RoleType).values())")
     @GetMapping(HomeConstants.ACCOUNT_OVERVIEW_URL_MAPPING)
     public String accountOverview(Principal principal, Model model) {
-        User user = UserUtils.convertToUser(userService.findByUsername(principal.getName()));
-        CheckingAccount checkingAccount = user.getCheckingAccount();
-        SavingsAccount savingsAccount = user.getSavingsAccount();
+        var user = UserUtils.convertToUser(userService.findByUsername(principal.getName()));
+        var checkingAccount = user.getCheckingAccount();
+        var savingsAccount = user.getSavingsAccount();
 
         model.addAttribute(AccountConstants.CHECKING_ACCOUNT_MODEL_KEY, checkingAccount);
         model.addAttribute(AccountConstants.SAVINGS_ACCOUNT_MODEL_KEY, savingsAccount);

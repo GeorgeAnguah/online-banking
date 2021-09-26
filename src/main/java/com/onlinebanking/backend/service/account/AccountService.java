@@ -34,5 +34,14 @@ public interface AccountService {
      * @param amount amount to be deposited.
      * @param principal principal for currently logged in user.
      */
-    void deposit(String accountType, Double amount, Principal principal);
+    void deposit(String accountType, String amount, Principal principal);
+
+    /**
+     * Withdraw money from bank account.
+     *
+     * @param accountType accountType that specifies a savings or checking account.
+     * @param amount amount to be withdrawn.
+     * @param principal principal for currently logged in user.
+     */
+    void withdraw(String accountType, String amount, Principal principal);
 }

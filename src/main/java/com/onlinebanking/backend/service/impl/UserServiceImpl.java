@@ -195,7 +195,7 @@ public class UserServiceImpl implements UserService {
         InputValidationUtils.validateInputs(getClass(), userDto, userHistoryType);
         userDto.setVerificationToken(null);
 
-        return persistUser(userDto, Collections.emptySet(), UserHistoryType.PROFILE_UPDATE, true);
+        return persistUser(userDto, Collections.emptySet(), userHistoryType, true);
     }
 
     /**
